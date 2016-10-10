@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**Class: Monster.java
  * @author Janna Timmer
  * @version 1.0
- * Course: ITEC 2150 Spring 2016
+ * Course:
  * Written: Oct 10, 2016
  * 
  *
