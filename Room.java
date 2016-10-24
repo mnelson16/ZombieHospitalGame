@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class Room
 {
-	String roomID, description;
-	ArrayList<Monster> monsters = new ArrayList<Monster>();
-	Puzzle puzzle;
-	ArrayList<String> exitIDs = new ArrayList<String>();
-	boolean saveableRoom;
+	private String roomID, description;
+	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	private Puzzle puzzle;
+	private ArrayList<String> exitIDs = new ArrayList<String>();
+	private boolean saveableRoom;
 	
 	/**
 	 * 
