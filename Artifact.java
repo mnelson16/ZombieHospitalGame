@@ -30,4 +30,9 @@ public class Artifact
 		this.defIncrease = defIncrease;
 		this.healthIncrease = healthIncrease;
 	}
+	
+	public void observeArtifact()
+	{
+		
+	}
 }
