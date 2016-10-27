@@ -1,5 +1,5 @@
 /**Class: Zombie
- * @author Janna Timmer
+ * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 10, 2016

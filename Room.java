@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-/**Class: Room.java
- * @author Janna Timmer
+/**Class: Room
+ * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 24, 2016

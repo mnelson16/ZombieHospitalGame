@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-/**Class: Puzzle.java
- * @author Janna Timmer
+/**Class: Puzzle
+ * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 24, 2016
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Puzzle
 {
 	private String puzzleID, roomID, description;
-	ArrayList<String> options;
-	boolean solved;
+	private ArrayList<String> options;
+	private boolean solved;
 	/**
 	 * 
 	 */
