@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**Class: Artifact
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class Artifact
 {
-	private String artifactID, name, description;
+	private String name, description;
 	private boolean consumable, equippable, currentlyEquipped;
 	private int atkIncrease, defIncrease, healthIncrease;
 	
@@ -29,10 +30,9 @@ public class Artifact
 	 * @param defIncrease
 	 * @param healthIncrease
 	 */
-	public Artifact(String artifactID, String name, String description, boolean consumable, boolean equippable,
+	public Artifact(String name, String description, boolean consumable, boolean equippable,
 			boolean currentlyEquipped, int atkIncrease, int defIncrease, int healthIncrease)
 	{
-		this.artifactID = artifactID;
 		this.name = name;
 		this.description = description;
 		this.consumable = consumable;
@@ -43,9 +43,9 @@ public class Artifact
 		this.healthIncrease = healthIncrease;
 	}
 
-	public void observeArtifact()
+	public String observeArtifact()
 	{
-		System.out.println(name + ": " + description);
+		return name + "\n" + description;
 	}
 	
 	/**Method: useArtifact
@@ -58,6 +58,24 @@ public class Artifact
 	 */
 	public void useArtifact(Monster mon)
 	{
+		String effectType;
+		int effectAmt;
+		if (atkIncrease > 0)
+		{
+			effectType = "attack";
+			effectAmt = atkIncrease;
+		}
+		else if (defIncrease > 0)
+		{
+			effectType = "defense";
+			effectAmt = defIncrease;
+		}
+		else //healthIncrease > 0
+		{
+			effectType = "health";
+			effectAmt = healthIncrease;
+		}
+		
 		if (equippable)
 		{
 			if (currentlyEquipped)
@@ -66,37 +84,34 @@ public class Artifact
 				mon.setHealth(mon.getHealth() - healthIncrease);
 				mon.setDefense(mon.getDefense() - defIncrease);
 				mon.setAttack(mon.getAttack() - atkIncrease);
+				
+				System.out.println("You unequipped " + this.name + ". Your " + effectType 
+						+ " decreased by " + effectAmt + ".");
 				return;
 			}
 			else
 			{
 				currentlyEquipped = true;
+				System.out.println("You equipped " + this.name + ". Your " + effectType 
+						+ " increased by " + effectAmt + ".");
 			}
 		}
 		
+		
 		if (consumable)
 		{
-			//index of this Artifact in inventory ArrayList
-			int artIndex = mon.getInventory().indexOf(this);
-			
-			//new inventory without this Artifact
-			ArrayList<Artifact> updatedInventory = mon.getInventory(); 
-			updatedInventory.remove(artIndex); 
+			HashMap<String, Artifact> updatedInventory = mon.getInventory(); 
+			updatedInventory.remove(this.name);
 			
 			mon.setInventory(updatedInventory);
+			
+			System.out.println("You used " + this.name + ". Your " + effectType 
+					+ " increased by " + effectAmt + ".");
 		}
 		
 		mon.setHealth(mon.getHealth() + healthIncrease);
 		mon.setDefense(mon.getDefense() + defIncrease);
 		mon.setAttack(mon.getAttack() + atkIncrease);
-	}
-
-	/**
-	 * @return the artifactID
-	 */
-	public String getArtifactID()
-	{
-		return artifactID;
 	}
 
 	/**
@@ -161,14 +176,6 @@ public class Artifact
 	public int getHealthIncrease()
 	{
 		return healthIncrease;
-	}
-
-	/**
-	 * @param artifactID the artifactID to set
-	 */
-	public void setArtifactID(String artifactID)
-	{
-		this.artifactID = artifactID;
 	}
 
 	/**
