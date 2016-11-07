@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**Class: Zombie
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
@@ -19,16 +21,16 @@ public class Zombie extends Monster
 	 * @param atk
 	 * @param def
 	 */
-	public Zombie(String ID, int maxHealth, int atk, int def)
+	public Zombie(String monsterID, int health, int attack, int defense, HashMap<String, Artifact> inventory)
 	{
-		super(ID, maxHealth, atk, def);
+		super(monsterID, health, attack, defense, inventory);
 	}
 
 	/** (non-Javadoc)
 	 * @see Monster#attack()
 	 */
 	@Override
-	protected void attack()
+	protected void attack(Monster player)
 	{
 		// TODO Auto-generated method stub
 
