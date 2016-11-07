@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**Class: Player
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -26,7 +28,7 @@ public class Player extends Monster
 	 * @param inCombat
 	 * @param previousRoomID
 	 */
-	public Player(String monsterID, int health, int attack, int defense, ArrayList<Artifact> inventory,
+	public Player(String monsterID, int health, int attack, int defense, HashMap<String, Artifact> inventory,
 			boolean inCombat, String previousRoomID)
 	{
 		super(monsterID, health, attack, defense, inventory);
