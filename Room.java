@@ -53,6 +53,10 @@ public class Room
 		if (west != null)
 			exitIDs.put("west", west);
 	}
+	public void spawnMonster()
+	{
+		
+	}
 	public String getRoomID() {
 		return roomID;
 	}
