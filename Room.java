@@ -53,12 +53,28 @@ public class Room
 		if (west != null)
 			exitIDs.put("west", west);
 	}
-	public void spawnMonster()
-	{
-		
-	}
+
+	
 	public String getRoomID() {
 		return roomID;
+	}
+	public void setRoomID(String roomID) {
+		this.roomID = roomID;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public void setMonsters(ArrayList<Monster> monsters) {
+		this.monsters = monsters;
+	}
+	public void setPuzzle(Puzzle puzzle) {
+		this.puzzle = puzzle;
+	}
+	public void setExitIDs(Map<String, Room> exitIDs) {
+		this.exitIDs = exitIDs;
+	}
+	public void setSaveableRoom(boolean saveableRoom) {
+		this.saveableRoom = saveableRoom;
 	}
 	public String getDescription() {
 		return description;
