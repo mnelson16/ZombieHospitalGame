@@ -17,24 +17,24 @@ import java.util.Map;
 public abstract class Monster
 {
 	private String monsterID;
-	private int health, attack, defense;
-	private HashMap<String, Artifact> inventory = new HashMap<String, Artifact>();
+	private int maxHealth, health, attack, defense;
 
-	
+
 	/**
 	 * @param monsterID
+	 * @param maxHealth
 	 * @param health
 	 * @param attack
 	 * @param defense
 	 * @param inventory
 	 */
-	public Monster(String monsterID, int health, int attack, int defense, HashMap<String, Artifact> inventory)
+	public Monster(String monsterID, int maxHealth, int attack, int defense)
 	{
 		this.monsterID = monsterID;
-		this.health = health;
+		this.maxHealth = maxHealth;
+		this.health = maxHealth;
 		this.attack = attack;
 		this.defense = defense;
-		this.inventory = inventory;
 	}
 
 
@@ -56,11 +56,20 @@ public abstract class Monster
 	/**
 	 * @return the health
 	 */
+	public int getMaxHealth()
+	{
+		return maxHealth;
+	}
+
+
+
+	/**
+	 * @return the health
+	 */
 	public int getHealth()
 	{
 		return health;
 	}
-
 
 
 	/**
@@ -82,23 +91,23 @@ public abstract class Monster
 	}
 
 
-
-	/**
-	 * @return the inventory
-	 */
-	public HashMap<String, Artifact> getInventory()
-	{
-		return inventory;
-	}
-
-
-
+	
 	/**
 	 * @param monsterID the monsterID to set
 	 */
 	public void setMonsterID(String monsterID)
 	{
 		this.monsterID = monsterID;
+	}
+
+
+
+	/**
+	 * @param health the health to set
+	 */
+	public void setMaxHealth(int maxHealth)
+	{
+		this.maxHealth = maxHealth;
 	}
 
 
@@ -130,15 +139,4 @@ public abstract class Monster
 	{
 		this.defense = defense;
 	}
-
-
-
-	/**
-	 * @param inventory the inventory to set
-	 */
-	public void setInventory(HashMap<String, Artifact> inventory)
-	{
-		this.inventory = inventory;
-	}
-
 }
