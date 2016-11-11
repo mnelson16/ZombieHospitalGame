@@ -28,21 +28,34 @@ public class Room
 	 * @param exitIDs 
 	 * @param saveableRoom 
 	 * @param monsters 
-	 * @param monsters 
-	 * @param puzzle 
 	 * @param puzzle 
 	 * 
 	 */
-	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom, ArrayList<Monster> monsters, Puzzle puzzle)
+	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom)
+	{
+		this.roomID = roomID;
+		this.description = description;
+		this.exitIDs = exitIDs;
+		this.saveableRoom = saveableRoom;
+		exitIDs = new LinkedHashMap<String, Room>();
+	}
+	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom,ArrayList<Monster>monsters)
 	{
 		this.roomID = roomID;
 		this.description = description;
 		this.exitIDs = exitIDs;
 		this.saveableRoom = saveableRoom;
 		this.monsters= monsters;
-		this.puzzle = puzzle;
-		exitIDs = new LinkedHashMap<String, Room>();
 	}
+	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom, Puzzle puzzle)
+	{
+		this.roomID = roomID;
+		this.description = description;
+		this.exitIDs = exitIDs;
+		this.saveableRoom = saveableRoom;
+		this.puzzle = puzzle;
+	}
+
 	public void setExits(Room north, Room east, Room south, Room west) {
 		if (north != null)
 			exitIDs.put("north", north);
