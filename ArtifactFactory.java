@@ -48,7 +48,7 @@ public class ArtifactFactory
 	/**
 	 * @return allItems
 	 */
-	public static HashMap<String, Artifact> getallItems()
+	public static LinkedHashMap<String, Artifact> getallItems()
 	{
 		return allItems;
 	}

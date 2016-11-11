@@ -19,7 +19,7 @@ public class Player extends Monster
 {
 	private boolean inCombat;
 	private String previousRoomID;
-	private static HashMap<String, Artifact> playerInventory;
+	private static LinkedHashMap<String, Artifact> playerInventory = ArtifactFactory.getallItems();
 
 	/**
 	 * @param monsterID
@@ -36,7 +36,7 @@ public class Player extends Monster
 		super(monsterID, health, attack, defense);
 		this.inCombat = inCombat;
 		this.previousRoomID = previousRoomID;
-		
+
 		playerInventory = ArtifactFactory.getallItems();
 	}
 
@@ -47,39 +47,52 @@ public class Player extends Monster
 		int damage = this.getAttack() - mon.getDefense() / 5; 
 		mon.setHealth(mon.getHealth() - damage);
 	}
-	
+
 	public HashMap<String, Artifact> getArtifacts()
 	{
-		
+
 		playerInventory = new LinkedHashMap<String, Artifact>();
 		Artifact tempArt;
-		
+
 		//String name, String description
 		//boolean consumable, boolean equippable
 		//int atkIncrease, int defIncrease, int healthIncrease
 		tempArt = new Artifact("First-Aid Kit", "A kit designed for attending minor wounds."
 				+ "\nRestores 20 Health", true, false, 0, 0, 20);
 		playerInventory.put(tempArt.getName(), tempArt);
-		
+
 		tempArt = new  Artifact("Obamacare Armor", "Issue #23-B."
 				+ "\nAttack +3", false, true, 0, 1, 0);
 		playerInventory.put(tempArt.getName(), tempArt);
-		
+
 		tempArt = new Artifact("Scalpel", "Cutting edge medical technology."
 				+ "\nAttack +2", false, true, 2, 0, 0);
 		playerInventory.put(tempArt.getName(), tempArt);
-		
+
 		tempArt = new Artifact("Whiskey", "You're 106% sure drinking this will make you feel better."
 				+ "\nHealth +5", true, false, 0, 0, 5);
 		playerInventory.put(tempArt.getName(), tempArt);
-		
+
 		return playerInventory;
 
 	}
+
+	
+
+	/**
+	 * @param playerInventory the playerInventory to set
+	 */
+	public static void setPlayerInventory(LinkedHashMap<String, Artifact> playerInv)
+	{
+		playerInventory = playerInv;
+	}
+
+
+
 	/**
 	 * @return the playerInventory
 	 */
-	public static HashMap<String, Artifact> getPlayerInventory()
+	public static LinkedHashMap<String, Artifact> getPlayerInventory()
 	{
 		return playerInventory;
 	}
@@ -94,12 +107,12 @@ public class Player extends Monster
 			//invStr += key + "\n";
 			invStr += playerInventory.get(key).getName() + "\n";
 		}
-		
+
 		if (invStr.length() > 0)
 		{
 			return invStr.substring(0, invStr.length() - 1);
 		}
-		return null;
+		return "\nYou have no items.";
 	}
 
 

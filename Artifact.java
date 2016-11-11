@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**Class: Artifact
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -98,10 +99,20 @@ public class Artifact
 		
 		if (consumable)
 		{
-			HashMap<String, Artifact> updatedInventory = mon.getInventory(); 
-			updatedInventory.remove(this.name);
+			if (mon instanceof Player)
+			{
+				LinkedHashMap<String, Artifact> updatedInventory = Player.getPlayerInventory(); 
+				updatedInventory.remove(this.name);
 			
-			mon.setInventory(updatedInventory);
+				Player.setPlayerInventory(updatedInventory);
+			}
+			else
+			{
+				HashMap<String, Artifact> updatedInventory = ((Zombie)mon).getInventory(); 
+				updatedInventory.remove(this.name);
+			
+				((Zombie)mon).setInventory(updatedInventory);
+			}
 			
 			System.out.println("You used " + this.name + ". Your " + effectType 
 					+ " increased by " + effectAmt + ".");

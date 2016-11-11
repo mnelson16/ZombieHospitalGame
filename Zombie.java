@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class Zombie extends Monster
 {
+	private HashMap<String, Artifact> inventory;
 
 	/**
 	 * @param ID
@@ -23,7 +24,8 @@ public class Zombie extends Monster
 	 */
 	public Zombie(String monsterID, int health, int attack, int defense, HashMap<String, Artifact> inventory)
 	{
-		super(monsterID, health, attack, defense, inventory);
+		super(monsterID, health, attack, defense);
+		this.inventory = inventory;
 	}
 
 	/** (non-Javadoc)
@@ -36,4 +38,19 @@ public class Zombie extends Monster
 
 	}
 
+	/**
+	 * @return the inventory
+	 */
+	public HashMap<String, Artifact> getInventory()
+	{
+		return inventory;
+	}
+
+	/**
+	 * @param inventory the inventory to set
+	 */
+	public void setInventory(HashMap<String, Artifact> inventory)
+	{
+		this.inventory = inventory;
+	}
 }
