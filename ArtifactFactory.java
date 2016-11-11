@@ -17,53 +17,39 @@ import java.util.Map;
 
 public class ArtifactFactory
 {
-	private static HashMap<String, Artifact> playerInventory; 
+	 private static LinkedHashMap<String, Artifact> allItems = new LinkedHashMap<String, Artifact>();
 	
 	public HashMap<String, Artifact> getArtifacts()
 	{
-		
-		playerInventory = new LinkedHashMap<String, Artifact>();
 		Artifact tempArt;
 		
-		tempArt = new Artifact("Cheesecloth", "You would have preferred pants, but what are ya gonna do?"
-				+ "\nDEF +2", false, true, false, 0, 2, 0);
-		playerInventory.put(tempArt.getName(), tempArt);
+		//String name, String description
+		//boolean consumable, boolean equippable
+		//int atkIncrease, int defIncrease, int healthIncrease
+		tempArt = new Artifact("First-Aid Kit", "A kit designed for attending minor wounds."
+				+ "\nRestores 20 Health", true, false, 0, 0, 20);
+		allItems.put(tempArt.getName(), tempArt);
 		
-		tempArt = new  Artifact("Club", "A wooden club. Caveman, ungh!"
-				+ "\nATK +3", false, true, false, 3, 0, 0);
-		playerInventory.put(tempArt.getName(), tempArt);
+		tempArt = new  Artifact("Obamacare Armor", "A tattered HazMat suit."
+				+ "\nAttack +3", false, true, 0, 1, 0);
+		allItems.put(tempArt.getName(), tempArt);
 		
-		tempArt = new Artifact("Saucepan", "Makes the deadliest tomato sauce."
-				+ "\nATK +1", false, true, false, 1, 0, 0);
-		playerInventory.put(tempArt.getName(), tempArt);
+		tempArt = new Artifact("Scalpel", "Cutting edge medical technology."
+				+ "\nAttack +2", false, true, 2, 0, 0);
+		allItems.put(tempArt.getName(), tempArt);
 		
 		tempArt = new Artifact("Whiskey", "You're 106% sure drinking this will make you feel better."
-				+ "\nHP +5", true, false, false, 0, 0, 5);
-		playerInventory.put(tempArt.getName(), tempArt);
+				+ "\nHealth +5", true, false, 0, 0, 5);
+		allItems.put(tempArt.getName(), tempArt);
 		
-		return playerInventory;
+		return allItems;
 
 	}
 	/**
-	 * @return the playerInventory
+	 * @return allItems
 	 */
-	public static HashMap<String, Artifact> getPlayerInventory()
+	public static HashMap<String, Artifact> getallItems()
 	{
-		return playerInventory;
+		return allItems;
 	}
-	/**
-	 * @return the playerInvList
-	 */
-	public static String inventoryToString()
-	{
-		String invStr = "";
-		for(String key : playerInventory.keySet())
-		{
-			//invStr += key + "\n";
-			invStr += playerInventory.get(key).getName() + "\n";
-		}
-		
-		return invStr.substring(0, invStr.length() - 1);
-	}
-
 }

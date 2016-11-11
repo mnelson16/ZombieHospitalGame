@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**Class: Artifact
@@ -30,14 +29,13 @@ public class Artifact
 	 * @param defIncrease
 	 * @param healthIncrease
 	 */
-	public Artifact(String name, String description, boolean consumable, boolean equippable,
-			boolean currentlyEquipped, int atkIncrease, int defIncrease, int healthIncrease)
+	public Artifact(String name, String description, boolean consumable, boolean equippable, int atkIncrease, int defIncrease, int healthIncrease)
 	{
 		this.name = name;
 		this.description = description;
 		this.consumable = consumable;
 		this.equippable = equippable;
-		this.currentlyEquipped = currentlyEquipped;
+		this.currentlyEquipped = false;
 		this.atkIncrease = atkIncrease;
 		this.defIncrease = defIncrease;
 		this.healthIncrease = healthIncrease;
