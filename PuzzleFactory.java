@@ -100,18 +100,69 @@ public class PuzzleFactory
 		options4.add("c. Leave the suit behind, it looks useless.");
 		options4.add("d. This room doesn’t look like anything you want a part of. Turn back.");
 		
-		responses4.put('a', "Equipped Obamacare, +1 to armor. Any armor currently wearing is dropped. Puzzle solved.");
-		responses4.put('b', "Obamacare in inventory, lose any other armor currently holding. Puzzle solved.");
-		responses4.put('c', "Puzzle solved.");
-		responses4.put('d', "d. Return to previous room.");
+		responses4.put('a', "Puzzle solved!");
+		responses4.put('b', "Obamacare in inventory, lose any other armor currently holding. Puzzle solved!");
+		responses4.put('c', "Puzzle solved!");
+		responses4.put('d', "You return to the previous room.");
 		
 		tempPuzzle = new Puzzle("PUZ004", "4", "You come across a room marked “Public Health Care Center.” Opening the"
 				+ " door, it is all but barren; save for a dirty, hole-ridden HazMat suit. Upon closer investigation, "
 				+ "the suit contains a barely legible label reading “Obamacare Issue #23-B.” The suit looks like it would"
 				+ " only provide minimal protection, and it will surely fall to pieces if you were to ever try and remove it", 
-				'\0', '\0', '\0', '\0', '\0', '\0', new Character[] {'\0'}, new Character[] {'\0'}, options4, responses4, false );
+				'd', 'a', 'b', '\0', '\0', '\0', new Character[] {'a', 'b', 'c'}, new Character[] {'\0'}, options4, responses4, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
 		//End Puzzle 4
+
+		ArrayList<String> options5 = new ArrayList<String>();
+		LinkedHashMap<Character, String> responses5 = new LinkedHashMap<Character, String>();
+		
+		//Puzzle 5
+		options5.add("a. Ignore the fire, you have enough problems.");
+		options5.add("b. Go retrieve a fire extinguisher and fight the fire. ");
+		options5.add("c. The smell is unbearable, turn back.");
+		
+		responses5.put('a',"You creep past the fire, shuddering at the smell of burning flesh. Puzzle solved.");
+		responses5.put('b',"You put the fire out, and notice a fire axe next to the fire safety box! Puzzle solved.");
+		responses5.put('c',"You return to the previous room.");
+		
+		tempPuzzle = new Puzzle("PUZ005", "5", "As you enter the room, a blast of heat almost knocks you back and a rancid smell "
+				+ "fills your nostrils. In the corner of the room, a fire blazes. Upon closer inspection, you "
+				+ "realize it is a pile of dead bodies. You notice a fire safety box on the wall, and you could "
+				+ "surely use all the karma you can get. But then again, the linoleum tile should not catch, "
+				+ "and you imagine that the morbid bonfire will simply burn itself out. There’s no use in wasting "
+				+ "energy in a hopeless cause…", 'c', '\0', '\0', 'b', '\0', '\0', new Character[] {'a', 'b'}, 
+				new Character[] {'\0'}, options5, responses5, false);
+		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
+		//End Puzzle 5
+		
+		ArrayList<String> options6 = new ArrayList<String>();
+		LinkedHashMap<Character, String> responses6 = new LinkedHashMap<Character, String>();
+		
+		//Puzzle 6
+		options6.add("a. Finish him off, there is no use risking him turning and coming back for you.");
+		options6.add("b. Search his body for weapons.");
+		options6.add("c. Place your fears behind you and attempt to comfort the dying man.");
+		options6.add("d. Whatever lies past him, you want none of it. Turn away.");
+		
+		responses6.put('a', "You raise your weapon and bring it down on his head. His shoulders slump. You continue on "
+				+ "your way. Puzzle solved");
+		responses6.put('b', "You approach the man to search him for weapons. As you get close, his eyes widen in fear and "
+				+ "confusion. He pulls his gun and attempts to shoot you. The bullets whiz past you, one of them making "
+				+ "partial contact with your abdomen. Exhausted, the security guard lets loose his final breath. After "
+				+ "searching him, you find that he used his last bullets attempting to shoot you. You carry on. "
+				+ "Puzzle solved.");
+		responses6.put('c', "You slowly approach, kneeling next to the man. You have no words, but the gesture speaks volumes."
+				+ " The man’s eyes swell with tears. Slowly, he removes his gun and places it in your hand. He tries to "
+				+ "mutter something, but cannot find the energy. His eyes slowly close, but at least there is peace on his"
+				+ " face. – Receive gun. Puzzle solved.");
+		responses6.put('d', "You returned to the previous room.");
+		
+		tempPuzzle = new Puzzle("PUZ006", "6", "You come across a severely injured security guard. His eyes are beginning to "
+				+ "show the unfocused gaze of the undead, and his body is riddled in bite marks. His chest rises and falls slowly,"
+				+ " and it is clear that he is scared and on the cusps of death", 'd', '\0', 'c', '\0', '\0', '\0', new Character[] {'a', 'b', 'c'}, 
+				new Character[] {'\0'}, options6, responses6, false);
+		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
+		//End Puzzle 6
 		
 		ArrayList<String> options7 = new ArrayList<String>();
 		LinkedHashMap<Character, String> responses7 = new LinkedHashMap<Character, String>();
