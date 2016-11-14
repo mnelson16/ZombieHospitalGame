@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 /**Class: Puzzle
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -24,6 +25,7 @@ public class Puzzle
 	private LinkedHashMap<Character, String> responses = 
 			new LinkedHashMap<Character, String>();
 	private boolean solved;
+	private Scanner input;
 
 	/**
 	 * 
@@ -54,15 +56,16 @@ public class Puzzle
 	{
 		System.out.println(description + "\nOptions:");
 		for(int i = 0; i < options.size(); i++)
-        	{
-            		String option = options.get(i);
-            		System.out.println(option);
-        	}
+        {
+            String option = options.get(i);
+            System.out.println(option);
+        }
 		System.out.println("What do you do?");
 	}
 	
-	public void solvePuzzle(Monster mon, String userInput)
+	public void solvePuzzle(Player mon, String userInput)
 	{
+		input = new Scanner(System.in);
 		char userAnswer = userInput.charAt(0);
 		setChosenOption(userAnswer);
 		
@@ -73,30 +76,88 @@ public class Puzzle
 			{
 				if(userAnswer == equipOption)
 				{
-					//Equip the specified artifact to the player.
+					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
+					updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
+							+ "\nAttack +3", false, false, true, 0, 1, 0));
+					mon.setPlayerInventory(updatedInv);
+					mon.getPlayerInventory().get("Obamacare Armor").useArtifact(mon);
 				}
 				else if(userAnswer == itemOption)
 				{
-					//Put the specified artifact in the player's inventory
+					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
+					if(puzzleID.equalsIgnoreCase("PUZ004"))
+					{
+					updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
+							+ "\nAttack +3", false, false, true, 0, 1, 0));
+					}
+					else if(puzzleID.equalsIgnoreCase("PUZ006"))
+					{
+						updatedInv.put("Obamacare Armor", new  Artifact("Hand Gun", "A weapon given to you by a brief friend."
+								+ "\nAttack +2", false, true, false, 2, 0, 0));
+					}
+					mon.setPlayerInventory(updatedInv);					
 				}
 				else if(userAnswer == possibleOption)
 				{
-					/*Ask the player if they would like to place the 
-					specified artifact in their inventory. If so,
-					place the artifact in their inventory; if not,
-					don't.*/
-					System.out.println("Would you like to take the " + "? \n(Y/N)");
+					boolean finished = false;
+					while(!finished)
+					{
+						System.out.println("Would you like to take the " + "fire axe? \n(Y/N)");
+						String userYN = input.nextLine();
+						if(userYN.equalsIgnoreCase("y"))
+						{
+							LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
+							updatedInv.put("Fire Axe", new  Artifact("Fire Axe", "The sharp truth."
+									+ "\nAttack +3", false, true, false, 3, 0, 0));
+							mon.setPlayerInventory(updatedInv);
+							finished = true;
+						}
+						else if(userYN.equalsIgnoreCase("n"))
+						{
+							finished = true;
+						}
+						else
+						{
+							System.out.println("You can't decide if you want to pick up the"
+									+ ".. Let's rethink this..\n");
+						}
+					}
 				}
 				else if(userAnswer == inputOption)
 				{
 					//Ask the player for their input and take a single line
 					//of input to check against the correct puzzle.
+					boolean finished = false;
+					while(!finished)
+					{
+						String userCheck = input.nextLine();
+						if(userCheck.equalsIgnoreCase("silence"))
+						{
+							System.out.println("That seemed to do it!");
+							finished = true;
+						}
+						else if(userCheck.equalsIgnoreCase("back"))
+						{
+							System.out.println("You decide you're not quite ready to type in the password.");
+							finished = true;
+							userAnswer = 'b';
+						}
+						else
+						{
+							System.out.println("That didn't seem to work.. Maybe try a different word?");
+						}
+					}
 				}
 				else if(userAnswer == injureOption)
 				{
-					//Damage the player's maximum health.
+					mon.setMaxHealth(mon.getMaxHealth() - 5);
+					System.out.println("-5 to max health!");
 				}
 				solved = true;
+				if(!Arrays.asList(correctOption).contains(userAnswer))
+				{
+					solved = false;
+				}
 			}
 			if(userAnswer == backOption)
 			{
@@ -104,7 +165,7 @@ public class Puzzle
 			}
 			if(Arrays.asList(damageOption).contains(userAnswer))
 			{
-				mon.setHealth(mon.getHealth());
+				mon.setHealth(mon.getHealth() - 5);
 				System.out.println("-5 health!");
 			}
 		}
@@ -122,7 +183,7 @@ public class Puzzle
 	
 	public Character[] getCorrectOption()
 	{
-        	return correctOption;
+        return correctOption;
 	}
 	
 	public boolean getSolved()
