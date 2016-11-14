@@ -30,7 +30,6 @@ public class ZHTester
 	{
 		Scanner input = new Scanner(System.in);
 		CharacterSubsystem cs = new CharacterSubsystem();
-		Player player = new Player("00", 20, 5, 5, false, null);
 		
 		/* Search for multiple words
 		 * If one word, send to appropriate subsystem
@@ -39,18 +38,18 @@ public class ZHTester
 		
 		//Temp
 		System.out.println("Available commands: \n"
-				+ "Help, Inventory, Observe <Item>, Use <Item>");
+				+ "Help, Inventory, Observe <Item>, Stats, Use <Item>");
 
 		while (true)
 		{
 			System.out.print("> ");
 			userInput = input.nextLine().toLowerCase();
 			userInput = userInput.replaceAll(" ", "_");
-			if (userInput.contains("_"))
+			if (userInput.contains("_")) //Multi-word command
 			{
 				command = userInput.substring(0, userInput.indexOf("_"));
 			}
-			else
+			else //One-word command
 			{
 				command = userInput;
 			}
@@ -67,7 +66,7 @@ public class ZHTester
 				System.out.println(Player.inventoryToString());
 			}
 			//Two or more word commands
-			else if (command.equals("use") || command.equals("observe"))
+			else if (command.equals("use") || command.equals("observe") || command.equals("stats"))
 			{
 				cs.CSRun();	
 			}
@@ -76,7 +75,7 @@ public class ZHTester
 				System.out.println("What is it you want to do?");
 			}
 
-			System.out.println();
+			//System.out.println();
 		}
 
 	}

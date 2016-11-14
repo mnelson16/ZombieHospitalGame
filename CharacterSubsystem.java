@@ -1,4 +1,6 @@
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 /**Class: CharacterSubsystem
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -15,70 +17,86 @@ import java.util.HashMap;
 
 public class CharacterSubsystem
 {
-	public static String itemInput, userInput;
+	public static String itemInput, userInput, command;
 	public static int separatorIndex; //index of dash or underscore
 	public static Artifact activeItem;
-	
+
 	/**
 	 * @param args
 	 */
 	public void CSRun()
 	{
-		Player player = new Player("00", 20, 5, 5, false, null);
-		HashMap<String, Artifact> inventory = player.getArtifacts();
+		command = ZHTester.command;
+		userInput = ZHTester.userInput;
+		Player player = new Player("00", 20, 5, 5, null);
 		
-		//Set itemInput to item name with underscores replacing spaces
-		itemInput = userInput.substring(userInput.indexOf("_") + 1);//userInput;
-		activeItem = Player.getPlayerInventory().get(itemInput);
 		
-		//If there's 1 or more words left
-		if (userInput.length() > 1)
+		if (command.equals("stats"))
 		{
-			//Set userInput to remaining word(s)
-			userInput = userInput.substring(userInput.indexOf("_") + 1);
-		
-		//First letter of first word capital, rest of word lower-case
-		separatorIndex = itemInput.indexOf("_");
-		itemInput = itemInput.substring(0, 1).toUpperCase() 
-				+ itemInput.substring(1, itemInput.length()).toLowerCase();
-		
-		if (itemInput.indexOf("_") != -1)
-		{
-			//First letter of second word capital
-			itemInput = itemInput.substring(0, separatorIndex) + " " +  
-					itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
-					itemInput.substring(separatorIndex + 2);
-			itemInput = itemInput.replaceAll("_", " ");
+			System.out.println(player.viewStats());
 		}
-		
-		//First letter after dash capital
-		if (itemInput.contains("-"))
+		else
 		{
-			separatorIndex = itemInput.indexOf("-");
-			itemInput = itemInput.substring(0, separatorIndex) + " " +  
-					itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
-					itemInput.substring(separatorIndex + 2);
-		}
-			//System.out.println(itemInput);
-		
-		if (ZHTester.command.equals("use"))
-		{
-			CharacterSubsystem.activeItem.useArtifact(player);
-		}
-		else if (ZHTester.command.equals("observe"))
-		{
-			//If the item is in the player inventory
-			if (Player.getPlayerInventory().containsKey(CharacterSubsystem.itemInput)) {
-				String printDesc = CharacterSubsystem.activeItem.observeArtifact();
-				System.out.println(printDesc);
-			}
-			
-			else
+			//If there's 1 or more words left
+			if (userInput.length() > 1)
 			{
-				System.out.println("I don't know where you can get one of those, but you definitely don't have one.");
+				//Set userInput to remaining word(s)
+				userInput = userInput.substring(userInput.indexOf("_") + 1);
+				
+				//Set itemInput to item name with underscores replacing spaces
+				itemInput = userInput.substring(userInput.indexOf("_") + 1);
+	
+				//First letter of first word capital, rest of word lower-case
+				itemInput = itemInput.substring(0, 1).toUpperCase() 
+						+ itemInput.substring(1, itemInput.length()).toLowerCase();
+	
+				
+				if (itemInput.contains("-"))
+				{
+					separatorIndex = itemInput.indexOf("-");
+					//First letter after dash capital
+					itemInput = itemInput.substring(0, separatorIndex) + "-" +  
+							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
+							itemInput.substring(separatorIndex + 2);
+				}
+				
+				if (itemInput.contains("_"))
+				{
+					//First letter of second word capital
+					separatorIndex = itemInput.indexOf("_");
+					itemInput = itemInput.substring(0, separatorIndex) + " " +  
+							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
+							itemInput.substring(separatorIndex + 2);
+					itemInput = itemInput.replaceAll("_", " ");
+				}
+				
+				activeItem = Player.getPlayerInventory().get(itemInput);
+	
+				//If the item is in the player inventory
+				if (Player.getPlayerInventory().containsKey(itemInput))
+				{
+					if (ZHTester.command.equals("use"))
+					{
+						CharacterSubsystem.activeItem.useArtifact(player);
+					}
+					else if (ZHTester.command.equals("observe"))
+					{
+						String printDesc = CharacterSubsystem.activeItem.observeArtifact();
+						System.out.println(printDesc);
+					}
+				}
+	
+				else
+				{
+					System.out.println("I don't know where you can get one of those, but you definitely don't have one.");
+				}
 			}
 		}
 	}
+	
+	public String parseItem()
+	{
+		
+		return "";
 	}
-
 }

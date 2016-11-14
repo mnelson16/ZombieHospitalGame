@@ -51,8 +51,6 @@ public abstract class Monster
 		return monsterID;
 	}
 
-
-
 	/**
 	 * @return the health
 	 */
@@ -60,8 +58,6 @@ public abstract class Monster
 	{
 		return maxHealth;
 	}
-
-
 
 	/**
 	 * @return the health
@@ -71,7 +67,6 @@ public abstract class Monster
 		return health;
 	}
 
-
 	/**
 	 * @return the attack
 	 */
@@ -80,8 +75,6 @@ public abstract class Monster
 		return attack;
 	}
 
-
-
 	/**
 	 * @return the defense
 	 */
@@ -89,8 +82,6 @@ public abstract class Monster
 	{
 		return defense;
 	}
-
-
 	
 	/**
 	 * @param monsterID the monsterID to set
@@ -100,8 +91,6 @@ public abstract class Monster
 		this.monsterID = monsterID;
 	}
 
-
-
 	/**
 	 * @param health the health to set
 	 */
@@ -109,8 +98,6 @@ public abstract class Monster
 	{
 		this.maxHealth = maxHealth;
 	}
-
-
 
 	/**
 	 * @param health the health to set
@@ -120,8 +107,6 @@ public abstract class Monster
 		this.health = health;
 	}
 
-
-
 	/**
 	 * @param attack the attack to set
 	 */
@@ -129,8 +114,6 @@ public abstract class Monster
 	{
 		this.attack = attack;
 	}
-
-
 
 	/**
 	 * @param defense the defense to set

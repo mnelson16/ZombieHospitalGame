@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**Class: Player
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -19,66 +17,36 @@ public class Player extends Monster
 {
 	private boolean inCombat;
 	private String previousRoomID;
-	private static LinkedHashMap<String, Artifact> playerInventory = ArtifactFactory.getallItems();
+	private static LinkedHashMap<String, Artifact> playerInventory = ArtifactFactory.getAllItems();
 
 	/**
 	 * @param monsterID
-	 * @param health
+	 * @param maxHealth
 	 * @param attack
 	 * @param defense
-	 * @param inventory
-	 * @param inCombat
 	 * @param previousRoomID
 	 */
-	public Player(String monsterID, int health, int attack, int defense,
-			boolean inCombat, String previousRoomID)
+	public Player(String monsterID, int maxHealth, int attack, int defense, String previousRoomID)
 	{
-		super(monsterID, health, attack, defense);
-		this.inCombat = inCombat;
+		super(monsterID, maxHealth, attack, defense);
+		this.inCombat = false;
 		this.previousRoomID = previousRoomID;
-
-		playerInventory = ArtifactFactory.getallItems();
 	}
 
 	@Override
 	public void attack(Monster mon)
 	{
-		//Damage = player attack (minus 1 for every 5 defense the monster has)
+		//Damage = player attack (minus 1 health for every 5 defense the monster has)
 		int damage = this.getAttack() - mon.getDefense() / 5; 
 		mon.setHealth(mon.getHealth() - damage);
 	}
-
-	public HashMap<String, Artifact> getArtifacts()
-	{
-
-		playerInventory = new LinkedHashMap<String, Artifact>();
-		Artifact tempArt;
-
-		//String name, String description
-		//boolean consumable, boolean equippable
-		//int atkIncrease, int defIncrease, int healthIncrease
-		tempArt = new Artifact("First-Aid Kit", "A kit designed for attending minor wounds."
-				+ "\nRestores 20 Health", true, false, 0, 0, 20);
-		playerInventory.put(tempArt.getName(), tempArt);
-
-		tempArt = new  Artifact("Obamacare Armor", "Issue #23-B."
-				+ "\nAttack +3", false, true, 0, 1, 0);
-		playerInventory.put(tempArt.getName(), tempArt);
-
-		tempArt = new Artifact("Scalpel", "Cutting edge medical technology."
-				+ "\nAttack +2", false, true, 2, 0, 0);
-		playerInventory.put(tempArt.getName(), tempArt);
-
-		tempArt = new Artifact("Whiskey", "You're 106% sure drinking this will make you feel better."
-				+ "\nHealth +5", true, false, 0, 0, 5);
-		playerInventory.put(tempArt.getName(), tempArt);
-
-		return playerInventory;
-
-	}
-
 	
-
+	public String viewStats()
+	{
+		return "Health: " + getHealth() + "/" + getMaxHealth() + "\nAttack: "
+				+ getAttack() + "\nDefense: " + getDefense();
+	}
+	
 	/**
 	 * @param playerInventory the playerInventory to set
 	 */
@@ -87,8 +55,6 @@ public class Player extends Monster
 		playerInventory = playerInv;
 	}
 
-
-
 	/**
 	 * @return the playerInventory
 	 */
@@ -96,6 +62,7 @@ public class Player extends Monster
 	{
 		return playerInventory;
 	}
+	
 	/**
 	 * @return the playerInvList
 	 */
@@ -104,16 +71,18 @@ public class Player extends Monster
 		String invStr = "";
 		for(String key : playerInventory.keySet())
 		{
-			//invStr += key + "\n";
-			invStr += playerInventory.get(key).getName() + "\n";
+			invStr += playerInventory.get(key).getName();
+			if (playerInventory.get(key).isCurrentlyEquipped())
+			{
+				invStr += " (Equipped)";
+			}
+			invStr += "\n";
 		}
 
 		if (invStr.length() > 0)
 		{
 			return invStr.substring(0, invStr.length() - 1);
 		}
-		return "\nYou have no items.";
+		return "You have no items.";
 	}
-
-
 }

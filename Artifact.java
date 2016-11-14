@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 public class Artifact
 {
 	private String name, description;
-	private boolean consumable, equippable, currentlyEquipped;
+	private boolean consumable, isWeapon, isArmor, currentlyEquipped;
 	private int atkIncrease, defIncrease, healthIncrease;
 	
 	/**
@@ -30,12 +30,15 @@ public class Artifact
 	 * @param defIncrease
 	 * @param healthIncrease
 	 */
-	public Artifact(String name, String description, boolean consumable, boolean equippable, int atkIncrease, int defIncrease, int healthIncrease)
+	public Artifact(String name, String description, 
+			boolean consumable, boolean isWeapon, boolean isArmor, 
+			int atkIncrease, int defIncrease, int healthIncrease)
 	{
 		this.name = name;
 		this.description = description;
 		this.consumable = consumable;
-		this.equippable = equippable;
+		this.isWeapon = isWeapon;
+		this.isArmor = isArmor;
 		this.currentlyEquipped = false;
 		this.atkIncrease = atkIncrease;
 		this.defIncrease = defIncrease;
@@ -50,15 +53,16 @@ public class Artifact
 	/**Method: useArtifact
 	 * Increases health, defense, and attack according to Artifact stats.
 	 * Consumable - disappears from player inventory
-	 * Equippable - becomes equipped or unequipped (affects inventory slots)
-	 * Neither - should not be usable 
+	 * isWeapon/isArmor - becomes equipped or unequipped (affects available inventory slots)
+	 * None - should not be usable 
 	 * 
-	 * @param mon The monster being attacked
+	 * @param mon The monster the artifact is being used on
 	 */
 	public void useArtifact(Monster mon)
 	{
 		String effectType;
 		int effectAmt;
+		
 		if (atkIncrease > 0)
 		{
 			effectType = "attack";
@@ -75,8 +79,16 @@ public class Artifact
 			effectAmt = healthIncrease;
 		}
 		
-		if (equippable)
+		if (isWeapon || isArmor)
 		{
+			if (isWeapon)
+			{
+				//Player.number of weapons equipped += 1;
+			}
+			else if (isArmor)
+			{
+				//Player.number of armor pieces equipped += 1;
+			}
 			if (currentlyEquipped)
 			{
 				currentlyEquipped = false;
@@ -96,21 +108,18 @@ public class Artifact
 			}
 		}
 		
-		
 		if (consumable)
 		{
 			if (mon instanceof Player)
 			{
-				LinkedHashMap<String, Artifact> updatedInventory = Player.getPlayerInventory(); 
+				LinkedHashMap<String, Artifact> updatedInventory = Player.getPlayerInventory();
 				updatedInventory.remove(this.name);
-			
 				Player.setPlayerInventory(updatedInventory);
 			}
 			else
 			{
 				HashMap<String, Artifact> updatedInventory = ((Zombie)mon).getInventory(); 
 				updatedInventory.remove(this.name);
-			
 				((Zombie)mon).setInventory(updatedInventory);
 			}
 			
@@ -121,6 +130,7 @@ public class Artifact
 		mon.setHealth(mon.getHealth() + healthIncrease);
 		mon.setDefense(mon.getDefense() + defIncrease);
 		mon.setAttack(mon.getAttack() + atkIncrease);
+		System.out.println(mon.getHealth());
 	}
 
 	/**
@@ -148,11 +158,19 @@ public class Artifact
 	}
 
 	/**
-	 * @return the equippable
+	 * @return if item is a weapon
 	 */
-	public boolean isEquippable()
+	public boolean isWeapon()
 	{
-		return equippable;
+		return isWeapon;
+	}
+	
+	/**
+	 * @return if item is armor
+	 */
+	public boolean isArmor()
+	{
+		return isArmor;
 	}
 
 	/**
@@ -212,13 +230,21 @@ public class Artifact
 	}
 
 	/**
-	 * @param equippable the equippable to set
+	 * @param isWeapon the isWeapon to set
 	 */
-	public void setEquippable(boolean equippable)
+	public void setIsWeapon(boolean isWeapon)
 	{
-		this.equippable = equippable;
+		this.isWeapon = isWeapon;
 	}
 
+	/**
+	 * @param isArmor the isArmor to set
+	 */
+	public void setIsArmor(boolean isArmor)
+	{
+		this.isArmor = isArmor;
+	}
+	
 	/**
 	 * @param currentlyEquipped the currentlyEquipped to set
 	 */
