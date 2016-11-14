@@ -21,6 +21,7 @@ public class Room
 	private Puzzle puzzle;
 	private Map<String,Room> exitIDs;
 	private boolean saveableRoom;
+	private String artifacts;
 	
 	/**
 	 * @param roomID 
@@ -55,8 +56,17 @@ public class Room
 		this.saveableRoom = saveableRoom;
 		this.puzzle = puzzle;
 	}
+	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom, String artifacts)
+	{
+		this.roomID = roomID;
+		this.description = description;
+		this.exitIDs = exitIDs;
+		this.saveableRoom = saveableRoom;
+		this.artifacts = artifacts;
+	}
+	
 
-	public void setExits(Room north, Room east, Room south, Room west) {
+	public void setExitIDs(Room north, Room east, Room south, Room west) {
 		if (north != null)
 			exitIDs.put("north", north);
 		if (east != null)
@@ -103,6 +113,12 @@ public class Room
 	}
 	public boolean isSaveableRoom() {
 		return saveableRoom;
+	}
+	public String getArtifacts() {
+		return artifacts;
+	}
+	public void setArtifacts(String artifacts) {
+		this.artifacts = artifacts;
 	}
 
 	}
