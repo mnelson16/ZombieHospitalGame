@@ -40,9 +40,6 @@ public class CharacterSubsystem
 			//If there's 1 or more words left
 			if (userInput.length() > 1)
 			{
-				//Set userInput to remaining word(s)
-				userInput = userInput.substring(userInput.indexOf("_") + 1);
-				
 				//Set itemInput to item name with underscores replacing spaces
 				itemInput = userInput.substring(userInput.indexOf("_") + 1);
 	
@@ -50,6 +47,15 @@ public class CharacterSubsystem
 				itemInput = itemInput.substring(0, 1).toUpperCase() 
 						+ itemInput.substring(1, itemInput.length()).toLowerCase();
 	
+				if (itemInput.contains("_"))
+				{
+					separatorIndex = itemInput.indexOf("_");
+					//First letter of second word capital
+					itemInput = itemInput.substring(0, separatorIndex) + " " +  
+							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
+							itemInput.substring(separatorIndex + 2);
+					itemInput = itemInput.replaceAll("_", " ");
+				}
 				
 				if (itemInput.contains("-"))
 				{
@@ -58,16 +64,6 @@ public class CharacterSubsystem
 					itemInput = itemInput.substring(0, separatorIndex) + "-" +  
 							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
 							itemInput.substring(separatorIndex + 2);
-				}
-				
-				if (itemInput.contains("_"))
-				{
-					//First letter of second word capital
-					separatorIndex = itemInput.indexOf("_");
-					itemInput = itemInput.substring(0, separatorIndex) + " " +  
-							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
-							itemInput.substring(separatorIndex + 2);
-					itemInput = itemInput.replaceAll("_", " ");
 				}
 				
 				activeItem = Player.getPlayerInventory().get(itemInput);
