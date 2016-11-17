@@ -130,7 +130,6 @@ public class Artifact
 		mon.setHealth(mon.getHealth() + healthIncrease);
 		mon.setDefense(mon.getDefense() + defIncrease);
 		mon.setAttack(mon.getAttack() + atkIncrease);
-		System.out.println(mon.getHealth());
 	}
 
 	/**
