@@ -28,9 +28,10 @@ public class ZHTester
 
 	public static void main(String[] args)
 	{
+		Game game = new Game();
 		Scanner input = new Scanner(System.in);
 		CharacterSubsystem cs = new CharacterSubsystem();
-		
+		RoomSubsystem rs = new RoomSubsystem();
 		/* Search for multiple words
 		 * If one word, send to appropriate subsystem
 		 * If multiple words, send to artifact (character) subsystem (except "take" command maybe goes to room?)
@@ -38,8 +39,8 @@ public class ZHTester
 		
 		//Temp
 		System.out.println("Available commands: \n"
-				+ "Help, Inventory, Observe <Item>, Stats, Use <Item>");
-
+				+ "Help, Inventory, Observe <Item>, Stats, Use <Item>, Go <Direction>");
+		System.out.println(rs.activeRoom.getDescription());
 		while (true)
 		{
 			System.out.print("> ");
@@ -59,7 +60,7 @@ public class ZHTester
 			if (command.equals("help"))
 			{
 				System.out.println("Available commands: \n"
-						+ "Help, Inventory, Observe <Item>, Use <Item>");
+						+ "Help, Inventory, Observe <Item>, Use <Item>, Go <Direction>");
 			}
 			else if (command.equals("inventory"))
 			{
@@ -70,14 +71,14 @@ public class ZHTester
 			{
 				cs.CSRun();	
 			}
+			else if(command.equals("go"))
+			{
+				rs.RSRun();
+			}
 			else 
 			{
 				System.out.println("What is it you want to do?");
 			}
-
-			//System.out.println();
 		}
-
 	}
-
 }
