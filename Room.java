@@ -1,6 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.apache.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrBuilder;
 
 /**Class: Room
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -17,11 +21,10 @@ import java.util.Map;
 public class Room
 {
 	private String roomID, description;
-	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	private Zombie zombie;
 	private Puzzle puzzle;
-	private Map<String,Room> exitIDs;
+	private HashMap<String, Room> exitIDs = new HashMap<String, Room>();
 	private boolean saveableRoom;
-	private String artifacts;
 	
 	/**
 	 * @param roomID 
@@ -32,41 +35,75 @@ public class Room
 	 * @param puzzle 
 	 * 
 	 */
-	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom)
+	public Room(String roomID, String description, boolean saveableRoom)
 	{
 		this.roomID = roomID;
 		this.description = description;
-		this.exitIDs = exitIDs;
 		this.saveableRoom = saveableRoom;
-		exitIDs = new LinkedHashMap<String, Room>();
 	}
-	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom,ArrayList<Monster>monsters)
+	public Room(String roomID, String description, boolean saveableRoom, Zombie zombie)
 	{
 		this.roomID = roomID;
 		this.description = description;
-		this.exitIDs = exitIDs;
 		this.saveableRoom = saveableRoom;
-		this.monsters= monsters;
+		this.zombie = zombie;
 	}
-	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom, Puzzle puzzle)
+	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle)
 	{
 		this.roomID = roomID;
 		this.description = description;
-		this.exitIDs = exitIDs;
 		this.saveableRoom = saveableRoom;
 		this.puzzle = puzzle;
 	}
-	public Room(String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom, String artifacts)
+	
+	public String getRoomID() 
+	{
+		return roomID;
+	}
+	public String getDescription() 
+	{
+		return description + "\n" + getExits();
+	}
+	public Zombie getZombie() 
+	{
+		return zombie;
+	}
+	public Puzzle getPuzzle() 
+	{
+		return puzzle;
+	}
+	public HashMap<String, Room> getExitIDs() 
+	{
+		return exitIDs;
+	}
+	public String getExits()
+	{
+		String str = StringUtils.join(exitIDs.keySet().toArray(), ", ");
+		str = "EXITS ARE: [" + str.toUpperCase() + "]";
+		return str;
+	}
+	public void setRoomID(String roomID) 
 	{
 		this.roomID = roomID;
-		this.description = description;
-		this.exitIDs = exitIDs;
-		this.saveableRoom = saveableRoom;
-		this.artifacts = artifacts;
 	}
-	
-
-	public void setExitIDs(Room north, Room east, Room south, Room west) {
+	public void setDescription(String description) 
+	{
+		this.description = description;
+	}
+	public void setMonsters(Zombie zombie) 
+	{
+		this.zombie = zombie;
+	}
+	public void setPuzzle(Puzzle puzzle) 
+	{
+		this.puzzle = puzzle;
+	}
+	public void setExitIDs(HashMap<String, Room> exitIDs) 
+	{
+		this.exitIDs = exitIDs;
+	}
+	public void setExits(Room north, Room east, Room south, Room west) 
+	{
 		if (north != null)
 			exitIDs.put("north", north);
 		if (east != null)
@@ -76,49 +113,12 @@ public class Room
 		if (west != null)
 			exitIDs.put("west", west);
 	}
-
-	
-	public String getRoomID() {
-		return roomID;
-	}
-	public void setRoomID(String roomID) {
-		this.roomID = roomID;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public void setMonsters(ArrayList<Monster> monsters) {
-		this.monsters = monsters;
-	}
-	public void setPuzzle(Puzzle puzzle) {
-		this.puzzle = puzzle;
-	}
-	public void setExitIDs(Map<String, Room> exitIDs) {
-		this.exitIDs = exitIDs;
-	}
-	public void setSaveableRoom(boolean saveableRoom) {
+	public void setSaveableRoom(boolean saveableRoom) 
+	{
 		this.saveableRoom = saveableRoom;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public ArrayList<Monster> getMonsters() {
-		return monsters;
-	}
-	public Puzzle getPuzzle() {
-		return puzzle;
-	}
-	public Map<String, Room> getExitIDs() {
-		return exitIDs;
-	}
-	public boolean isSaveableRoom() {
+	public boolean isSaveableRoom() 
+	{
 		return saveableRoom;
 	}
-	public String getArtifacts() {
-		return artifacts;
-	}
-	public void setArtifacts(String artifacts) {
-		this.artifacts = artifacts;
-	}
-
-	}
+}
