@@ -24,7 +24,7 @@ public class Puzzle
 	private ArrayList<String> options;
 	private LinkedHashMap<Character, String> responses = 
 			new LinkedHashMap<Character, String>();
-	private boolean solved;
+	private boolean solved, goBack;
 	private Scanner input;
 
 	/**
@@ -68,6 +68,7 @@ public class Puzzle
 		input = new Scanner(System.in);
 		char userAnswer = userInput.charAt(0);
 		setChosenOption(userAnswer);
+		goBack = false;
 		
 		if(responses.containsKey(userAnswer))
 		{
@@ -85,14 +86,19 @@ public class Puzzle
 				else if(userAnswer == itemOption)
 				{
 					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
-					if(puzzleID.equalsIgnoreCase("PUZ004"))
+					if(puzzleID.equalsIgnoreCase("PUZ002"))
 					{
-					updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
+						updatedInv.put("Flashlight", new  Artifact("Flashlight", "There's just enough battery to last!", 
+								false, false, false, 0, 0, 0));
+					}
+					else if(puzzleID.equalsIgnoreCase("PUZ004"))
+					{
+						updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
 							+ "\nAttack +3", false, false, true, 0, 1, 0));
 					}
 					else if(puzzleID.equalsIgnoreCase("PUZ006"))
 					{
-						updatedInv.put("Obamacare Armor", new  Artifact("Hand Gun", "A weapon given to you by a brief friend."
+						updatedInv.put("Hand Gun", new  Artifact("Hand Gun", "A weapon given to you by a brief friend."
 								+ "\nAttack +2", false, true, false, 2, 0, 0));
 					}
 					mon.setPlayerInventory(updatedInv);					
@@ -161,7 +167,7 @@ public class Puzzle
 			}
 			if(userAnswer == backOption)
 			{
-				//Return the user to the previous room here.
+				goBack = true;
 			}
 			if(Arrays.asList(damageOption).contains(userAnswer))
 			{
@@ -190,6 +196,11 @@ public class Puzzle
 	{
 		return solved;
 	}
+	
+	public boolean getGoBack()
+	{
+		return goBack;
+	}
 
 	public void setChosenOption(char chosenOption)
 	{
@@ -199,5 +210,10 @@ public class Puzzle
 	public void setSolved(boolean solved)
 	{
 		this.solved = solved;
+	}
+	
+	public void setGoBack(boolean goBack)
+	{
+		this.goBack = goBack;
 	}
 }
