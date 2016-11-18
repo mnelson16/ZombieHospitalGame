@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ArtifactFactory
 {
-	 private static LinkedHashMap<String, Artifact> allItems = new LinkedHashMap<String, Artifact>();
+	private static LinkedHashMap<String, Artifact> allItems = new LinkedHashMap<String, Artifact>();
 	
 	public static LinkedHashMap<String, Artifact> createItems()
 	{
