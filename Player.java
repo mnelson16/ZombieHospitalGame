@@ -85,4 +85,14 @@ public class Player extends Monster
 		}
 		return "You have no items.";
 	}
+	
+	public String getPreviousRoomID()
+	{
+		return previousRoomID;
+	}
+	
+	public void setPreviousRoomID(String previousRoomID)
+	{
+		this.previousRoomID = previousRoomID;
+	}
 }
