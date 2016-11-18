@@ -57,8 +57,8 @@ public class PuzzleFactory
 				+ "navigate. You see what used to be a light switch, but the cover is ripped "
 				+ "from the wall and the wires exposed. Faced with such a circumstance, there "
 				+ "is no shame in retreating for more information. But perhaps there is "
-				+ "something here to help…", 'd', '\0',
-				'\0', '\0', '\0', '\0', new Character[] {'d'}, new Character[] {'a', 'b', 'c'}, 
+				+ "something here to help…", '\0', '\0',
+				'd', '\0', '\0', '\0', new Character[] {'d'}, new Character[] {'a', 'b', 'c'}, 
 				options2, responses2, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
 		//End Puzzle 2
