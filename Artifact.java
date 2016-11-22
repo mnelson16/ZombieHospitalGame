@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import Classes.TestClass;
 
 /**Class: Artifact
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -55,10 +56,11 @@ public class Artifact
 	 * Consumable - disappears from player inventory
 	 * isWeapon/isArmor - becomes equipped or unequipped (affects available inventory slots)
 	 * None - should not be usable 
+	 * If equipment of same type (weapon or armor) is already equipped, unequips it first.
 	 * 
 	 * @param mon The monster the artifact is being used on
 	 */
-	public void useArtifact(Monster mon)
+	public void useArtifact(Player player)
 	{
 		String effectType;
 		int effectAmt;
@@ -81,20 +83,40 @@ public class Artifact
 		
 		if (isWeapon || isArmor)
 		{
-			if (isWeapon)
+			if (isWeapon && player.getWeaponEq() != null)
 			{
-				//Player.number of weapons equipped += 1;
+				player.getWeaponEq().setCurrentlyEquipped(false);
+				System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
+				 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
+				
+				//Reduce player attack from the previously equipped weapon
+				player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
 			}
-			else if (isArmor)
+			else if (isArmor && player.getArmorEq() != null)
 			{
-				//Player.number of armor pieces equipped += 1;
+				player.getArmorEq().setCurrentlyEquipped(false);
+				System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
+						 + " decreased by " + player.getWeaponEq().getDefIncrease() + ".");
+				
+				//Reduce player defense from the previously equipped armor
+				player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
 			}
+			
+			//if already equipped: unequip, reduce stats, and exit method
 			if (currentlyEquipped)
 			{
+				if (isWeapon)
+				{
+					player.setWeaponEq(null);
+				}
+				else if (isArmor)
+				{
+					player.setArmorEq(null);
+				}
 				currentlyEquipped = false;
-				mon.setHealth(mon.getHealth() - healthIncrease);
-				mon.setDefense(mon.getDefense() - defIncrease);
-				mon.setAttack(mon.getAttack() - atkIncrease);
+				player.setHealth(player.getHealth() - healthIncrease);
+				player.setDefense(player.getDefense() - defIncrease);
+				player.setAttack(player.getAttack() - atkIncrease);
 				
 				System.out.println("You unequipped " + this.name + ". Your " + effectType 
 						+ " decreased by " + effectAmt + ".");
@@ -102,6 +124,15 @@ public class Artifact
 			}
 			else
 			{
+				if (isWeapon)
+				{
+					player.setWeaponEq(this);
+				}
+				else if (isArmor)
+				{
+					player.setArmorEq(this);
+				}
+				
 				currentlyEquipped = true;
 				System.out.println("You equipped " + this.name + ". Your " + effectType 
 						+ " increased by " + effectAmt + ".");
@@ -110,26 +141,26 @@ public class Artifact
 		
 		if (consumable)
 		{
-			if (mon instanceof Player)
-			{
-				LinkedHashMap<String, Artifact> updatedInventory = Player.getPlayerInventory();
-				updatedInventory.remove(this.name);
-				Player.setPlayerInventory(updatedInventory);
-			}
-			else
-			{
-				HashMap<String, Artifact> updatedInventory = ((Zombie)mon).getInventory(); 
-				updatedInventory.remove(this.name);
-				((Zombie)mon).setInventory(updatedInventory);
-			}
+			//Remove artifact from inventory
+			LinkedHashMap<String, Artifact> updatedInventory = player.getPlayerInventory();
+			updatedInventory.remove(this.name);
+			player.setPlayerInventory(updatedInventory);
 			
 			System.out.println("You used " + this.name + ". Your " + effectType 
 					+ " increased by " + effectAmt + ".");
 		}
 		
-		mon.setHealth(mon.getHealth() + healthIncrease);
-		mon.setDefense(mon.getDefense() + defIncrease);
-		mon.setAttack(mon.getAttack() + atkIncrease);
+		//if artifact's healthIncrease won't cause health to exceed max
+		if (player.getMaxHealth() > player.getHealth() + healthIncrease)
+		{
+			player.setHealth(player.getHealth() + healthIncrease);
+		}
+		else //else, set health to max
+		{
+			player.setHealth(player.getMaxHealth());
+		}
+		player.setDefense(player.getDefense() + defIncrease);
+		player.setAttack(player.getAttack() + atkIncrease);
 	}
 
 	/**
