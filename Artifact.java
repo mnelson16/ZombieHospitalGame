@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import Classes.TestClass;
 
 /**Class: Artifact
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
