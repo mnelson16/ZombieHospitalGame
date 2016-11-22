@@ -18,6 +18,7 @@ public abstract class Monster
 {
 	private String monsterID;
 	private int maxHealth, health, attack, defense;
+	private boolean isPlayer;
 
 
 	/**
@@ -28,7 +29,7 @@ public abstract class Monster
 	 * @param defense
 	 * @param inventory
 	 */
-	public Monster(String monsterID, int maxHealth, int attack, int defense)
+	public Monster(String monsterID, int maxHealth, int attack, int defense, boolean isPlayer)
 	{
 		this.monsterID = monsterID;
 		this.maxHealth = maxHealth;
@@ -38,10 +39,10 @@ public abstract class Monster
 	}
 
 
-
-	protected abstract void attack(Monster mon);
-
-
+	/**
+	 * @param mon
+	 */
+	public abstract void attack(Monster mon);
 
 	/**
 	 * @return the monsterID
@@ -84,6 +85,14 @@ public abstract class Monster
 	}
 	
 	/**
+	 * @return the isPlayer
+	 */
+	public boolean isPlayer()
+	{
+		return isPlayer;
+	}
+
+	/**
 	 * @param monsterID the monsterID to set
 	 */
 	public void setMonsterID(String monsterID)
@@ -121,5 +130,13 @@ public abstract class Monster
 	public void setDefense(int defense)
 	{
 		this.defense = defense;
+	}
+	
+	/**
+	 * @param isPlayer the isPlayer to set
+	 */
+	public void setPlayer(boolean isPlayer)
+	{
+		this.isPlayer = isPlayer;
 	}
 }

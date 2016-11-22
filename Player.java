@@ -17,7 +17,9 @@ public class Player extends Monster
 {
 	private boolean inCombat;
 	private String previousRoomID;
-	private static LinkedHashMap<String, Artifact> playerInventory = ArtifactFactory.getAllItems();
+	private LinkedHashMap<String, Artifact> playerInventory;
+	private int defCalculation = this.getDefense() / 5;
+	private Artifact weaponEq, armorEq;
 
 	/**
 	 * @param monsterID
@@ -28,15 +30,16 @@ public class Player extends Monster
 	 */
 	public Player(String monsterID, int maxHealth, int attack, int defense, String previousRoomID)
 	{
-		super(monsterID, maxHealth, attack, defense);
+		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
 		this.previousRoomID = previousRoomID;
+		playerInventory = ArtifactFactory.getAllArtifacts();
 	}
 
 	@Override
 	public void attack(Monster mon)
 	{
-		//Damage = player attack (minus 1 health for every 5 defense the monster has)
+		//Damage = player attack (minus 1 for every 5 defense the monster has)
 		int damage = this.getAttack() - mon.getDefense() / 5; 
 		mon.setHealth(mon.getHealth() - damage);
 	}
@@ -48,25 +51,105 @@ public class Player extends Monster
 	}
 	
 	/**
-	 * @param playerInventory the playerInventory to set
+	 * @return the inCombat
 	 */
-	public static void setPlayerInventory(LinkedHashMap<String, Artifact> playerInv)
+	public boolean isInCombat()
 	{
-		playerInventory = playerInv;
+		return inCombat;
+	}
+
+	/**
+	 * @return the previousRoomID
+	 */
+	public String getPreviousRoomID()
+	{
+		return previousRoomID;
 	}
 
 	/**
 	 * @return the playerInventory
 	 */
-	public static LinkedHashMap<String, Artifact> getPlayerInventory()
+	public LinkedHashMap<String, Artifact> getPlayerInventory()
 	{
 		return playerInventory;
 	}
-	
+
+	/**
+	 * @return the defCalculation
+	 */
+	public int getDefCalculation()
+	{
+		return defCalculation;
+	}
+
+	/**
+	 * @return the weaponEq
+	 */
+	public Artifact getWeaponEq()
+	{
+		return weaponEq;
+	}
+
+	/**
+	 * @return the armorEq
+	 */
+	public Artifact getArmorEq()
+	{
+		return armorEq;
+	}
+
+	/**
+	 * @param inCombat the inCombat to set
+	 */
+	public void setInCombat(boolean inCombat)
+	{
+		this.inCombat = inCombat;
+	}
+
+	/**
+	 * @param previousRoomID the previousRoomID to set
+	 */
+	public void setPreviousRoomID(String previousRoomID)
+	{
+		this.previousRoomID = previousRoomID;
+	}
+
+	/**
+	 * @param playerInventory the playerInventory to set
+	 */
+	public void setPlayerInventory(LinkedHashMap<String, Artifact> playerInventory)
+	{
+		this.playerInventory = playerInventory;
+	}
+
+	/**
+	 * @param defCalculation the defCalculation to set
+	 */
+	public void setDefCalculation(int defCalculation)
+	{
+		this.defCalculation = defCalculation;
+	}
+
+	/**
+	 * @param weaponEq the weaponEq to set
+	 */
+	public void setWeaponEq(Artifact weaponEq)
+	{
+		this.weaponEq = weaponEq;
+	}
+
+	/**
+	 * @param armorEq the armorEq to set
+	 */
+	public void setArmorEq(Artifact armorEq)
+	{
+		this.armorEq = armorEq;
+	}
+
 	/**
 	 * @return the playerInvList
 	 */
-	public static String inventoryToString()
+	public String inventoryToString()
 	{
 		String invStr = "";
 		for(String key : playerInventory.keySet())
@@ -84,15 +167,5 @@ public class Player extends Monster
 			return invStr.substring(0, invStr.length() - 1);
 		}
 		return "You have no items.";
-	}
-	
-	public String getPreviousRoomID()
-	{
-		return previousRoomID;
-	}
-	
-	public void setPreviousRoomID(String previousRoomID)
-	{
-		this.previousRoomID = previousRoomID;
 	}
 }

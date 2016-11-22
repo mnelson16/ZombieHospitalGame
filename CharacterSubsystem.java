@@ -1,7 +1,5 @@
 import java.util.LinkedHashMap;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 /**Class: CharacterSubsystem
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
@@ -17,19 +15,19 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class CharacterSubsystem
 {
-	public static String itemInput, userInput, command;
+	public static String artifactInput, userInput, command;
 	public static int separatorIndex; //index of dash or underscore
-	public static Artifact activeItem;
-
+	public static Artifact activeArtifact;
+	public static Player player;
+	//Player player = new Player("00", 20, 5, 5, null);
 	/**
 	 * @param args
 	 */
-	public void CSRun()
+	public void CSRun(Player p)
 	{
+		player = p;
 		command = ZHTester.command;
 		userInput = ZHTester.userInput;
-		Player player = new Player("00", 20, 5, 5, null);
-		
 		
 		if (command.equals("stats"))
 		{
@@ -40,44 +38,18 @@ public class CharacterSubsystem
 			//If there's 1 or more words left
 			if (userInput.length() > 1)
 			{
-				//Set itemInput to item name with underscores replacing spaces
-				itemInput = userInput.substring(userInput.indexOf("_") + 1);
-	
-				//First letter of first word capital, rest of word lower-case
-				itemInput = itemInput.substring(0, 1).toUpperCase() 
-						+ itemInput.substring(1, itemInput.length()).toLowerCase();
-	
-				if (itemInput.contains("_"))
-				{
-					separatorIndex = itemInput.indexOf("_");
-					//First letter of second word capital
-					itemInput = itemInput.substring(0, separatorIndex) + " " +  
-							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
-							itemInput.substring(separatorIndex + 2);
-					itemInput = itemInput.replaceAll("_", " ");
-				}
-				
-				if (itemInput.contains("-"))
-				{
-					separatorIndex = itemInput.indexOf("-");
-					//First letter after dash capital
-					itemInput = itemInput.substring(0, separatorIndex) + "-" +  
-							itemInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
-							itemInput.substring(separatorIndex + 2);
-				}
-				
-				activeItem = Player.getPlayerInventory().get(itemInput);
+				parseArtifactName();
 	
 				//If the item is in the player inventory
-				if (Player.getPlayerInventory().containsKey(itemInput))
+				if (player.getPlayerInventory().containsKey(artifactInput))
 				{
 					if (ZHTester.command.equals("use"))
 					{
-						CharacterSubsystem.activeItem.useArtifact(player);
+						CharacterSubsystem.activeArtifact.useArtifact(player);
 					}
 					else if (ZHTester.command.equals("observe"))
 					{
-						String printDesc = CharacterSubsystem.activeItem.observeArtifact();
+						String printDesc = CharacterSubsystem.activeArtifact.observeArtifact();
 						System.out.println(printDesc);
 					}
 				}
@@ -90,9 +62,38 @@ public class CharacterSubsystem
 		}
 	}
 	
-	public String parseItem()
+	/**
+	 * Determines item name from remaining words
+	 * @return
+	 */
+	public void parseArtifactName()
 	{
+		//Set itemInput to item name with underscores replacing spaces
+		artifactInput = userInput.substring(userInput.indexOf("_") + 1);
+
+		//First letter of first word capital, rest of word lower-case
+		artifactInput = artifactInput.substring(0, 1).toUpperCase() 
+				+ artifactInput.substring(1, artifactInput.length()).toLowerCase();
+
+		if (artifactInput.contains("_"))
+		{
+			separatorIndex = artifactInput.indexOf("_");
+			//First letter of second word capital
+			artifactInput = artifactInput.substring(0, separatorIndex) + " " +  
+					artifactInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
+					artifactInput.substring(separatorIndex + 2);
+			artifactInput = artifactInput.replaceAll("_", " ");
+		}
 		
-		return "";
+		if (artifactInput.contains("-"))
+		{
+			separatorIndex = artifactInput.indexOf("-");
+			//First letter after dash capital
+			artifactInput = artifactInput.substring(0, separatorIndex) + "-" +  
+					artifactInput.substring(separatorIndex + 1, separatorIndex + 2).toUpperCase() +
+					artifactInput.substring(separatorIndex + 2);
+		}
+		
+		activeArtifact = player.getPlayerInventory().get(artifactInput);
 	}
 }
