@@ -23,7 +23,7 @@ public class CharacterSubsystem
 	/**
 	 * @param args
 	 */
-	public void CSRun(Player p)
+	public Player CSRun(Player p)
 	{
 		player = p;
 		command = ZHTester.command;
@@ -60,6 +60,8 @@ public class CharacterSubsystem
 				}
 			}
 		}
+		
+		return player;
 	}
 	
 	/**
