@@ -69,7 +69,7 @@ public class ZHTester
 			//Two or more word commands
 			else if (command.equals("use") || command.equals("observe") || command.equals("stats"))
 			{
-				player = cs.CSRun(player);	
+				cs.CSRun(player);	
 			}
 			else if(command.equals("go"))
 			{
