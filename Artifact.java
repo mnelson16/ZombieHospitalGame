@@ -82,25 +82,6 @@ public class Artifact
 		
 		if (isWeapon || isArmor)
 		{
-			if (isWeapon && player.getWeaponEq() != null)
-			{
-				player.getWeaponEq().setCurrentlyEquipped(false);
-				System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
-				 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
-				
-				//Reduce player attack from the previously equipped weapon
-				player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
-			}
-			else if (isArmor && player.getArmorEq() != null)
-			{
-				player.getArmorEq().setCurrentlyEquipped(false);
-				System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
-						 + " decreased by " + player.getWeaponEq().getDefIncrease() + ".");
-				
-				//Reduce player defense from the previously equipped armor
-				player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
-			}
-			
 			//if already equipped: unequip, reduce stats, and exit method
 			if (currentlyEquipped)
 			{
@@ -112,6 +93,7 @@ public class Artifact
 				{
 					player.setArmorEq(null);
 				}
+				
 				currentlyEquipped = false;
 				player.setHealth(player.getHealth() - healthIncrease);
 				player.setDefense(player.getDefense() - defIncrease);
@@ -123,6 +105,24 @@ public class Artifact
 			}
 			else
 			{
+				if (isWeapon && player.getWeaponEq() != null)
+				{
+					player.getWeaponEq().setCurrentlyEquipped(false);
+					System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
+					 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
+					
+					//Reduce player attack from the previously equipped weapon
+					player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
+				}
+				else if (isArmor && player.getArmorEq() != null)
+				{
+					player.getArmorEq().setCurrentlyEquipped(false);
+					System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
+							 + " decreased by " + player.getArmorEq().getDefIncrease() + ".");
+					
+					//Reduce player defense from the previously equipped armor
+					player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
+				}
 				if (isWeapon)
 				{
 					player.setWeaponEq(this);
@@ -136,6 +136,8 @@ public class Artifact
 				System.out.println("You equipped " + this.name + ". Your " + effectType 
 						+ " increased by " + effectAmt + ".");
 			}
+			
+			
 		}
 		
 		if (consumable)
