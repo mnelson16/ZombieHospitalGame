@@ -105,30 +105,35 @@ public class Artifact
 			}
 			else
 			{
-				if (isWeapon && player.getWeaponEq() != null)
-				{
-					player.getWeaponEq().setCurrentlyEquipped(false);
-					System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
-					 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
-					
-					//Reduce player attack from the previously equipped weapon
-					player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
-				}
-				else if (isArmor && player.getArmorEq() != null)
-				{
-					player.getArmorEq().setCurrentlyEquipped(false);
-					System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
-							 + " decreased by " + player.getArmorEq().getDefIncrease() + ".");
-					
-					//Reduce player defense from the previously equipped armor
-					player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
-				}
 				if (isWeapon)
 				{
+					//If player has a weapon equipped
+					if (player.getWeaponEq() != null)
+					{
+						player.getWeaponEq().setCurrentlyEquipped(false);
+						System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
+						 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
+						
+						//Reduce player attack from the previously equipped weapon
+						player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
+					}
+					
 					player.setWeaponEq(this);
 				}
 				else if (isArmor)
 				{
+					
+					//If player has armor equipped
+					if (player.getArmorEq() != null)
+					{
+						player.getArmorEq().setCurrentlyEquipped(false);
+						System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
+								 + " decreased by " + player.getArmorEq().getDefIncrease() + ".");
+						
+						//Reduce player defense from the previously equipped armor
+						player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
+					}
+					
 					player.setArmorEq(this);
 				}
 				
