@@ -38,7 +38,7 @@ public class ZHTester
 		
 		//Temp
 		String help = "Available commands: \n"
-				+ "Help, Inventory, Observe <Item>, Stats, Use <Item>";
+				+ "Go <Direction>, Help, Inventory, Observe <Item>, Stats, Use <Item>";
 		System.out.println(help);
 		System.out.println(rs.activeRoom.getDescription());
 
