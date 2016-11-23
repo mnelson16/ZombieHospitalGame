@@ -141,8 +141,6 @@ public class Artifact
 				System.out.println("You equipped " + this.name + ". Your " + effectType 
 						+ " increased by " + effectAmt + ".");
 			}
-			
-			
 		}
 		
 		if (consumable)
