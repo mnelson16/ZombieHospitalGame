@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**Class: ArtifactFactory.java
+/**Class: ArtifactFactory
  * @author Janna Timmer
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
@@ -65,7 +65,7 @@ public class ArtifactFactory
 	}
 	
 	/**
-	 * @return allItems
+	 * @return allArtifacts
 	 */
 	public static LinkedHashMap<String, Artifact> getAllArtifacts()
 	{

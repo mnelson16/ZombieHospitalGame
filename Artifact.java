@@ -8,9 +8,9 @@ import java.util.LinkedHashMap;
  * Written: Oct 10, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class includes Artifact type, name, description, and stat effects.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: To provide the structure of Artifact 
  */
 
 public class Artifact
@@ -140,7 +140,7 @@ public class Artifact
 				currentlyEquipped = true;
 				System.out.println("You equipped " + this.name + ". Your " + effectType 
 						+ " increased by " + effectAmt + ".");
-			}
+			}	
 		}
 		
 		if (consumable)

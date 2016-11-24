@@ -15,62 +15,62 @@ import java.util.LinkedHashMap;
 
 public class CharacterSubsystem
 {
-	public static String artifactInput, userInput, command;
-	public static int separatorIndex; //index of dash or underscore
-	public static Artifact activeArtifact;
 	public static Player player;
 	//Player player = new Player("00", 20, 5, 5, null);
-	/**
-	 * @param args
+	
+	/**Method: CSRun
+	 * Handles major functionality for the Character subsystem -- Artifact and Monster
+	 * @param p main Player
+	 * @param command -- first word user typed in (game action to be taken)
+	 * @param activeArtifact -- artifact user typed in (null if user typed in one word command)
 	 */
-	public void CSRun(Player p)
+	public void CSRun(Player p, String command, String artifactInput)
 	{
+		Artifact activeArtifact;
 		player = p;
-		command = ZHTester.command;
-		userInput = ZHTester.userInput;
 		
 		if (command.equals("stats"))
 		{
 			System.out.println(player.viewStats());
 		}
-		else
+		else if (command.equals("inventory"))
 		{
-			//If there's 1 or more words left
-			if (userInput.length() > 1)
+			System.out.println(player.inventoryToString());
+		}
+		else if (command.equals("use") || command.equals("observe"))
+		{
+			activeArtifact = parseArtifactName(artifactInput);
+			
+			//If the item is in the player inventory
+			if (player.getPlayerInventory().containsValue(activeArtifact))
 			{
-				parseArtifactName();
-	
-				//If the item is in the player inventory
-				if (player.getPlayerInventory().containsKey(artifactInput))
+				if (command.equals("use"))
 				{
-					if (ZHTester.command.equals("use"))
-					{
-						CharacterSubsystem.activeArtifact.useArtifact(player);
-					}
-					else if (ZHTester.command.equals("observe"))
-					{
-						String printDesc = CharacterSubsystem.activeArtifact.observeArtifact();
-						System.out.println(printDesc);
-					}
+					activeArtifact.useArtifact(player);
 				}
-	
-				else
+				else if (command.equals("observe"))
 				{
-					System.out.println("I don't know where you can get one of those, but you definitely don't have one.");
+					String printDesc = activeArtifact.observeArtifact();
+					System.out.println(printDesc);
 				}
 			}
-		}
+			else
+			{
+				System.out.println("I don't know where you can get one of those, but you definitely don't have one.");
+			}
+		}	
 	}
 	
-	/**
+	/**Method: parseArtifactName
 	 * Determines item name from remaining words
-	 * @return
+	 * Sets letters after dash, space, or underscore as capital letters
+	 * @return parsedArtifact
 	 */
-	public void parseArtifactName()
+	public Artifact parseArtifactName(String artifactInput)
 	{
-		//Set itemInput to item name with underscores replacing spaces
-		artifactInput = userInput.substring(userInput.indexOf("_") + 1);
-
+		int separatorIndex;
+		Artifact parsedArtifact;
+		
 		//First letter of first word capital, rest of word lower-case
 		artifactInput = artifactInput.substring(0, 1).toUpperCase() 
 				+ artifactInput.substring(1, artifactInput.length()).toLowerCase();
@@ -94,6 +94,7 @@ public class CharacterSubsystem
 					artifactInput.substring(separatorIndex + 2);
 		}
 		
-		activeArtifact = player.getPlayerInventory().get(artifactInput);
+		parsedArtifact = player.getPlayerInventory().get(artifactInput);
+		return parsedArtifact;
 	}
 }

@@ -40,17 +40,6 @@ public class Zombie extends Monster
 	 */
 	@Override
 	public void attack(Monster player)
-	{	
-		//Todo
-	}
-
-	public void standardAttack(Monster player)
-	{
-		int damage;
-		//Damage = zombie attack (minus 1 for every 5 defense the player has)
-	}
-
-	public void specialAttack(Monster player)
 	{
 		Random rnd = new Random();
 		int defCalc = ((Player) player).getDefCalculation();
@@ -149,6 +138,8 @@ public class Zombie extends Monster
 			}
 			break;
 		}
+		
+		player.setHealth(player.getHealth() - damage);
 	}
 
 	/**
