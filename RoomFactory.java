@@ -193,17 +193,4 @@ public class RoomFactory
 		return rooms;
 		}
 		
-		
-		private void generateRoomMonster() {
-			ArrayList<Monster> monsterList = newZ().getMonsterList();
-
-			Room room;
-			int roomID;
-
-			for (int i = 0; i < roomID.size(); i++) {
-
-				room = roomID.get(5);
-				roomID = room.getRoomID();
-	}
-		}
 	}
