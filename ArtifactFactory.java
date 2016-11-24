@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**Class: ArtifactFactory
+/**Class: ArtifactFactory.java
  * @author Janna Timmer
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
@@ -26,7 +26,15 @@ public class ArtifactFactory
 		//String name, String description
 		//boolean consumable, boolean isWeapon, boolean isArmor
 		//int atkIncrease, int defIncrease, int healthIncrease
-		
+		tempArt = new Artifact("Flashlight", "A tiny handheld flashlight.", true, false, false, 0, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+		tempArt = new Artifact("Crowbar", "A stiff metal bar, strong enough to pry off some wood. Attack +5", true, false, false, 5, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+		tempArt = new Artifact("Oil Nail", "An old rusty nail, "
+				+ "/nhopefully you didnt step on this!", false, false, false, 0, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+		tempArt = new Artifact("Mop Handle", "A broken mop, the brush has fallen off and only the stick remains.", false, true, false, 5, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
 		tempArt = new Artifact("Bone Saw", "When you looked at the saw used for sawing bones, you saw"
 				+ "\nthe saw was why you saw the bones. You saw the bones had"
 				+ "\nbeen bone-sawn by the bone saw you saw."
@@ -65,7 +73,7 @@ public class ArtifactFactory
 	}
 	
 	/**
-	 * @return allArtifacts
+	 * @return allItems
 	 */
 	public static LinkedHashMap<String, Artifact> getAllArtifacts()
 	{
