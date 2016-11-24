@@ -10,18 +10,17 @@ import java.util.Scanner;
  * Written: Oct 3, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class handles user input and organizes/combines subsystem components.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: Handle user input and run major subsystem functionality.
  */
 
 public class ZHTester
 {
-	public static String command, artifactInput, userInput;
-	public static Artifact activeArtifact;
+	private static String command, object, userInput;
 	private static Player player = new Player("00", 20, 5, 5, null);
 	
-	/**
+	/**Main method
 	 * @param args
 	 */
 	public static void main(String[] args)
@@ -30,10 +29,11 @@ public class ZHTester
 		Scanner input = new Scanner(System.in);
 		CharacterSubsystem cs = new CharacterSubsystem();
 		RoomSubsystem rs = new RoomSubsystem();
+		//Temporary - inventory should be added to in... room?
+		player.setPlayerInventory(ArtifactFactory.createArtifacts());
 		
-		/* Search for multiple words
-		 * If one word, send to appropriate subsystem
-		 * If multiple words, send to artifact (character) subsystem (except "take" command maybe goes to room?)
+		/*
+		 * "take" command go to room?
 		 */
 		
 		//Temp
@@ -47,29 +47,28 @@ public class ZHTester
 			System.out.print("> ");
 			userInput = input.nextLine().toLowerCase();
 			userInput = userInput.replaceAll(" ", "_");
-			if (userInput.contains("_")) //If userInput is multi-word command
+			
+			if (userInput.contains("_")) //If userInput is multi-word
 			{
 				command = userInput.substring(0, userInput.indexOf("_"));
+				//Set object to word(s) after command with underscores replacing spaces
+				object = userInput.substring(userInput.indexOf("_") + 1);
 			}
-			else //If userInput is one-word command
+			else //If userInput is one word
 			{
 				command = userInput;
+				object = "";
 			}
 
 			//Temp, move help functionality to Game class
-			//One word commands
 			if (command.equals("help"))
 			{
 				System.out.println(help);
 			}
-			else if (command.equals("inventory"))
+			else if (command.equals("use") || command.equals("observe") || command.equals("stats")
+					|| command.equals("inventory"))
 			{
-				System.out.println(player.inventoryToString());
-			}
-			//Two or more word commands
-			else if (command.equals("use") || command.equals("observe") || command.equals("stats"))
-			{
-				cs.CSRun(player);	
+				cs.CSRun(player, command, object);	
 			}
 			else if(command.equals("go"))
 			{
@@ -82,7 +81,5 @@ public class ZHTester
 
 			//System.out.println();
 		}
-
 	}
-
 }
