@@ -23,6 +23,7 @@ public class Room
 	private String roomID, description;
 	private Zombie zombie;
 	private Puzzle puzzle;
+	private Artifact artifact;
 	private HashMap<String, Room> exitIDs = new HashMap<String, Room>();
 	private boolean saveableRoom;
 	
@@ -41,19 +42,26 @@ public class Room
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 	}
-	public Room(String roomID, String description, boolean saveableRoom, Zombie zombie)
+	public Room(String roomID, String description, boolean saveableRoom, Zombie zombie, Artifact artifact)
 	{
 		this.roomID = roomID;
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 		this.zombie = zombie;
 	}
-	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle)
+	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle , Artifact artifact)
 	{
 		this.roomID = roomID;
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 		this.puzzle = puzzle;
+	}
+	public Room(String roomID, String description, boolean saveableRoom, Artifact artifact)
+	{
+		this.roomID = roomID;
+		this.description = description;
+		this.saveableRoom = saveableRoom;
+		this.artifact = artifact;
 	}
 	
 	public String getRoomID() 
@@ -101,6 +109,15 @@ public class Room
 	public void setExitIDs(HashMap<String, Room> exitIDs) 
 	{
 		this.exitIDs = exitIDs;
+	}
+	public Artifact getArtifact() {
+		return artifact;
+	}
+	public void setArtifact(Artifact artifact) {
+		this.artifact = artifact;
+	}
+	public void setZombie(Zombie zombie) {
+		this.zombie = zombie;
 	}
 	public void setExits(Room north, Room east, Room south, Room west) 
 	{
