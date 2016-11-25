@@ -4,8 +4,9 @@ import java.util.LinkedHashMap;
 
 public class PuzzleFactory
 {
-	private static HashMap<String, Puzzle> puzzles;
-	public HashMap<String, Puzzle> getPuzzles()
+	private static HashMap<String, Puzzle> puzzles = new LinkedHashMap<String, Puzzle>();;
+	
+	public void createPuzzles()
 	{
 		/*Puzzle constructor is:
 		 *(puzzleID, roomID, description, 
@@ -13,7 +14,6 @@ public class PuzzleFactory
 		 *correctOption, damageOption,
 		 *options, responses, solved)
 		 */
-		puzzles = new LinkedHashMap<String, Puzzle>();
 		ArrayList<String> options = new ArrayList<String>();
 		LinkedHashMap<Character, String> responses = new LinkedHashMap<Character, String>();
 		Puzzle tempPuzzle;
@@ -179,9 +179,12 @@ public class PuzzleFactory
 				'a', '\0', new Character[] {'a'}, new Character[] {'\0'}, options7, responses7, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
 		//End Puzzle 7
-		
-		return puzzles;
 	}
 	
+	public HashMap<String, Puzzle> getPuzzles()
+	{
+		createPuzzles();
+		return puzzles;
+	}
 	
 }
