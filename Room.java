@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,7 +19,7 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Purpose: - Describe the purpose of this class
  */
 
-public class Room
+public class Room implements Serializable
 {
 	private String roomID, description;
 	private Zombie zombie;
@@ -49,7 +50,7 @@ public class Room
 		this.saveableRoom = saveableRoom;
 		this.zombie = zombie;
 	}
-	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle , Artifact artifact)
+	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle, Artifact artifact)
 	{
 		this.roomID = roomID;
 		this.description = description;
