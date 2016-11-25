@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
  * Purpose: To specify enemy traits/activity as opposed to player traits/activity.
  */
 
-public class Zombie extends Monster
+public class Zombie extends Monster implements Serializable
 {
 	private LinkedHashMap<String, Artifact> inventory;
 	private int specialAttackChance, specialAttackHitChance, turnsSinceSpecial;
