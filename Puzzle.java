@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -15,7 +16,7 @@ import java.util.Scanner;
  * Purpose: - Describe the purpose of this class
  */
 
-public class Puzzle
+public class Puzzle implements Serializable
 {
 	private String puzzleID, roomID, description;
 	private char chosenOption, backOption, equipOption, itemOption, 
@@ -25,7 +26,7 @@ public class Puzzle
 	private LinkedHashMap<Character, String> responses = 
 			new LinkedHashMap<Character, String>();
 	private boolean solved, goBack;
-	private Scanner input;
+	private transient Scanner input;
 
 	/**
 	 * 
