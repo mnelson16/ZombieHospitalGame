@@ -45,5 +45,10 @@ private static LinkedHashMap<String, Zombie> allZombies = new LinkedHashMap<Stri
 		
 		return allZombies;
 	}
-
+	
+	public static LinkedHashMap<String, Zombie> getAllZombies()
+	{
+		allZombies = createZombies();
+		return allZombies;
+	}
 }
