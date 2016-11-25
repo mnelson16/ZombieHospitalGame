@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 /**Class: Player
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -40,9 +41,23 @@ public class Player extends Monster implements Serializable
 	@Override
 	public void attack(Monster mon)
 	{
-		//Damage = player attack (minus 1 for every 5 defense the monster has)
-		int damage = this.getAttack() - mon.getDefense() / 5; 
-		mon.setHealth(mon.getHealth() - damage);
+		Random rnd = new Random();
+		int damage = 0;
+		if (rnd.nextInt(100) < 80)
+		{
+			//Damage = player attack (minus 1 for every 5 defense the monster has)
+			damage = this.getAttack() - mon.getDefense() / 5; 
+			mon.setHealth(mon.getHealth() - damage);
+		}
+		
+		if (damage > 0)
+		{
+			System.out.println("You attack for " + damage + " damage.");
+		}
+		else
+		{
+			System.out.println("You attack and miss!");
+		}
 	}
 	
 	public String viewStats()
@@ -58,15 +73,15 @@ public class Player extends Monster implements Serializable
 	{
 		return inCombat;
 	}
-
+	
 	/**
-	 * @return the currentRoomID
-	 */
+	* @return the currentRoomID
+	*/
 	public String getCurrentRoomID()
 	{
 		return currentRoomID;
 	}
-	
+
 	/**
 	 * @return the previousRoomID
 	 */
@@ -114,7 +129,7 @@ public class Player extends Monster implements Serializable
 	{
 		this.inCombat = inCombat;
 	}
-
+	
 	/**
 	 * @param currentRoomID the currentRoomID to set
 	 */
@@ -122,7 +137,7 @@ public class Player extends Monster implements Serializable
 	{
 		this.currentRoomID = currentRoomID;
 	}
-	
+
 	/**
 	 * @param previousRoomID the previousRoomID to set
 	 */

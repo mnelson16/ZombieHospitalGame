@@ -18,6 +18,7 @@ import java.util.Random;
 public class Zombie extends Monster implements Serializable
 {
 	private LinkedHashMap<String, Artifact> inventory;
+	private String name, specialName;
 	private int specialAttackChance, specialAttackHitChance, turnsSinceSpecial;
 
 	/**
@@ -27,10 +28,13 @@ public class Zombie extends Monster implements Serializable
 	 * @param def
 	 */	
 	public Zombie(String monsterID, int maxHealth, int attack, LinkedHashMap<String, Artifact> inventory,
-			int specialAttackChance, int SpecialAttackHitChance)
+			String name, String specialName, int specialAttackChance, int SpecialAttackHitChance)
 	{
 		super(monsterID, maxHealth, attack, 0, false);
+		
 		this.inventory = inventory;
+		this.name = name;
+		this.specialName = specialName;
 		this.specialAttackChance = specialAttackChance;
 		this.specialAttackHitChance = specialAttackHitChance;
 		this.turnsSinceSpecial = 0;
@@ -47,17 +51,17 @@ public class Zombie extends Monster implements Serializable
 		int damage = 0;
 		boolean executed = false, hit = false;
 
-		//Standard attack
+		//Standard attack hit attempt
 		if (rnd.nextInt(100) < 50)
 		{
 			damage = 1 - defCalc;
 		}
 
-		if (rnd.nextInt(100) < specialAttackChance)
+		if (rnd.nextInt(100) < specialAttackChance) //Chance to attempt special attack
 		{
 			executed = true;
 
-			if (rnd.nextInt(100) < specialAttackHitChance)
+			if (rnd.nextInt(100) < specialAttackHitChance) //Chance for special attack to succeed
 			{
 				hit = true;
 			}
@@ -96,6 +100,7 @@ public class Zombie extends Monster implements Serializable
 		case "M05":
 			if (executed)
 			{
+				damage = 0;
 				//Cuts player damage on zombie in half (rounded down)
 				this.setDefense(player.getAttack() * 5 / 2);
 			}
@@ -119,6 +124,7 @@ public class Zombie extends Monster implements Serializable
 				//If player is holding obamacare armor
 				if (((Player) player).getPlayerInventory().containsKey("Obamacare Armor"))
 				{
+					setSpecialName("Insurance Not Accepted Attack");
 					//If player has equipped obamacare armor
 					if (((Player) player).getPlayerInventory().get("Obamacare Armor").isCurrentlyEquipped())
 					{
@@ -128,11 +134,17 @@ public class Zombie extends Monster implements Serializable
 			}
 			else
 			{
-				damage = 5 - defCalc;
+				if (!executed)
+				{
+					setSpecialName("Second-Hand Smoke Attack");
+					executed = true;
+					damage = 5 - defCalc;
+				}
 			}
 			break;
 			
 		case "M08":
+			damage = 0; //Does not perform regular standard attack
 			if (hit)
 			{
 				damage = 5 - defCalc;
@@ -140,7 +152,45 @@ public class Zombie extends Monster implements Serializable
 			break;
 		}
 		
-		player.setHealth(player.getHealth() - damage);
+		if (!executed)
+		{
+			System.out.println(getName() + " attacks...");
+			try
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			if (damage == 0)
+			{
+				System.out.println("...and misses!");
+			}
+			
+		}
+		else
+		{
+			System.out.println(getName() + " performs " + getSpecialName() + ".");
+			if (hit)
+			{
+				if (damage > 0)
+				{
+					 // + special description
+				}
+			}
+			else
+			{
+				System.out.println(getName() + " misses!");
+				damage = 0;
+			}
+		}
+		
+		if (damage > 0)
+		{
+			System.out.println("...and hits for " + damage + " damage!");
+			player.setHealth(player.getHealth() - damage);
+		}
+		
 	}
 
 	/**
@@ -152,10 +202,90 @@ public class Zombie extends Monster implements Serializable
 	}
 
 	/**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * @return the specialName
+	 */
+	public String getSpecialName()
+	{
+		return specialName;
+	}
+
+	/**
+	 * @return the specialAttackChance
+	 */
+	public int getSpecialAttackChance()
+	{
+		return specialAttackChance;
+	}
+
+	/**
+	 * @return the specialAttackHitChance
+	 */
+	public int getSpecialAttackHitChance()
+	{
+		return specialAttackHitChance;
+	}
+
+	/**
+	 * @return the turnsSinceSpecial
+	 */
+	public int getTurnsSinceSpecial()
+	{
+		return turnsSinceSpecial;
+	}
+
+	/**
 	 * @param inventory the inventory to set
 	 */
 	public void setInventory(LinkedHashMap<String, Artifact> inventory)
 	{
 		this.inventory = inventory;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	/**
+	 * @param specialName the specialName to set
+	 */
+	public void setSpecialName(String specialName)
+	{
+		this.specialName = specialName;
+	}
+
+	/**
+	 * @param specialAttackChance the specialAttackChance to set
+	 */
+	public void setSpecialAttackChance(int specialAttackChance)
+	{
+		this.specialAttackChance = specialAttackChance;
+	}
+
+	/**
+	 * @param specialAttackHitChance the specialAttackHitChance to set
+	 */
+	public void setSpecialAttackHitChance(int specialAttackHitChance)
+	{
+		this.specialAttackHitChance = specialAttackHitChance;
+	}
+
+	/**
+	 * @param turnsSinceSpecial the turnsSinceSpecial to set
+	 */
+	public void setTurnsSinceSpecial(int turnsSinceSpecial)
+	{
+		this.turnsSinceSpecial = turnsSinceSpecial;
 	}
 }

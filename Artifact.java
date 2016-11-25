@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 
 public class Artifact implements Serializable
 {
-	private String name, description;
+	private String name, description, currentRoom;
 	private boolean consumable, isWeapon, isArmor, currentlyEquipped;
 	private int atkIncrease, defIncrease, healthIncrease;
 	
