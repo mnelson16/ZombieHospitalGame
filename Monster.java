@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Purpose: - Describe the purpose of this class
  */
 
-public abstract class Monster
+public abstract class Monster implements Serializable
 {
 	private String monsterID;
 	private int maxHealth, health, attack, defense;
