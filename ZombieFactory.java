@@ -26,21 +26,21 @@ private static LinkedHashMap<String, Zombie> allZombies = new LinkedHashMap<Stri
 		//int specialAttackChance, int SpecialAttackHitChance)
 		Zombie tempZom;
 		
-		tempZom = new Zombie("M01", 50, 1, null, 0, 0);
+		tempZom = new Zombie("M01", 50, 1, null, "Patient Zombie", "Standard attack", 0, 0);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Patient"
-		tempZom = new Zombie("M02", 60, 1, null, 75, 50);
+		tempZom = new Zombie("M02", 60, 1, null, "Janitor Zombie", "Mop-Handle Attack", 75, 50);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Janitor"
-		tempZom = new Zombie("M03", 70, 1, null, 75, 50);
+		tempZom = new Zombie("M03", 70, 1, null, "Nurse Zombie", "Syringe Attack", 75, 50);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Nurse"
-		tempZom = new Zombie("M04", 80, 1, null, 60, 20);
+		tempZom = new Zombie("M04", 80, 1, null, "Doctor Zombie", "Cold-Stethoscope Attack", 60, 20);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Doctor"
-		tempZom = new Zombie("M05", 90, 1, null, 50, 0);
+		tempZom = new Zombie("M05", 90, 1, null, "Plastic Surgeon Zombie", "Skin Graft Buff", 50, 0);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Plastic Surgeon"
-		tempZom = new Zombie("M06", 95, 1, null, 10, 100);
+		tempZom = new Zombie("M06", 95, 1, null, "Brain Surgeon Zombie", "Brain-Removal Attack", 10, 100);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Brain Surgeon"
-		tempZom = new Zombie("M07", 100, 1, null, 5, 100);
+		tempZom = new Zombie("M07", 100, 1, null, "Surgeon General Zombie", "Insurance Not Accepted Attack", 5, 100);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Surgeon General"
-		tempZom = new Zombie("M08", 40, 1, null, 100, 40);
+		tempZom = new Zombie("M08", 40, 1, null, "Secretary Zombie", "Standard attack", 100, 40);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Secretary"
 		
 		return allZombies;
@@ -51,4 +51,5 @@ private static LinkedHashMap<String, Zombie> allZombies = new LinkedHashMap<Stri
 		allZombies = createZombies();
 		return allZombies;
 	}
+
 }
