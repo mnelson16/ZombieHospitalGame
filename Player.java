@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -13,10 +14,10 @@ import java.util.LinkedHashMap;
  * Purpose: - Describe the purpose of this class
  */
 
-public class Player extends Monster
+public class Player extends Monster implements Serializable
 {
 	private boolean inCombat;
-	private String previousRoomID;
+	private String currentRoomID, previousRoomID;
 	private LinkedHashMap<String, Artifact> playerInventory;
 	private int defCalculation = this.getDefense() / 5;
 	private Artifact weaponEq, armorEq;
@@ -28,11 +29,11 @@ public class Player extends Monster
 	 * @param defense
 	 * @param previousRoomID
 	 */
-	public Player(String monsterID, int maxHealth, int attack, int defense, String previousRoomID)
+	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID)
 	{
 		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
-		this.previousRoomID = previousRoomID;
+		this.currentRoomID = currentRoomID;
 		playerInventory = ArtifactFactory.getAllArtifacts();
 	}
 
@@ -58,6 +59,14 @@ public class Player extends Monster
 		return inCombat;
 	}
 
+	/**
+	 * @return the currentRoomID
+	 */
+	public String getCurrentRoomID()
+	{
+		return currentRoomID;
+	}
+	
 	/**
 	 * @return the previousRoomID
 	 */
@@ -106,6 +115,14 @@ public class Player extends Monster
 		this.inCombat = inCombat;
 	}
 
+	/**
+	 * @param currentRoomID the currentRoomID to set
+	 */
+	public void setCurrentRoomID(String currentRoomID)
+	{
+		this.currentRoomID = currentRoomID;
+	}
+	
 	/**
 	 * @param previousRoomID the previousRoomID to set
 	 */
