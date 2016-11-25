@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -13,7 +14,7 @@ import java.util.LinkedHashMap;
  * Purpose: To provide the structure of Artifact 
  */
 
-public class Artifact
+public class Artifact implements Serializable
 {
 	private String name, description;
 	private boolean consumable, isWeapon, isArmor, currentlyEquipped;
