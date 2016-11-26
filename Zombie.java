@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
@@ -30,34 +29,17 @@ public class Zombie extends Monster implements Serializable
 			int specialAttackHitChance)
 	{
 		super(monsterID, maxHealth, attack, 0, false);
-		
+
 		this.inventory = inventory;
 		this.name = name;
 		this.specialName = specialName;
 		this.specialDescription = specialDescription;
 		this.specialAttackChance = specialAttackChance;
-		tempSAC = specialAttackChance;
 		this.specialAttackHitChance = specialAttackHitChance;
 		this.turnsSinceSpecial = 0;
 		dead = false;
 		specialActivated = false;
 		playerAttackPrevented = false;
-	}
-
-	/**
-	 * @return the specialDescription
-	 */
-	public String getSpecialDescription()
-	{
-		return specialDescription;
-	}
-
-	/**
-	 * @param specialDescription the specialDescription to set
-	 */
-	public void setSpecialDescription(String specialDescription)
-	{
-		this.specialDescription = specialDescription;
 	}
 
 	/** (non-Javadoc)
@@ -71,19 +53,20 @@ public class Zombie extends Monster implements Serializable
 		int damage = 0;
 		boolean executed = false, hit = false;
 
-		if (playerAttackPrevented)
+		//Standard attack hit attempt
+		if (getMonsterID().equals("M08")) //case M08
 		{
-			specialAttackChance = 0;
+			if (rnd.nextInt(100) < 40)
+			{
+				damage = 2 - defCalc;
+			}
 		}
 		else
 		{
-			specialAttackChance = tempSAC;
-		}
-		
-		//Standard attack hit attempt
-		if (rnd.nextInt(100) < 50)
-		{
-			damage = 1 - defCalc;
+			if (rnd.nextInt(100) < 50)
+			{
+				damage = 3 - defCalc;
+			}
 		}
 
 		if (rnd.nextInt(100) < specialAttackChance) //Chance to attempt special attack
@@ -100,11 +83,17 @@ public class Zombie extends Monster implements Serializable
 		switch(getMonsterID())
 		{
 		//M01 is taken care of in standard attack
-		
+
 		case "M02":
 			if (hit)
 			{
 				damage = 2 - defCalc;
+				
+			}
+			
+			if (damage <= 0)
+			{
+				damage = 1;
 			}
 			break;
 
@@ -130,6 +119,16 @@ public class Zombie extends Monster implements Serializable
 				playerAttackPrevented = false;
 			}
 			
+			//Won't cast special attack if player incapacitated
+			if (playerAttackPrevented)
+			{
+				specialAttackChance = 0;
+			}
+			else
+			{
+				specialAttackChance = 60;
+			}
+
 			if (hit)
 			{
 				//Special attack can't be used again
@@ -141,11 +140,19 @@ public class Zombie extends Monster implements Serializable
 			if (executed)
 			{
 				damage = 0;
-				turnsSinceSpecial = 0;
+				turnsSinceSpecial = -2;
 				//Cuts player damage on zombie in half (rounded down)
 				this.setDefense(player.getAttack() * 5 / 2);
 			}
 			//if buffed, 0% chance for special; special lasts for next 2 turns
+			if (turnsSinceSpecial < 0)
+			{
+				specialAttackChance = 0;
+			}
+			else
+			{
+				specialAttackChance = 50;
+			}
 			break;
 
 		case "M06":
@@ -155,6 +162,16 @@ public class Zombie extends Monster implements Serializable
 				//player incapacitated for 3 turns
 				playerAttackPrevented = true;
 				//0% chance for special if player incapacitated
+				
+				//Won't cast special attack if player incapacitated
+				if (playerAttackPrevented)
+				{
+					specialAttackChance = 0;
+				}
+				else
+				{
+					specialAttackChance = 10;
+				}
 			}
 			break;
 
@@ -164,7 +181,7 @@ public class Zombie extends Monster implements Serializable
 				//Player will die
 				damage = player.getHealth();
 				setSpecialName("Insurance Not Accepted Attack");
-				
+
 				//If player is holding obamacare armor
 				if (((Player) player).getPlayerInventory().containsKey("Obamacare Armor"))
 				{
@@ -188,16 +205,8 @@ public class Zombie extends Monster implements Serializable
 				}
 			}
 			break;
-			
-		case "M08":
-			damage = 0; //Does not perform regular standard attack
-			if (hit)
-			{
-				damage = 5 - defCalc;
-			}
-			break;
 		}
-		
+
 		if (!executed) //If special wasn't executed, perform regular attack
 		{
 			System.out.println(getName() + " attacks...");
@@ -212,7 +221,7 @@ public class Zombie extends Monster implements Serializable
 			{
 				System.out.println("...and misses!");
 			}
-			
+
 		}
 		else //If special was executed
 		{
@@ -224,10 +233,17 @@ public class Zombie extends Monster implements Serializable
 			{
 				e.printStackTrace();
 			}
-			
+
 			if (hit)
 			{
-				System.out.println("...and hits! " + specialDescription);
+				if (damage == 0)
+				{
+					System.out.println("...and hits! " + specialDescription);
+				}
+				else
+				{
+					System.out.println("...and hits for " + damage + " damage!");
+				}
 			}
 			else
 			{
@@ -235,23 +251,24 @@ public class Zombie extends Monster implements Serializable
 				damage = 0;
 			}
 		}
-		
+
 		if (damage > 0) //If zombie doesn't miss
 		{
 			System.out.println("...and hits for " + damage + " damage!");
 			player.setHealth(player.getHealth() - damage);
 		}
-		
+
 		if (specialActivated)
 		{
 			turnsSinceSpecial += 1;
 		}
-		
+
 		if (playerAttackPrevented)
 		{
 			this.attack(player);
 		}
 		
+
 	}
 
 	/**
@@ -414,5 +431,21 @@ public class Zombie extends Monster implements Serializable
 		this.playerAttackPrevented = playerAttackPrevented;
 	}
 
-	
+	/**
+	 * @return the specialDescription
+	 */
+	public String getSpecialDescription()
+	{
+		return specialDescription;
+	}
+
+	/**
+	 * @param specialDescription the specialDescription to set
+	 */
+	public void setSpecialDescription(String specialDescription)
+	{
+		this.specialDescription = specialDescription;
+	}
+
+
 }

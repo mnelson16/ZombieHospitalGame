@@ -1,8 +1,5 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**Class: ZHTester
@@ -22,6 +19,7 @@ public class ZHTester
 	private static String command, object, userInput;
 	private static Player player;// = new Player("00", 10, 10, 0, null);
 	private static HashMap<String, Room> rooms;
+	private static HashMap<String, Artifact> artifacts;
 	public static File stockSave = new File("stockSave.dat"), save1 = new File("save1.dat"), 
 			save2 = new File("save2.dat"), save3 = new File("save3.dat");
 
@@ -31,28 +29,32 @@ public class ZHTester
 	 */
 	public static void main(String[] args)
 	{
-		ZombieFactory.createZombies();
 		Scanner input = new Scanner(System.in);
+		ZombieFactory.createZombies();
+		ArtifactFactory.createArtifacts();
+		PuzzleFactory.createPuzzles();
+		ArtifactFactory af = new ArtifactFactory();
 		GameSubsystem gs = new GameSubsystem();
 		CharacterSubsystem cs = new CharacterSubsystem();
 		RoomSubsystem rs = new RoomSubsystem();
 		player = gs.game.getNewPlayer();
 		rooms = gs.game.getRooms();
+		artifacts = af.getAllArtifacts();
+		gs.game.makeNewGame();
 
 		String help = "Available Commands: \n"
 				+ "--Help Commands-- Help (Displays available commands and current room exits.)\n"
 				+ "--Game Commands-- New, Save, Load \n"
-				+ "--Other Commands-- Go <North, South, East, or West>, Inventory, Observe <Item>, Stats, Use <Item>";
+				+ "--Other Commands-- Go <Direction>, Inventory, Observe <Item>, Stats, Use <Item>";
 		System.out.println(help + "\n");
-		gs.game.makeNewGame();
-
+		
 		System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
 		rooms.get(player.getCurrentRoomID()).setDescription("This is where you woke up. "
 				+ "There's nothing interesting to find here.");
 
 		while (true)
 		{
-			System.out.print("\n> ");
+			System.out.print("> ");
 			userInput = input.nextLine().toLowerCase();
 			userInput = userInput.replaceAll(" ", "_");
 			System.out.print("\n");
@@ -71,11 +73,11 @@ public class ZHTester
 			
 			if (command.equals("help"))
 			{
+				System.out.println(help);
 				if (rs.getActiveRoom() != null)
 				{
-					help += "\n" + rs.getActiveRoom().getExits();
+					System.out.println("\n" + rs.getActiveRoom().getExits());
 				}
-				System.out.println(help);
 			}
 			else if (command.equals("use") || command.equals("observe") || command.equals("stats")
 					|| command.equals("inventory") || command.equals("take"))
@@ -84,7 +86,7 @@ public class ZHTester
 			}
 			else if(command.equals("go"))
 			{
-				rs.RSRun(player, rooms, command, object);
+				rs.RSRun(player, rooms, command, object, artifacts);
 			}
 			else if(command.equals("new") || command.equals("save") || command.equals("load"))
 			{

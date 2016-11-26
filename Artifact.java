@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**Class: Artifact
@@ -65,6 +64,11 @@ public class Artifact implements Serializable
 		String effectType;
 		int effectAmt;
 		
+		if (!isWeapon && !isArmor && !consumable)
+		{
+			System.out.println("The item does nothing.");
+		}
+		
 		if (atkIncrease > 0)
 		{
 			effectType = "attack";
@@ -89,10 +93,12 @@ public class Artifact implements Serializable
 				if (isWeapon)
 				{
 					player.setWeaponEq(null);
+					player.setWeaponHeld(this);
 				}
 				else if (isArmor)
 				{
 					player.setArmorEq(null);
+					player.setArmorHeld(this);
 				}
 				
 				currentlyEquipped = false;
@@ -104,7 +110,7 @@ public class Artifact implements Serializable
 						+ " decreased by " + effectAmt + ".");
 				return;
 			}
-			else
+			else //not currently equipped
 			{
 				if (isWeapon)
 				{
@@ -120,6 +126,7 @@ public class Artifact implements Serializable
 					}
 					
 					player.setWeaponEq(this);
+					player.setWeaponHeld(null);
 				}
 				else if (isArmor)
 				{
@@ -136,6 +143,7 @@ public class Artifact implements Serializable
 					}
 					
 					player.setArmorEq(this);
+					player.setArmorHeld(null);
 				}
 				
 				currentlyEquipped = true;

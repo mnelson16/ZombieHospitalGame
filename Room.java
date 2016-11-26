@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.HashMap;
-//import org.apache.commons.lang3.StringUtils;
 
 /**Class: Room
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -24,13 +23,9 @@ public class Room implements Serializable
 	private boolean saveableRoom;
 	
 	/**
-	 * @param roomID 
-	 * @param description 
-	 * @param exitIDs 
-	 * @param saveableRoom 
-	 * @param monsters 
-	 * @param puzzle 
-	 * 
+	 * @param roomID
+	 * @param description
+	 * @param saveableRoom
 	 */
 	public Room(String roomID, String description, boolean saveableRoom)
 	{
@@ -38,20 +33,45 @@ public class Room implements Serializable
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 	}
+	/**
+	 * 
+	 * @param roomID
+	 * @param description
+	 * @param saveableRoom
+	 * @param zombie
+	 * @param artifact
+	 */
 	public Room(String roomID, String description, boolean saveableRoom, Zombie zombie, Artifact artifact)
 	{
 		this.roomID = roomID;
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 		this.zombie = zombie;
+		this.artifact = artifact;
 	}
+	/**
+	 * 
+	 * @param roomID
+	 * @param description
+	 * @param saveableRoom
+	 * @param puzzle
+	 * @param artifact
+	 */
 	public Room(String roomID, String description, boolean saveableRoom, Puzzle puzzle, Artifact artifact)
 	{
 		this.roomID = roomID;
 		this.description = description;
 		this.saveableRoom = saveableRoom;
 		this.puzzle = puzzle;
+		this.artifact = artifact;
 	}
+	/**Constructor
+	 * 
+	 * @param roomID
+	 * @param description
+	 * @param saveableRoom
+	 * @param artifact
+	 */
 	public Room(String roomID, String description, boolean saveableRoom, Artifact artifact)
 	{
 		this.roomID = roomID;
@@ -59,26 +79,47 @@ public class Room implements Serializable
 		this.saveableRoom = saveableRoom;
 		this.artifact = artifact;
 	}
-	
-	public String getRoomID() 
+	/**
+	 * @return the roomID
+	 */
+	public String getRoomID()
 	{
 		return roomID;
 	}
-	public String getDescription() 
+	/**
+	 * @return the description and list of exits
+	 */
+	public String getDescription()
 	{
-		return description + "\n" + getExits();
+		if (isSaveableRoom())
+		{
+			return description + "\n(You can save your game here.)\n" + getExits();
+		}
+		else
+		{
+			return description + "\n" + getExits();
+		}
 	}
-	public Zombie getZombie() 
+	/**
+	 * @return the zombie
+	 */
+	public Zombie getZombie()
 	{
 		return zombie;
 	}
-	public Puzzle getPuzzle() 
+	/**
+	 * @return the puzzle
+	 */
+	public Puzzle getPuzzle()
 	{
 		return puzzle;
 	}
-	public HashMap<String, Room> getExitIDs() 
+	/**
+	 * @return the artifact
+	 */
+	public Artifact getArtifact()
 	{
-		return exitIDs;
+		return artifact;
 	}
 	public String getExits()
 	{
@@ -94,32 +135,61 @@ public class Room implements Serializable
 		}
 		return "NO EXITS";
 	}
-	public void setRoomID(String roomID) 
+	/**
+	 * @return the exitIDs
+	 */
+	public HashMap<String, Room> getExitIDs()
+	{
+		return exitIDs;
+	}
+	/**
+	 * @return the saveableRoom
+	 */
+	public boolean isSaveableRoom()
+	{
+		return saveableRoom;
+	}
+	/**
+	 * @param roomID the roomID to set
+	 */
+	public void setRoomID(String roomID)
 	{
 		this.roomID = roomID;
 	}
-	public void setDescription(String description) 
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description)
 	{
 		this.description = description;
 	}
-	public void setPuzzle(Puzzle puzzle) 
-	{
-		this.puzzle = puzzle;
-	}
-	public void setExitIDs(HashMap<String, Room> exitIDs) 
-	{
-		this.exitIDs = exitIDs;
-	}
-	public Artifact getArtifact() {
-		return artifact;
-	}
-	public void setArtifact(Artifact artifact) {
-		this.artifact = artifact;
-	}
-	public void setZombie(Zombie zombie) 
+	/**
+	 * @param zombie the zombie to set
+	 */
+	public void setZombie(Zombie zombie)
 	{
 		this.zombie = zombie;
 	}
+	/**
+	 * @param puzzle the puzzle to set
+	 */
+	public void setPuzzle(Puzzle puzzle)
+	{
+		this.puzzle = puzzle;
+	}
+	/**
+	 * @param artifact the artifact to set
+	 */
+	public void setArtifact(Artifact artifact)
+	{
+		this.artifact = artifact;
+	}
+	/**
+	 * @param north
+	 * @param east
+	 * @param south
+	 * @param west
+	 */
 	public void setExits(Room north, Room east, Room south, Room west) 
 	{
 		if (north != null)
@@ -131,12 +201,20 @@ public class Room implements Serializable
 		if (west != null)
 			exitIDs.put("west", west);
 	}
-	public void setSaveableRoom(boolean saveableRoom) 
+	/**
+	 * @param exitIDs the exitIDs to set
+	 */
+	public void setExitIDs(HashMap<String, Room> exitIDs)
+	{
+		this.exitIDs = exitIDs;
+	}
+	/**
+	 * @param saveableRoom the saveableRoom to set
+	 */
+	public void setSaveableRoom(boolean saveableRoom)
 	{
 		this.saveableRoom = saveableRoom;
 	}
-	public boolean isSaveableRoom() 
-	{
-		return saveableRoom;
-	}
+	
+	
 }

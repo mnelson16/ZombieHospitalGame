@@ -1,6 +1,6 @@
 import java.util.LinkedHashMap;
 
-/**Class: ZombieFactory.java
+/**Class: ZombieFactory
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
@@ -37,7 +37,7 @@ public class ZombieFactory
 				"You can now only attack every two turns!", 60, 20);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Doctor"
 		tempZom = new Zombie("M05", 90, 1, null, "Plastic Surgeon Zombie", "Skin Graft Buff", 
-				"Damage done to Plastic Surgeon Zombie is now reduced by 50% for two turns", 50, 0);
+				"Damage done to Plastic Surgeon Zombie is reduced by 50% for two turns.", 50, 100);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Plastic Surgeon"
 		tempZom = new Zombie("M06", 95, 1, null, "Brain Surgeon Zombie", "Brain-Removal Attack", 
 				"You're incapacitated for three turns!", 10, 100);
@@ -46,7 +46,7 @@ public class ZombieFactory
 				null, 5, 100);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Surgeon General"
 		tempZom = new Zombie("M08", 40, 1, null, "Secretary Zombie", "Standard attack", 
-				null, 100, 40);
+				null, 0, 0);
 		allZombies.put(tempZom.getMonsterID(), tempZom); //"Secretary"
 		
 		return allZombies;

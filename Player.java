@@ -1,5 +1,5 @@
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Player extends Monster implements Serializable
 	private boolean inCombat;
 	private String currentRoomID, previousRoomID;
 	private LinkedHashMap<String, Artifact> playerInventory = new LinkedHashMap<String, Artifact>();
-	private int defCalculation = this.getDefense() / 5;
+	private int defCalculation;
 	private Artifact weaponEq, armorEq;
 
 	/**
@@ -35,6 +35,7 @@ public class Player extends Monster implements Serializable
 		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
 		this.currentRoomID = currentRoomID;
+		defCalculation = this.getDefense() / 5;
 	}
 
 	@Override

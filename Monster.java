@@ -1,7 +1,4 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**Class: Monster
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong

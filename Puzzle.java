@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
@@ -64,7 +65,7 @@ public class Puzzle implements Serializable
 		System.out.println("What do you do?");
 	}
 	
-	public void solvePuzzle(Player mon, String userInput)
+	public void solvePuzzle(Player mon, String userInput, HashMap<String, Artifact> artifacts)
 	{
 		input = new Scanner(System.in);
 		char userAnswer = userInput.charAt(0);
@@ -76,33 +77,29 @@ public class Puzzle implements Serializable
 			System.out.println(responses.get(userAnswer));
 			if(Arrays.asList(correctOption).contains(userAnswer))
 			{
-				if(userAnswer == equipOption)
+				if(userAnswer == equipOption) //choice to equip armor
 				{
 					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
-					updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
-							+ "\nAttack +3", false, false, true, 0, 1, 0));
+					updatedInv.put("Obamacare Armor", artifacts.get("Obamacare Armor"));
 					mon.setPlayerInventory(updatedInv);
 					mon.getPlayerInventory().get("Obamacare Armor").useArtifact(mon);
 				}
 				else if(userAnswer == itemOption)
 				{
-					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
+					LinkedHashMap<String, Artifact> updatedInv = ((Player) mon).getPlayerInventory();
 					if(puzzleID.equalsIgnoreCase("PUZ002"))
 					{
-						updatedInv.put("Flashlight", new  Artifact("Flashlight", "There's just enough battery to last!", 
-								false, false, false, 0, 0, 0));
+						updatedInv.put("Flashlight", artifacts.get("Flashlight"));
 					}
 					else if(puzzleID.equalsIgnoreCase("PUZ004"))
 					{
-						updatedInv.put("Obamacare Armor", new  Artifact("Obamacare Armor", "Issue #23-B."
-							+ "\nAttack +3", false, false, true, 0, 1, 0));
+						updatedInv.put("Obamacare Armor", artifacts.get("Obamacare Armor"));
 					}
 					else if(puzzleID.equalsIgnoreCase("PUZ006"))
 					{
-						updatedInv.put("Hand Gun", new  Artifact("Hand Gun", "A weapon given to you by a brief friend."
-								+ "\nAttack +2", false, true, false, 2, 0, 0));
+						updatedInv.put("Hand Gun", artifacts.get("Hand Gun"));
 					}
-					mon.setPlayerInventory(updatedInv);					
+					((Player) mon).setPlayerInventory(updatedInv);
 				}
 				else if(userAnswer == possibleOption)
 				{
@@ -114,10 +111,10 @@ public class Puzzle implements Serializable
 						if(userYN.equalsIgnoreCase("y"))
 						{
 							LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
-							updatedInv.put("Fire Axe", new  Artifact("Fire Axe", "The sharp truth."
-									+ "\nAttack +3", false, true, false, 3, 0, 0));
+							updatedInv.put("Fire Axe", artifacts.get("Fire Axe"));
 							mon.setPlayerInventory(updatedInv);
 							finished = true;
+							System.out.println("You pick up the fire axe and move on.");
 						}
 						else if(userYN.equalsIgnoreCase("n"))
 						{
@@ -125,8 +122,8 @@ public class Puzzle implements Serializable
 						}
 						else
 						{
-							System.out.println("You can't decide if you want to pick up the"
-									+ ".. Let's rethink this..\n");
+							System.out.println("You can't decide if you want to pick up the Fire Axe"
+									+ "... Let's rethink this...\n");
 						}
 					}
 				}
@@ -139,7 +136,8 @@ public class Puzzle implements Serializable
 					{
 						System.out.print("> ");
 						String userCheck = input.nextLine();
-						if(userCheck.equalsIgnoreCase("silence"))
+						userCheck = userCheck.toLowerCase();
+						if(userCheck.contains("silence"))
 						{
 							System.out.println("That seemed to do it!");
 							finished = true;
@@ -152,7 +150,7 @@ public class Puzzle implements Serializable
 						}
 						else
 						{
-							System.out.println("That didn't seem to work.. Maybe try a different word?");
+							System.out.println("That didn't seem to work... Maybe try a different word?");
 						}
 					}
 				}

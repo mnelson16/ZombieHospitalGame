@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 /**Class: CharacterSubsystem
  * @author Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -30,7 +29,7 @@ public class CharacterSubsystem
 	public void CSRun(Player p, HashMap<String, Room> rooms, String command, String artifactInput)
 	{
 		Artifact activeArtifact;
-		
+
 		player = p;
 		activeRoom = rooms.get(player.getCurrentRoomID());
 
@@ -53,7 +52,7 @@ public class CharacterSubsystem
 				player.setPlayerInventory(newInv);
 				activeRoom.setArtifact(null);
 				System.out.println("You got the " + activeArtifact.getName() + "! \n" + 
-				"The " + activeArtifact.getName() + " has been added to your inventory.");
+						activeArtifact.getName() + " has been added to your inventory.");
 			}
 			else
 			{

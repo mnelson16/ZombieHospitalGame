@@ -18,7 +18,8 @@ public class RoomSubsystem
 	public static int separatorIndex; //index of dash or underscore
 	public Room activeRoom;
 
-	public void RSRun(Player player, HashMap<String, Room> rooms, String command, String roomInput)
+	public void RSRun(Player player, HashMap<String, Room> rooms, String command, String roomInput,
+			HashMap<String, Artifact> artifacts)
 	{
 		activeRoom = rooms.get(player.getCurrentRoomID());
 		String userInput, fightHelp;
@@ -26,7 +27,7 @@ public class RoomSubsystem
 
 		if(activeRoom.getExitIDs().containsKey(roomInput))
 		{
-			//Change description for when player revisits room and there is an item
+			//Changes description for when player revisits room and there is an item
 			if (activeRoom.getArtifact() != null)
 			{
 				activeRoom.setDescription("You've been here before. An item remains: "
@@ -39,15 +40,16 @@ public class RoomSubsystem
 
 			if((activeRoom.getPuzzle() != null)) //If there's a puzzle in the room
 			{
-				if(!activeRoom.getPuzzle().getSolved())
+				if(!activeRoom.getPuzzle().getSolved()) //If the puzzle is not yet solved
 				{
 					activeRoom.getPuzzle().encounterPuzzle();
 				}
-				while(!activeRoom.getPuzzle().getSolved())
+				while(!activeRoom.getPuzzle().getSolved()) //while puzzle is not solved
 				{
+					//ask for puzzle answer
 					System.out.print("> ");
 					userInput = input.nextLine();
-					activeRoom.getPuzzle().solvePuzzle(player, userInput);
+					activeRoom.getPuzzle().solvePuzzle(player, userInput, artifacts);
 					if(activeRoom.getPuzzle().getGoBack())
 					{
 						activeRoom.getPuzzle().setGoBack(false);
@@ -58,18 +60,24 @@ public class RoomSubsystem
 				}
 				System.out.println(activeRoom.getDescription());
 			}
-			else if(activeRoom.getZombie() != null) //If there's a zombie in the room
+			//If there's a zombie in the room
+			else if(activeRoom.getZombie() != null)
 			{
-				System.out.println(activeRoom.getDescription() + "\n");
-				try
+				if (activeRoom.getZombie().isDead()) //If the zombie is dead
 				{
-					Thread.sleep(4000);
-					System.out.println("Something's coming...\n");
-					Thread.sleep(2000);
-				} catch (InterruptedException e1)
-				{}
-				if(!activeRoom.getZombie().isDead()) //If the zombie isn't dead
+					System.out.println(activeRoom.getDescription());
+				}
+				else //If the zombie isn't dead
 				{
+					System.out.println(activeRoom.getDescription() + "\n");
+					try
+					{
+						Thread.sleep(4000);
+						System.out.println("Something's coming...\n");
+						Thread.sleep(2000);
+					} catch (InterruptedException e1)
+					{}
+					//Fight output
 					fightHelp = "Fight commands: \nAttack, Flee";
 					System.out.println("Fight engaged with " + activeRoom.getZombie().getName() + "!");
 					System.out.println(activeRoom.getZombie().getName() + " HP: " + activeRoom.getZombie().getHealth()		
@@ -94,13 +102,21 @@ public class RoomSubsystem
 								} 
 								catch (InterruptedException e)
 								{}
+								
 								activeRoom.getZombie().attack(player);
 							}
 							if (activeRoom.getZombie().getHealth() <= 0) //If zombie dies
 							{
 								System.out.println(activeRoom.getZombie().getName() + " is dead!");
+								//If there's armor or weapon in the room, notify player what the zombie dropped
+								if (activeRoom.getArtifact() != null && (activeRoom.getArtifact().isArmor() ||
+										activeRoom.getArtifact().isWeapon()))
+								{
+									System.out.println("It dropped " + activeRoom.getArtifact().getName() + ".");
+								}
 								System.out.println("Your HP: " + player.getHealth() + "/" + player.getMaxHealth());
-								activeRoom.getZombie().setDead(false);
+								
+								activeRoom.getZombie().setDead(true);
 							}
 							if (player.getHealth() <= 0) //If player dies
 							{

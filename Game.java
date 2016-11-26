@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class Game
 {
-	private Player newPlayer = new Player("00", 20, 5, 0, "L1001");
+	private Player newPlayer = new Player("00", 20, 10, 0, "L1001");
 	private HashMap<String, Room> updatedRooms = new HashMap<String, Room>(), rooms = RoomFactory.getRooms();
 	private Player player;
 	

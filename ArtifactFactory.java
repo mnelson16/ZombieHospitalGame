@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**Class: ArtifactFactory
  * @author Janna Timmer
@@ -20,7 +16,7 @@ public class ArtifactFactory
 {
 	private static LinkedHashMap<String, Artifact> allArtifacts = new LinkedHashMap<String, Artifact>();
 	
-	public void createArtifacts()
+	public static LinkedHashMap<String, Artifact> createArtifacts()
 	{
 		Artifact tempArt;
 		
@@ -55,6 +51,12 @@ public class ArtifactFactory
 				+ "\nAttack +15", false, true, false, 15, 0, 0);
 		allArtifacts.put(tempArt.getName(), tempArt); //Brain Surgeon M06
 		
+		tempArt = new Artifact("Hand Gun", "A dying man gave you this gun, and you should honor his memory"
+				+ "\nby kicking zombie ass with it."
+				+ "\nAttack +20", 
+				false, true, false, 20, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+		
 		tempArt = new Artifact("Whiskey", "Drinking this will probably make you feel better."
 				+ "\nHealth +5", true, false, false, 0, 0, 5);
 		allArtifacts.put(tempArt.getName(), tempArt);
@@ -64,7 +66,7 @@ public class ArtifactFactory
 		allArtifacts.put(tempArt.getName(), tempArt);
 		
 		tempArt = new Artifact("Crowbar", "A stiff metal bar, strong enough to pry off some wood."
-				+ "\nAttack +5", true, false, false, 5, 0, 0);
+				+ "\nAttack +5", false, true, false, 5, 0, 0);
 		allArtifacts.put(tempArt.getName(), tempArt);
 		
 		tempArt = new Artifact("Flashlight", "A small handheld flashlight.", false, false, false, 0, 0, 0);
@@ -77,6 +79,17 @@ public class ArtifactFactory
 		tempArt = new Artifact("Old Nail", "An old, rusty nail. Hopefully you didnt step on it!", 
 				false, false, false, 0, 0, 0);
 		allArtifacts.put(tempArt.getName(), tempArt);
+		
+		tempArt = new Artifact("Fire Axe", "An axe to be used for emergencies only. "
+				+ "\nAttack +3", false, true, false, 3, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+				
+		tempArt = new Artifact("Note", "The note reads: \"The password is that which is so fragile, to "
+				+ "simply speak its name would be to break it\"", 
+				false, false, false, 0, 0, 0);
+		allArtifacts.put(tempArt.getName(), tempArt);
+		
+		return allArtifacts;
 	}
 	
 	/**
@@ -84,7 +97,6 @@ public class ArtifactFactory
 	 */
 	public LinkedHashMap<String, Artifact> getAllArtifacts()
 	{
-		createArtifacts();
 		return allArtifacts;
 	}
 }
