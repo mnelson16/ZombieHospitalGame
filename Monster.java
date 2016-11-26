@@ -10,9 +10,9 @@ import java.util.Map;
  * Written: Oct 10, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class provides structure for all characters in the game, including the player and the zombies.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: provide character blueprint.
  */
 
 public abstract class Monster implements Serializable

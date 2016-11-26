@@ -10,16 +10,16 @@ import java.util.Random;
  * Written: Oct 10, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class extends the Monster class to include player activity and traits.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: to store information about player stats, equipment, etc.
  */
 
 public class Player extends Monster implements Serializable
 {
 	private boolean inCombat;
 	private String currentRoomID, previousRoomID;
-	private LinkedHashMap<String, Artifact> playerInventory;
+	private LinkedHashMap<String, Artifact> playerInventory = new LinkedHashMap<String, Artifact>();
 	private int defCalculation = this.getDefense() / 5;
 	private Artifact weaponEq, armorEq;
 
@@ -28,14 +28,13 @@ public class Player extends Monster implements Serializable
 	 * @param maxHealth
 	 * @param attack
 	 * @param defense
-	 * @param previousRoomID
+	 * @param currentRoomID
 	 */
 	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID)
 	{
 		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
 		this.currentRoomID = currentRoomID;
-		playerInventory = ArtifactFactory.getAllArtifacts();
 	}
 
 	@Override
@@ -43,20 +42,28 @@ public class Player extends Monster implements Serializable
 	{
 		Random rnd = new Random();
 		int damage = 0;
-		if (rnd.nextInt(100) < 80)
-		{
-			//Damage = player attack (minus 1 for every 5 defense the monster has)
-			damage = this.getAttack() - mon.getDefense() / 5; 
-			mon.setHealth(mon.getHealth() - damage);
-		}
 		
-		if (damage > 0)
+		if (((Zombie) mon).isPlayerAttackPrevented()) //If player is incapacitated
 		{
-			System.out.println("You attack for " + damage + " damage.");
+			System.out.println("You are incapacitated!\n");
 		}
 		else
 		{
-			System.out.println("You attack and miss!");
+			if (rnd.nextInt(100) < 80)
+			{
+				//Damage = player attack (minus 1 for every 5 defense the monster has)
+				damage = this.getAttack() - mon.getDefense() / 5; 
+				mon.setHealth(mon.getHealth() - damage);
+			}
+			
+			if (damage > 0)
+			{
+				System.out.println("You attack for " + damage + " damage.");
+			}
+			else
+			{
+				System.out.println("You attack and miss!");
+			}
 		}
 	}
 	
@@ -184,15 +191,15 @@ public class Player extends Monster implements Serializable
 	public String inventoryToString()
 	{
 		String invStr = "";
-		for(String key : playerInventory.keySet())
-		{
-			invStr += playerInventory.get(key).getName();
-			if (playerInventory.get(key).isCurrentlyEquipped())
+			for(String key : playerInventory.keySet())
 			{
-				invStr += " (Equipped)";
+				invStr += playerInventory.get(key).getName();
+				if (playerInventory.get(key).isCurrentlyEquipped())
+				{
+					invStr += " (Equipped)";
+				}
+				invStr += "\n";
 			}
-			invStr += "\n";
-		}
 
 		if (invStr.length() > 0)
 		{

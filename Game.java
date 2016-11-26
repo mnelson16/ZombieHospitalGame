@@ -5,16 +5,27 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+/**Class: Game
+ * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
+ * @version 1.0
+ * Course: ITEC 3860 Fall 2016
+ * Written: Nov 20, 2016
+ * 
+ *
+ * This class provides the blueprint for Game files
+ *
+ * Purpose: Handle saving, loading, and starting a new game.
+ */
+
 public class Game
 {
-	private RoomFactory rf = new RoomFactory();
-	private Player newPlayer = new Player("00", 20, 5, 5, "L1001");
-	private HashMap<String, Room> updatedRooms = new HashMap<String, Room>(), rooms = rf.getRooms();
+	private Player newPlayer = new Player("00", 20, 5, 0, "L1001");
+	private HashMap<String, Room> updatedRooms = new HashMap<String, Room>(), rooms = RoomFactory.getRooms();
 	private Player player;
 	
 	public void makeNewGame()
 	{
-		saveGame(ZHTester.stockSave, newPlayer, rf.getRooms());
+		saveGame(ZHTester.stockSave, newPlayer, RoomFactory.getRooms());
 	}
 	
 	public void newGame()

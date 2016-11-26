@@ -19,9 +19,9 @@ public class PuzzleFactory
 		Puzzle tempPuzzle;
 		
 		//Puzzle 1
-		options.add("a. Reach hand through glass and unlock door.");
-		options.add("b. Yell down hallway.");
-		options.add("c. Pry off boards.");
+		options.add("a. Reach your hand through glass and unlock the door.");
+		options.add("b. Yell down the hallway.");
+		options.add("c. Pry off the boards.");
 		options.add("d. Continue exploring elsewhere.");
 		
 		responses.put('a', "You attempt to reach your hand through the glass on the door, but"
@@ -31,7 +31,7 @@ public class PuzzleFactory
 		responses.put('d', "You return to the previous room.");
 		
 		tempPuzzle = new Puzzle("PUZ001", "1", "You come across a boarded up door marked "
-				+ "‚ÄúDEAD AHEAD, DO NOT OPEN.‚Äù Through the broken glass, you "
+				+ "ìDEAD AHEAD, DO NOT OPEN.î Through the broken glass, you "
 				+ "can see what appears to be blood on the floor beyond.", 'd', '\0',
 				'\0', '\0', '\0', '\0', new Character[] {'c'}, new Character[] {'a'},
 				options, responses, false);
@@ -57,7 +57,7 @@ public class PuzzleFactory
 				+ "navigate. You see what used to be a light switch, but the cover is ripped "
 				+ "from the wall and the wires exposed. Faced with such a circumstance, there "
 				+ "is no shame in retreating for more information. But perhaps there is "
-				+ "something here to help‚Ä¶", '\0', '\0',
+				+ "something here to helpÖ", '\0', '\0',
 				'd', '\0', '\0', '\0', new Character[] {'d'}, new Character[] {'a', 'b', 'c'}, 
 				options2, responses2, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
@@ -69,13 +69,13 @@ public class PuzzleFactory
 		//Puzzle 3
 		options3.add("a. Charge the zombie!");
 		options3.add("b. Try and sneak into a nearby room.");
-		options3.add("c. Stand perfectly still and hope the zombie doesn‚Äôt see you.");
+		options3.add("c. Stand perfectly still and hope the zombie doesnít see you.");
 		options3.add("d. Quietly walk back to the last room.");
 		
 		responses3.put('a', "Fighting dead people is harder than it sounds, and the zombie "
 				+ "manages to inflict a pretty nasty wound. Puzzle solved!");
 		responses3.put('b', "The door is locked, and the zombie hears you're struggling with the "
-				+ "handle! He attacks! Fortunately, he isn‚Äôt too strong and you manage to put "
+				+ "handle! He attacks! Fortunately, he isnít too strong and you manage to put "
 				+ "him back to rest with only minor scratches. Puzzle solved!");
 		responses3.put('c', "You stand still and hold your breath, heart pounding as the zombie "
 				+ "shuffles past you. Right as he passes, you knock him over the head. Puzzle solved!");
@@ -84,7 +84,7 @@ public class PuzzleFactory
 		tempPuzzle = new Puzzle("PUZ003", "3", "As you approach the next room, you hear a "
 				+ "grumble and a shuffle from around the corner. You retreat back, and a "
 				+ "zombie comes around, shuffling dead-eyed down the hall towards you. You "
-				+ "know that there are two things that zombies are sensitive towards ‚Äì "
+				+ "know that there are two things that zombies are sensitive towards ñ "
 				+ "noise, and blunt objects to the skull.", 'd', '\0',
 				'\0', '\0', '\0', 'a', new Character[] {'a', 'b', 'c'}, new Character[] {'b'}, 
 				options3, responses3, false);
@@ -98,16 +98,16 @@ public class PuzzleFactory
 		options4.add("a. Slip the suit on, perhaps it could come in handy later?");
 		options4.add("b. Drop any other armor you are carrying and pick the suit up.");
 		options4.add("c. Leave the suit behind, it looks useless.");
-		options4.add("d. This room doesn‚Äôt look like anything you want a part of. Turn back.");
+		options4.add("d. This room doesnít look like anything you want a part of. Turn back.");
 		
 		responses4.put('a', "Puzzle solved!");
 		responses4.put('b', "Obamacare in inventory, lose any other armor currently holding. Puzzle solved!");
 		responses4.put('c', "Puzzle solved!");
 		responses4.put('d', "You return to the previous room.");
 		
-		tempPuzzle = new Puzzle("PUZ004", "4", "You come across a room marked ‚ÄúPublic Health Care Center.‚Äù Opening the"
+		tempPuzzle = new Puzzle("PUZ004", "4", "You come across a room marked ìPublic Health Care Center.î Opening the"
 				+ " door, it is all but barren; save for a dirty, hole-ridden HazMat suit. Upon closer investigation, "
-				+ "the suit contains a barely legible label reading ‚ÄúObamacare Issue #23-B.‚Äù The suit looks like it would"
+				+ "the suit contains a barely legible label reading ìObamacare Issue #23-B.î The suit looks like it would"
 				+ " only provide minimal protection, and it will surely fall to pieces if you were to ever try and remove it", 
 				'd', 'a', 'b', '\0', '\0', '\0', new Character[] {'a', 'b', 'c'}, new Character[] {'\0'}, options4, responses4, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
@@ -129,8 +129,8 @@ public class PuzzleFactory
 				+ "fills your nostrils. In the corner of the room, a fire blazes. Upon closer inspection, you "
 				+ "realize it is a pile of dead bodies. You notice a fire safety box on the wall, and you could "
 				+ "surely use all the karma you can get. But then again, the linoleum tile should not catch, "
-				+ "and you imagine that the morbid bonfire will simply burn itself out. There‚Äôs no use in wasting "
-				+ "energy in a hopeless cause‚Ä¶", 'c', '\0', '\0', 'b', '\0', '\0', new Character[] {'a', 'b'}, 
+				+ "and you imagine that the morbid bonfire will simply burn itself out. Thereís no use in wasting "
+				+ "energy in a hopeless causeÖ", 'c', '\0', '\0', 'b', '\0', '\0', new Character[] {'a', 'b'}, 
 				new Character[] {'\0'}, options5, responses5, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
 		//End Puzzle 5
@@ -152,9 +152,9 @@ public class PuzzleFactory
 				+ "searching him, you find that he used his last bullets attempting to shoot you. You carry on. "
 				+ "Puzzle solved.");
 		responses6.put('c', "You slowly approach, kneeling next to the man. You have no words, but the gesture speaks volumes."
-				+ " The man‚Äôs eyes swell with tears. Slowly, he removes his gun and places it in your hand. He tries to "
+				+ " The manís eyes swell with tears. Slowly, he removes his gun and places it in your hand. He tries to "
 				+ "mutter something, but cannot find the energy. His eyes slowly close, but at least there is peace on his"
-				+ " face. ‚Äì Receive gun. Puzzle solved.");
+				+ " face. ñ Receive gun. Puzzle solved.");
 		responses6.put('d', "You returned to the previous room.");
 		
 		tempPuzzle = new Puzzle("PUZ006", "6", "You come across a severely injured security guard. His eyes are beginning to "
@@ -175,7 +175,7 @@ public class PuzzleFactory
 		responses7.put('b', "You returned to the previous room.");
 		
 		tempPuzzle = new Puzzle("PUZ007", "7", "You come across a locked door. Next to the "
-				+ "frame lies a dusty password keyboard. What do you do?", 'b', '\0', '\0', '\0',
+				+ "frame lies a dusty password keyboard.", 'b', '\0', '\0', '\0',
 				'a', '\0', new Character[] {'a'}, new Character[] {'\0'}, options7, responses7, false);
 		puzzles.put(tempPuzzle.getPuzzleID(), tempPuzzle);
 		//End Puzzle 7

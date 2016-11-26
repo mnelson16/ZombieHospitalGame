@@ -11,9 +11,9 @@ import java.util.Scanner;
  * Written: Oct 24, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class organizes Puzzle structure. Allows puzzle to damage player or equip items.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: create a system for the player to solve puzzles.
  */
 
 public class Puzzle implements Serializable
@@ -137,6 +137,7 @@ public class Puzzle implements Serializable
 					boolean finished = false;
 					while(!finished)
 					{
+						System.out.print("> ");
 						String userCheck = input.nextLine();
 						if(userCheck.equalsIgnoreCase("silence"))
 						{
@@ -216,5 +217,213 @@ public class Puzzle implements Serializable
 	public void setGoBack(boolean goBack)
 	{
 		this.goBack = goBack;
+	}
+
+	/**
+	 * @return the roomID
+	 */
+	public String getRoomID()
+	{
+		return roomID;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription()
+	{
+		return description;
+	}
+
+	/**
+	 * @return the backOption
+	 */
+	public char getBackOption()
+	{
+		return backOption;
+	}
+
+	/**
+	 * @return the equipOption
+	 */
+	public char getEquipOption()
+	{
+		return equipOption;
+	}
+
+	/**
+	 * @return the itemOption
+	 */
+	public char getItemOption()
+	{
+		return itemOption;
+	}
+
+	/**
+	 * @return the possibleOption
+	 */
+	public char getPossibleOption()
+	{
+		return possibleOption;
+	}
+
+	/**
+	 * @return the inputOption
+	 */
+	public char getInputOption()
+	{
+		return inputOption;
+	}
+
+	/**
+	 * @return the injureOption
+	 */
+	public char getInjureOption()
+	{
+		return injureOption;
+	}
+
+	/**
+	 * @return the damageOption
+	 */
+	public Character[] getDamageOption()
+	{
+		return damageOption;
+	}
+
+	/**
+	 * @return the options
+	 */
+	public ArrayList<String> getOptions()
+	{
+		return options;
+	}
+
+	/**
+	 * @return the responses
+	 */
+	public LinkedHashMap<Character, String> getResponses()
+	{
+		return responses;
+	}
+
+	/**
+	 * @return the input
+	 */
+	public Scanner getInput()
+	{
+		return input;
+	}
+
+	/**
+	 * @param puzzleID the puzzleID to set
+	 */
+	public void setPuzzleID(String puzzleID)
+	{
+		this.puzzleID = puzzleID;
+	}
+
+	/**
+	 * @param roomID the roomID to set
+	 */
+	public void setRoomID(String roomID)
+	{
+		this.roomID = roomID;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	/**
+	 * @param backOption the backOption to set
+	 */
+	public void setBackOption(char backOption)
+	{
+		this.backOption = backOption;
+	}
+
+	/**
+	 * @param equipOption the equipOption to set
+	 */
+	public void setEquipOption(char equipOption)
+	{
+		this.equipOption = equipOption;
+	}
+
+	/**
+	 * @param itemOption the itemOption to set
+	 */
+	public void setItemOption(char itemOption)
+	{
+		this.itemOption = itemOption;
+	}
+
+	/**
+	 * @param possibleOption the possibleOption to set
+	 */
+	public void setPossibleOption(char possibleOption)
+	{
+		this.possibleOption = possibleOption;
+	}
+
+	/**
+	 * @param inputOption the inputOption to set
+	 */
+	public void setInputOption(char inputOption)
+	{
+		this.inputOption = inputOption;
+	}
+
+	/**
+	 * @param injureOption the injureOption to set
+	 */
+	public void setInjureOption(char injureOption)
+	{
+		this.injureOption = injureOption;
+	}
+
+	/**
+	 * @param correctOption the correctOption to set
+	 */
+	public void setCorrectOption(Character[] correctOption)
+	{
+		this.correctOption = correctOption;
+	}
+
+	/**
+	 * @param damageOption the damageOption to set
+	 */
+	public void setDamageOption(Character[] damageOption)
+	{
+		this.damageOption = damageOption;
+	}
+
+	/**
+	 * @param options the options to set
+	 */
+	public void setOptions(ArrayList<String> options)
+	{
+		this.options = options;
+	}
+
+	/**
+	 * @param responses the responses to set
+	 */
+	public void setResponses(LinkedHashMap<Character, String> responses)
+	{
+		this.responses = responses;
+	}
+
+	/**
+	 * @param input the input to set
+	 */
+	public void setInput(Scanner input)
+	{
+		this.input = input;
 	}
 }

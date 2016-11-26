@@ -31,40 +31,31 @@ public class ZHTester
 	 */
 	public static void main(String[] args)
 	{
-		Zombie tempZom = new Zombie("M01", 50, 1, null, "Patient Zombie", "Standard attack", 0, 0);
+		ZombieFactory.createZombies();
 		Scanner input = new Scanner(System.in);
 		GameSubsystem gs = new GameSubsystem();
 		CharacterSubsystem cs = new CharacterSubsystem();
 		RoomSubsystem rs = new RoomSubsystem();
 		player = gs.game.getNewPlayer();
 		rooms = gs.game.getRooms();
-		boolean monster_in_room = true;
-		//Temporary - inventory should be added to in... room?
-		player.setPlayerInventory(ArtifactFactory.createArtifacts());
 
-		//Temp
-		String help = "Available commands: \n"
-				+ "Fight, Go <Direction>, Help, Inventory, Observe <Item>, Stats, Use <Item>";
-		System.out.println(help);
+		String help = "Available Commands: \n"
+				+ "--Help Commands-- Help (Displays available commands and current room exits.)\n"
+				+ "--Game Commands-- New, Save, Load \n"
+				+ "--Other Commands-- Go <North, South, East, or West>, Inventory, Observe <Item>, Stats, Use <Item>";
+		System.out.println(help + "\n");
 		gs.game.makeNewGame();
 
 		System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
-		System.out.println(rs.activeRoom.getDescription());
-
-		if (monster_in_room)
-		{
-
-		}
-
-		/*
-		 * "take" command go to room?
-		 */
+		rooms.get(player.getCurrentRoomID()).setDescription("This is where you woke up. "
+				+ "There's nothing interesting to find here.");
 
 		while (true)
 		{
-			System.out.print("> ");
+			System.out.print("\n> ");
 			userInput = input.nextLine().toLowerCase();
 			userInput = userInput.replaceAll(" ", "_");
+			System.out.print("\n");
 
 			if (userInput.contains("_")) //If userInput is multi-word
 			{
@@ -77,16 +68,19 @@ public class ZHTester
 				command = userInput;
 				object = "";
 			}
-
-			//Temp, move help functionality to Game class
+			
 			if (command.equals("help"))
 			{
+				if (rs.getActiveRoom() != null)
+				{
+					help += "\n" + rs.getActiveRoom().getExits();
+				}
 				System.out.println(help);
 			}
 			else if (command.equals("use") || command.equals("observe") || command.equals("stats")
-					|| command.equals("inventory") || command.equals("fight"))
+					|| command.equals("inventory") || command.equals("take"))
 			{
-				cs.CSRun(player, command, object, tempZom);
+				cs.CSRun(player, rooms, command, object);
 			}
 			else if(command.equals("go"))
 			{

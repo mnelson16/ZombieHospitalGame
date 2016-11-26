@@ -1,11 +1,6 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import org.apache.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.StrBuilder;
+//import org.apache.commons.lang3.StringUtils;
 
 /**Class: Room
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
@@ -14,9 +9,9 @@ import org.apache.commons.lang3.text.StrBuilder;
  * Written: Oct 24, 2016
  * 
  *
- * This class - now describe what the class does
+ * This class provides the blueprint for Room.
  *
- * Purpose: - Describe the purpose of this class
+ * Purpose: Hold information relating to what the player can do in a given room.
  */
 
 public class Room implements Serializable
@@ -87,9 +82,17 @@ public class Room implements Serializable
 	}
 	public String getExits()
 	{
-		String str = StringUtils.join(exitIDs.keySet().toArray(), ", ");
-		str = "EXITS ARE: [" + str.toUpperCase() + "]";
-		return str;
+		String exStr = "";
+		for (String exit : exitIDs.keySet())
+		{
+			exStr += exit + ", ";
+		}
+		if (exStr.length() > 0)
+		{
+			exStr = exStr.substring(0, exStr.length() - 2);
+			return "EXITS ARE: [" + exStr.toUpperCase() + "]";
+		}
+		return "NO EXITS";
 	}
 	public void setRoomID(String roomID) 
 	{
@@ -98,10 +101,6 @@ public class Room implements Serializable
 	public void setDescription(String description) 
 	{
 		this.description = description;
-	}
-	public void setMonsters(Zombie zombie) 
-	{
-		this.zombie = zombie;
 	}
 	public void setPuzzle(Puzzle puzzle) 
 	{
@@ -117,7 +116,8 @@ public class Room implements Serializable
 	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
 	}
-	public void setZombie(Zombie zombie) {
+	public void setZombie(Zombie zombie) 
+	{
 		this.zombie = zombie;
 	}
 	public void setExits(Room north, Room east, Room south, Room west) 
