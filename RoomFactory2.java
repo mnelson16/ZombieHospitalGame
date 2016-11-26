@@ -30,7 +30,7 @@ public class RoomFactory
 					+ "\nsome rooms, but cannot see anything through the windows in the doors. A cold "
 					+ "\ndraft sets over you.", false, pf.getPuzzles().get("PUZ001"), af.getAllArtifacts().get("Crowbar"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L1004","Moving forward you goes to the Cafeteria. You go to the McDonald’s"
+			tempRoom = new Room("L1004","Moving forward you go to the Cafeteria. You go to the McDonald’s"
 					+ "\nand looks around for food. But everything needs to be microwaved and the microwave "
 					+ "\nhas no power. You try to open the freezer because there is banging around in there, "
 					+ "\nbut the door won’t budge.", false);
@@ -59,7 +59,7 @@ public class RoomFactory
 			tempRoom = new Room("L1010","There are headphones on the ground next to the Player’s feet."
 					+ " \nAnd that humming was coming from the possibly tone deaf Janitor Zombie!"
 					+ " \nThe floors are being mopped with blood and body parts by the Janitor Zombie."
-					+ " \nThe Player thinks “I’ve heard of working over-time but not working after-death”..", true,zf.getAllZombies().get("MO2") ,af.getAllArtifacts().get("Mop Handle"));
+					+ " \nYou think to yourself “I’ve heard of working over-time but not working after-death”..", true,zf.getAllZombies().get("MO2") ,af.getAllArtifacts().get("Mop Handle"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			
 			tempRoom = new Room("L2001","Fresh air assaults your nostrils."
@@ -76,7 +76,7 @@ public class RoomFactory
 					+ " \nYour body still cold from the encounter."
 					+ " \nYou take a moment to rest before pressing on.", false);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L2004","Puzzle Text will display itself.", false, pf.getPuzzles().get("PUZ003"), null);
+			tempRoom = new Room("L2004","You enter the hallway.", false, pf.getPuzzles().get("PUZ003"), null);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			tempRoom = new Room("L2005","The grass here is wet with dew."
 					+ " \n“Odd” you think to yourself as it is the middle of the day."
@@ -89,7 +89,7 @@ public class RoomFactory
 					+ " \nThe words “There is no hope” are written in blood on its otherwise unblemished surface."
 					+ "\n“Damn kids” you think to yourself.", false);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L2007","Puzzle text will display itself", false, pf.getPuzzles().get("PUZ004"), af.getAllArtifacts().get("Obamacare Armor"));
+			tempRoom = new Room("L2007","Moving forward,", false, pf.getPuzzles().get("PUZ004"), af.getAllArtifacts().get("Obamacare Armor"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			tempRoom = new Room("L2008","You are starting to get annoyed with how this hospital is laid out."
 					+ " \nWhat would happen if there had been an emergency?"
@@ -114,33 +114,27 @@ public class RoomFactory
 					+ " \na reception desk with blood splattered on the counter, and bloody hand/footprints leading to the North door. "
 					+ "\nOn the broken window sill the player can find a healing item.", true,af.getAllArtifacts().get("First-Aid Kit"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3002","Upon entering the player is attacked by a Plastic Surgeon Zombie, "
-					+ "\nthis Zombie will drop a scalpel that the player can pick up. "
-					+ "\nThe room is covered in blood, the ceiling is crumbling and"
-					+ "\nthere is one mobile metal patient bed that has been torn apart.", false,zf.getAllZombies().get("MO5"),af.getAllArtifacts().get("Scalpel"));
+			tempRoom = new Room("L3002", "The room is covered in blood, the ceiling is crumbling and"
+					+ "\nthere is one mobile metal patient bed that has been torn apart."
+					+ "As you approach the bed, somthing luncges for your feet, but you were able to jumpo back in time.", false,zf.getAllZombies().get("MO5"),af.getAllArtifacts().get("Scalpel"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3003","Upon entering the room a puzzle dialog will pop up,"
-					+ "\nthe player will have to solve it to continue. "
-					+ "\nThis room was the operating room for the plastic surgeon, there is an operating table in the middle of the room covered in blood, human skin, and body fluids, "
+			tempRoom = new Room("L3003", "This room was the operating room for the plastic surgeon, there is an operating table in the middle of the room covered in blood, human skin, and body fluids, "
 					+ "\nand there is a small desk with patient files and pictures, scalpels, several jars of lips, "
 					+ "\nA Joan Rivers shrine, and other instruments for surgery.", false, pf.getPuzzles().get("PUZ005"),null);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			tempRoom = new Room("L3004","The lights are flickering on and off irregularly, there is a human brain in the middle of the room and all around the brain are blood, bent scalpels, a broken drill, and bloody hand prints. "
 					+ "\nThe room looks like remnants of a waiting room, the chairs are stacked to the ceiling, and the small check-in desk is broken in half. "
-					+ "\nIn between the broken desk fragments the player can find a healing item.", false,af.getAllArtifacts().get("First-Aid Kit"));
+					, false,af.getAllArtifacts().get("First-Aid Kit"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3005","Upon entering the player is attacked by a Brain Surgeon Zombie. "
-					+ "\nThe brain surgeon zombie will drop a bone saw and a bloody note. This area is the surgeon's operating room, there is a broken operating table leaning against the wall. "
+			tempRoom = new Room("L3005","This area is the surgeon's operating room, there is a broken operating table leaning against the wall. "
 					+ "\nThe floor is sticky and covered in. The smell is unbearable."
 					+ "\nThe door to the east has a strange bloody insignia on it reminiscent of a skull.", false,zf.getAllZombies().get("MO6"),af.getAllArtifacts().get("Bone Saw" + "Random Note"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			tempRoom = new Room("L3006","This room is mostly dark with a dimly lit small lamp in the far right of the room. "
 					+ "\nThe floor is still sticky. Once your eyes adjust you can make out the shapes of old filing cabinets, extra medical supplies, bandages, strewn pills, more jars with unidentifiable human parts, "
-					+ "\nand more blood than you have seen anywhere else in the hospital. "
-					+ "\nThere is a health item the player can pick up when looking at the pills.", false,af.getAllArtifacts().get("First-Aid Kit"));
+					+ "\nand more blood than you have seen anywhere else in the hospital. ", false,af.getAllArtifacts().get("First-Aid Kit"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3007","Upon entering the room a puzzle dialog will pop up, "
-					+ "\nthe player will have to solve it to continue. The room is very dark,"
+			tempRoom = new Room("L3007","The room is very dark,"
 					+ "\nyou step in some liquid feel around with your foot and notice a narrow "
 					+ "\ntrail leading to the west.", false, pf.getPuzzles().get("PUZ006"),null);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
@@ -148,15 +142,12 @@ public class RoomFactory
 					+ "\nThere are bloody rags and bandages covering the floors and corpses lie still on stretchers. "
 					+ "\nThe amount of light in this room in contrast with the previous rooms makes your eyes constrict painfully.", false);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3009","Upon entering the room a puzzle dialog will pop up; "
-					+ "\nthe player will have to solve it to continue. "
-					+ "\nThe note from the Brain Surgeon Zombie is the solution to this puzzle, "
-					+ "\nthis room has a few chairs against the north wall and a large counter that stretches across the south wall,"
+			tempRoom = new Room("L3009",
+					 "This room has a few chairs against the north wall and a large counter that stretches across the south wall,"
 					+ "\nand it looks like a room for blood work and other medical samples. On the counter are glass and plastic vials, "
 					+ "\nstands, cotton swabs, bandages, forms, chemical tester strips, and a health item.", true, pf.getPuzzles().get("PUZ007"),af.getAllArtifacts().get("First-Aid Kit"));
 			rooms.put(tempRoom.getRoomID(), tempRoom);
-			tempRoom = new Room("L3010","Upon entering the room you are attacked by a Surgeon General Zombie. "
-					+ "\nThere is a spotlight on the west wall with a broken window, there is a message written in blood on the walls, "
+			tempRoom = new Room("L3010", "There is a spotlight on the west wall with a broken window, there is a message written in blood on the walls, "
 					+ "\nyou make out: Death will consume you, light goes dark. The only way out is through.", true,zf.getAllZombies().get("MO7"), null);
 			rooms.put(tempRoom.getRoomID(), tempRoom);
 			
