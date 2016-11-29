@@ -93,12 +93,10 @@ public class Artifact implements Serializable
 				if (isWeapon)
 				{
 					player.setWeaponEq(null);
-					player.setWeaponHeld(this);
 				}
 				else if (isArmor)
 				{
 					player.setArmorEq(null);
-					player.setArmorHeld(this);
 				}
 				
 				currentlyEquipped = false;
@@ -126,7 +124,6 @@ public class Artifact implements Serializable
 					}
 					
 					player.setWeaponEq(this);
-					player.setWeaponHeld(null);
 				}
 				else if (isArmor)
 				{
@@ -143,7 +140,6 @@ public class Artifact implements Serializable
 					}
 					
 					player.setArmorEq(this);
-					player.setArmorHeld(null);
 				}
 				
 				currentlyEquipped = true;
