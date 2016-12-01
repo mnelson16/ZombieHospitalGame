@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 24, 2016
- * 
+ *
  *
  * This class organizes Puzzle structure. Allows puzzle to damage player or equip items.
  *
@@ -20,20 +20,20 @@ import java.util.Scanner;
 public class Puzzle implements Serializable
 {
 	private String puzzleID, roomID, description;
-	private char chosenOption, backOption, equipOption, itemOption, 
+	private char chosenOption, backOption, equipOption, itemOption,
 		possibleOption, inputOption, injureOption;
 	private Character[] correctOption, damageOption;
 	private ArrayList<String> options;
-	private LinkedHashMap<Character, String> responses = 
+	private LinkedHashMap<Character, String> responses =
 			new LinkedHashMap<Character, String>();
 	private boolean solved, goBack;
 	private transient Scanner input;
 
 	/**
-	 * 
+	 *
 	 */
-	public Puzzle(String puzzleID, String roomID, String description, 
-			char backOption, char equipOption, char itemOption, 
+	public Puzzle(String puzzleID, String roomID, String description,
+			char backOption, char equipOption, char itemOption,
 			char possibleOption, char inputOption, char injureOption,
 			Character[] correctOption, Character[] damageOption, ArrayList<String> options,
 			LinkedHashMap<Character, String> responses, boolean solved)
@@ -64,19 +64,27 @@ public class Puzzle implements Serializable
         }
 		System.out.println("What do you do?");
 	}
-	
+
 	public void solvePuzzle(Player mon, String userInput, HashMap<String, Artifact> artifacts)
 	{
 		input = new Scanner(System.in);
 		char userAnswer = userInput.charAt(0);
 		setChosenOption(userAnswer);
 		goBack = false;
-		
+
 		if(responses.containsKey(userAnswer))
 		{
-			System.out.println(responses.get(userAnswer));
 			if(Arrays.asList(correctOption).contains(userAnswer))
 			{
+				if(puzzleID.equalsIgnoreCase("PUZ001"))
+				{
+					if(!mon.getPlayerInventory().containsKey("Crowbar"))
+					{
+						userAnswer = 'd';
+						System.out.println("You can't pry with your hands.. You return to the previoius room to search for\n"
+								+ "something to pry the boards.");
+					}
+				}
 				if(userAnswer == equipOption) //choice to equip armor
 				{
 					LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
@@ -164,39 +172,51 @@ public class Puzzle implements Serializable
 				{
 					solved = false;
 				}
+				System.out.println(responses.get(userAnswer));
 			}
 			if(userAnswer == backOption)
 			{
+				System.out.println(responses.get(userAnswer));
 				goBack = true;
 			}
 			if(Arrays.asList(damageOption).contains(userAnswer))
 			{
+				if(puzzleID.equalsIgnoreCase("PUZ002"))
+				{
+					if(userAnswer == 'b')
+					{
+						LinkedHashMap<String, Artifact> updatedInv = mon.getPlayerInventory();
+						updatedInv.put("Old Nail", artifacts.get("Old Nail"));
+						mon.setPlayerInventory(updatedInv);
+					}
+				}
 				mon.setHealth(mon.getHealth() - 5);
+				System.out.println(responses.get(userAnswer));
 				System.out.println("-5 health!");
 			}
 		}
 	}
-	
+
 	public String getPuzzleID()
 	{
 		return puzzleID;
 	}
-	
+
 	public char getChosenOption()
 	{
 		return chosenOption;
 	}
-	
+
 	public Character[] getCorrectOption()
 	{
         return correctOption;
 	}
-	
+
 	public boolean getSolved()
 	{
 		return solved;
 	}
-	
+
 	public boolean getGoBack()
 	{
 		return goBack;
@@ -206,12 +226,12 @@ public class Puzzle implements Serializable
 	{
 		this.chosenOption = chosenOption;
 	}
-	
+
 	public void setSolved(boolean solved)
 	{
 		this.solved = solved;
 	}
-	
+
 	public void setGoBack(boolean goBack)
 	{
 		this.goBack = goBack;
