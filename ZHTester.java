@@ -1,13 +1,21 @@
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 /**Class: ZHTester
  * @authors Janna Timmer, Matthew Nelson, Matthew Xiong
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 3, 2016
- * 
+ *
  *
  * This class handles user input and organizes/combines subsystem components.
  *
@@ -20,7 +28,7 @@ public class ZHTester
 	private static Player player;// = new Player("00", 10, 10, 0, null);
 	private static HashMap<String, Room> rooms;
 	private static HashMap<String, Artifact> artifacts;
-	public static File stockSave = new File("stockSave.dat"), save1 = new File("save1.dat"), 
+	public static File stockSave = new File("stockSave.dat"), save1 = new File("save1.dat"),
 			save2 = new File("save2.dat"), save3 = new File("save3.dat");
 
 
@@ -45,60 +53,65 @@ public class ZHTester
 		String help = "Available Commands: \n"
 				+ "--Help Commands-- Help (Displays available commands and current room exits.)\n"
 				+ "--Game Commands-- New, Save, Load \n"
-				+ "--Other Commands-- Go <Direction>, Inventory, Observe <Item>, Stats, Use <Item>";
+				+ "--Other Commands-- Go <Direction>, Inventory, Observe <Item>, Stats, Use <Item>, Take <Item>";
 		System.out.println(help + "\n");
-		
+
 		System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
 		rooms.get(player.getCurrentRoomID()).setDescription("This is where you woke up. "
 				+ "There's nothing interesting to find here.");
-
-		while (true)
-		{
-			System.out.print("> ");
-			userInput = input.nextLine().toLowerCase();
-			userInput = userInput.replaceAll(" ", "_");
-			System.out.print("\n");
-
-			if (userInput.contains("_")) //If userInput is multi-word
+			while (true)
 			{
-				command = userInput.substring(0, userInput.indexOf("_"));
-				//Set object to word(s) after command with underscores replacing spaces
-				object = userInput.substring(userInput.indexOf("_") + 1);
-			}
-			else //If userInput is one word
-			{
-				command = userInput;
-				object = "";
-			}
-			
-			if (command.equals("help"))
-			{
-				System.out.println(help);
-				if (rs.getActiveRoom() != null)
+				try
 				{
-					System.out.println("\n" + rs.getActiveRoom().getExits());
+					System.out.print("> ");
+					userInput = input.nextLine().toLowerCase();
+					userInput = userInput.replaceAll(" ", "_");
+					System.out.print("\n");
+
+					if (userInput.contains("_")) //If userInput is multi-word
+					{
+						command = userInput.substring(0, userInput.indexOf("_"));
+						//Set object to word(s) after command with underscores replacing spaces
+						object = userInput.substring(userInput.indexOf("_") + 1);
+					}
+					else //If userInput is one word
+					{
+						command = userInput;
+						object = "";
+					}
+
+					if(player.getHealth() <= 0)
+					{
+						System.out.println("You died.. \nStarting new game!");
+						gs.game.newGame();
+					}
+					else if (command.equals("help"))
+					{
+						System.out.println(help);
+						if (rs.getActiveRoom() != null)
+						{
+							System.out.println("\n" + rs.getActiveRoom().getExits());
+						}
+					}
+					else if (command.equals("use") || command.equals("observe") || command.equals("stats")
+							|| command.equals("inventory") || command.equals("take"))
+					{
+						cs.CSRun(player, rooms, command, object);
+					}
+					else if(command.equals("go"))
+					{
+						rs.RSRun(player, rooms, command, object, artifacts);
+					}
+					else if(command.equals("new") || command.equals("save") || command.equals("load"))
+					{
+						gs.GSRun(player, rooms, command, object);
+					}
+				}
+				catch(Exception e)
+				{
+					System.out.println("What is it you want to do?");
 				}
 			}
-			else if (command.equals("use") || command.equals("observe") || command.equals("stats")
-					|| command.equals("inventory") || command.equals("take"))
-			{
-				cs.CSRun(player, rooms, command, object);
-			}
-			else if(command.equals("go"))
-			{
-				rs.RSRun(player, rooms, command, object, artifacts);
-			}
-			else if(command.equals("new") || command.equals("save") || command.equals("load"))
-			{
-				gs.GSRun(player, rooms, command, object);
-			}
-			else 
-			{
-				System.out.println("What is it you want to do?");
-			}
-
-			//System.out.println();
-		}
 	}
 
 	public Player getPlayer()
