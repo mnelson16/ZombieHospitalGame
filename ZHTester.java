@@ -55,8 +55,7 @@ public class ZHTester
 				+ "--Help Commands-- Help (Displays available commands and current room exits.)\n"
 				+ "--Game Commands-- New, Save, Load \n"
 				+ "--Other Commands-- Go <Direction>, Inventory, Observe <Item>, Stats, Take <Item>, Use <Item>";*/
-		String help = "Available Commands: "
-				+ "\n--Help Commands-- "
+		String help = "--Help Commands--"
 				+ "\nHelp (Displays available commands and current room exits.)"
 				+ "\n--Game Commands-- "
 				+ "\nNew || Save || Load"
