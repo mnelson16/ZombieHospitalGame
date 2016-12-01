@@ -30,6 +30,7 @@ public class Game
 	
 	public void newGame()
 	{
+		System.out.print("New Game ");
 		loadGame(ZHTester.stockSave);
 	}
 	
@@ -66,9 +67,14 @@ public class Game
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println("That file doesn't seem to exist.. Create a file\n"
+					+ "and then load it!");
 		}
-		System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
+		if(player != null)
+		{
+			System.out.println("Loading... ");
+			System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
+		}
 	}
 
 	public HashMap<String, Room> getRooms()
