@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Nov 20, 2016
- * 
+ *
  *
  * This class creates and collects Room objects.
  *
@@ -16,8 +16,6 @@ import java.util.LinkedHashMap;
 public class RoomFactory
 {
 	private static HashMap<String, Room> rooms ;
-	private static HashMap<String, Artifact> artifacts;
-	private static HashMap<String, Zombie> zombies;
 
 	/**getRooms
 	 * Creates and returns all the rooms in the game.
@@ -30,34 +28,34 @@ public class RoomFactory
 		rooms = new LinkedHashMap<String, Room>();
 
 		Room tempRoom;
-		/* Constructor 
+		/* Constructor
 		 * String roomID, String description, Map<String, Room> exitIDs, boolean saveableRoom
 		 */
-		tempRoom = new Room("L1001", 
-				"You wake up on the floor of a hospital room. It’s quiet for a hospital. "
+		tempRoom = new Room("L1001",
+				"You wake up on the floor of a hospital room. Itâ€™s quiet for a hospital. "
 				+ "\nThe nurse call button seems to be broken, and none of the machines"
-				+ " \nin the room have power.", true);
+				+ " \nin the room have power.", true, af.getAllArtifacts().get("Crowbar"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
-		tempRoom = new Room("L1002", 
+		tempRoom = new Room("L1002",
 				"Out in the hallway, the hospital looks abandoned. You think \"Have the "
 				+ "\nnurses gone on strike?\" You wander around and find the reception desk. "
 				+ "\nYou discover some whiskey hidden inside.", false, af.getAllArtifacts().get("Whiskey"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
-		tempRoom = new Room("L1003", 
+		tempRoom = new Room("L1003",
 				"Down the hallway you go. You can hear moans coming from some rooms, "
 				+ "\nbut cannot see anything through the windows in the doors. A cold "
-				+ "\ndraft sets over you.", false, pf.getPuzzles().get("PUZ001"), af.getAllArtifacts().get("Crowbar"));
+				+ "\ndraft sets over you.", false, pf.getPuzzles().get("PUZ001"), null);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1004",
-				"Moving forward, you head to the Cafeteria. You walk to the McDonald’s and look "
+				"Moving forward, you head to the Cafeteria. You walk to the McDonaldâ€™s and look "
 				+ "\naround for food, but everything needs to be microwaved, and the microwave has "
 				+ "\nno power. You hear some banging around in the freezer and try to open it,"
-				+ "\nbut the door won’t budge.", false);
+				+ "\nbut the door wonâ€™t budge.", false);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1005",
 				"This is the waiting area. People would normally wait here for a check-up. "
 				+ "\nAll the chairs have been wrecked. Blood has been splattered everywhere, and the"
-				+ "\nstench is overwhelming. You think, \"Can’t believe I miss that old hospital smell.\"", 
+				+ "\nstench is overwhelming. You think, \"Canâ€™t believe I miss that old hospital smell.\"",
 				false, ZombieFactory.getAllZombies().get("M08"),af.getAllArtifacts().get("Mixtape"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1006",
@@ -66,10 +64,10 @@ public class RoomFactory
 				+ "\nthat says E.R. above the door west of you is flashing.", false);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1007",
-				"This room is where doctors like to give patients bad news. It’s painted "
-				+ "\na sky blue and has inspirational posters. It’s more of an office. You hear "
-				+ "\nsome eating noises from behind the doctor’s desk. When you enter to see who "
-				+ "\nis eating what, you find a zombie eating the doctor’s brains. Then the "
+				"This room is where doctors like to give patients bad news. Itâ€™s painted "
+				+ "\na sky blue and has inspirational posters. Itâ€™s more of an office. You hear "
+				+ "\nsome eating noises from behind the doctorâ€™s desk. When you enter to see who "
+				+ "\nis eating what, you find a zombie eating the doctorâ€™s brains. Then the "
 				+ "\nzombie stops. There is a silence as time slows down and the patient zombie "
 				+ "\nlooks dead at you.", false, ZombieFactory.getAllZombies().get("M01"),null);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
@@ -77,14 +75,14 @@ public class RoomFactory
 				false, pf.getPuzzles().get("PUZ002"),af.getAllArtifacts().get("Flashlight"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1009","This is the waiting area for the E.R. which is just as destroyed as "
-				+ "\nthe last waiting room. There's a first-aid kit lying in the midst of a broken desk.", 
+				+ "\nthe last waiting room. There's a first-aid kit lying in the midst of a broken desk.",
 				false, af.getAllArtifacts().get("First-Aid Kit"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L1010",
 				"There are headphones on the ground next to your feet. And that humming was "
 				+ "\ncoming from the possibly tone deaf Janitor Zombie! The floors are being"
-				+ "\nmopped with blood and body parts by the Janitor Zombie. You think \"I’ve "
-				+ "\nheard of working over-time but not working after-death\"...", 
+				+ "\nmopped with blood and body parts by the Janitor Zombie. You think \"Iâ€™ve "
+				+ "\nheard of working over-time but not working after-death\"...",
 				true,ZombieFactory.getAllZombies().get("M02") ,af.getAllArtifacts().get("Mop Handle"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 
@@ -99,7 +97,7 @@ public class RoomFactory
 				"You come across a large tree. In any other setting you would think "
 				+ "\nthis tree in the middle of a grassy field odd. However, now you "
 				+ "\nare just glad to find a place to rest. You begin to climb the tree "
-				+ "\nwhen out falls a woman in a nurse’s uniform. She attacks.",
+				+ "\nwhen out falls a woman in a nurseâ€™s uniform. She attacks.",
 				false,ZombieFactory.getAllZombies().get("M03"),af.getAllArtifacts().get("Syringe"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L2003",
@@ -113,7 +111,7 @@ public class RoomFactory
 				+ "\nIt is only after looking down you notice that it is not dew, but blood "
 				+ "\nlittering the ground. Something horrible waits ahead."
 				+ "\nYou attempt to continue your southward progress."
-				+ "\nHowever, you know you can’t leave without looking for further survivors.",
+				+ "\nHowever, you know you canâ€™t leave without looking for further survivors.",
 				false,af.getAllArtifacts().get("First-Aid Kit"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L2006",
@@ -122,7 +120,7 @@ public class RoomFactory
 				+ "\n\"Damn kids,\" you think to yourself.", false);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L2007", "", false, pf.getPuzzles().get("PUZ004"),
-				af.getAllArtifacts().get("Obamacare Armor"));
+				null);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L2008","You are starting to get annoyed with how this hospital is laid out."
 				+ " \nWhat would happen if there had been an emergency?"
@@ -156,7 +154,7 @@ public class RoomFactory
 		tempRoom = new Room("L3003","This room was the operating room for the plastic surgeon, there is "
 				+ "\nan operating table in the middle of the room covered in blood, human skin, "
 				+ "\nand body fluids, and there is a small desk with patient files and pictures, "
-				+ "\nscalpels, several jars of lips, a Joan Rivers shrine, and other instruments for surgery.", 
+				+ "\nscalpels, several jars of lips, a Joan Rivers shrine, and other instruments for surgery.",
 				false, pf.getPuzzles().get("PUZ005"),null);
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L3004","The lights are flickering on and off irregularly, there is a human brain"
@@ -175,7 +173,7 @@ public class RoomFactory
 				+ "\nof the room. The floor is still sticky. Once your eyes adjust, you can make out "
 				+ "\nthe shapes of old filing cabinets, extra medical supplies, bandages, strewn pills,"
 				+ "\nmore jars with unidentifiable human parts, and more blood than you have seen "
-				+ "\nanywhere else in the hospital. You notice a note on top of one of the filing cabinets.", 
+				+ "\nanywhere else in the hospital. You notice a note on top of one of the filing cabinets.",
 				false, af.getAllArtifacts().get("Note"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L3007",
@@ -186,14 +184,14 @@ public class RoomFactory
 				+ "\nwretch, this room looks like the burn unit. There are bloody rags and bandages "
 				+ "\ncovering the floors, and corpses lie still on stretchers. The amount of light in "
 				+ "\nthis room in contrast with the previous rooms makes your eyes constrict painfully."
-				+ "\nYou see a first-aid kit lying partially underneath one of the corpses.", false, 
+				+ "\nYou see a first-aid kit lying partially underneath one of the corpses.", false,
 				af.getAllArtifacts().get("First-Aid Kit"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L3009",
 				"This room has a few chairs against the north wall and a large counter that "
 				+ "\nstretches across the south wall. It looks like a room for blood work and other "
 				+ "\nmedical samples. On the counter are glass and plastic vials, stands, cotton swabs, "
-				+ "\nbandages, forms, chemical tester strips, and another first-aid kit.", true, 
+				+ "\nbandages, forms, chemical tester strips, and another first-aid kit.", true,
 				pf.getPuzzles().get("PUZ007"),af.getAllArtifacts().get("First-Aid Kit"));
 		rooms.put(tempRoom.getRoomID(), tempRoom);
 		tempRoom = new Room("L3010","There is a spotlight on the west wall with a broken window. There"
@@ -238,5 +236,5 @@ public class RoomFactory
 		return rooms;
 	}
 
-	
+
 }
