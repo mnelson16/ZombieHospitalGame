@@ -108,7 +108,7 @@ public class GameSubsystem
 				
 				if(loaded)
 				{
-					System.out.println("Load complete.");
+					break;
 				}
 			}
 		}
