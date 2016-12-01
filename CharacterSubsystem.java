@@ -45,12 +45,11 @@ public class CharacterSubsystem
 		{
 			activeArtifact = parseArtifactName(artifactInput);
 			//If the item is in the room
-			if(!(activeRoom.getArtifact() == null))
+			if(activeRoom.getArtifact() != null)
 			{
 				LinkedHashMap<String, Artifact> newInv = player.getPlayerInventory();
 				newInv.put(activeArtifact.getName(), activeArtifact);
 				player.setPlayerInventory(newInv);
-				activeRoom.setArtifact(null);
 				System.out.println("You got the " + activeArtifact.getName() + "! \n" + 
 						activeArtifact.getName() + " has been added to your inventory.");
 			}
