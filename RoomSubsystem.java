@@ -23,6 +23,7 @@ public class RoomSubsystem
 	{
 		activeRoom = rooms.get(player.getCurrentRoomID());
 		String userInput, fightHelp;
+		Game game = new Game();
 		Scanner input = new Scanner(System.in);
 
 		if(activeRoom.getExitIDs().containsKey(roomInput))
@@ -46,16 +47,28 @@ public class RoomSubsystem
 				}
 				while(!activeRoom.getPuzzle().getSolved()) //while puzzle is not solved
 				{
-					//ask for puzzle answer
-					System.out.print("> ");
-					userInput = input.nextLine();
-					activeRoom.getPuzzle().solvePuzzle(player, userInput, artifacts);
-					if(activeRoom.getPuzzle().getGoBack())
+					try
 					{
-						activeRoom.getPuzzle().setGoBack(false);
-						activeRoom = rooms.get(player.getPreviousRoomID());
-						player.setCurrentRoomID(activeRoom.getRoomID());
-						break;
+						//ask for puzzle answer
+						System.out.print("> ");
+						userInput = input.nextLine();
+						activeRoom.getPuzzle().solvePuzzle(player, userInput, artifacts);
+						if(activeRoom.getPuzzle().getGoBack())
+						{
+							activeRoom.getPuzzle().setGoBack(false);
+							activeRoom = rooms.get(player.getPreviousRoomID());
+							player.setCurrentRoomID(activeRoom.getRoomID());
+							break;
+						}
+						else if (player.getHealth() <= 0) //If player dies
+						{
+							System.out.println("You are dead.\n");
+							game.newGame();
+						}
+					}
+					catch(Exception e)
+					{
+						System.out.println("What is it you want to do?");
 					}
 				}
 				System.out.println(activeRoom.getDescription());
@@ -121,8 +134,7 @@ public class RoomSubsystem
 							if (player.getHealth() <= 0) //If player dies
 							{
 								System.out.println("You are dead.\n");
-								Game gs = new Game();
-								gs.newGame();
+								game.newGame();
 							}
 						}
 						if(userInput.equals("flee"))
