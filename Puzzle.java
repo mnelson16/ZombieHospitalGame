@@ -194,6 +194,10 @@ public class Puzzle implements Serializable
 				System.out.println(responses.get(userAnswer));
 				System.out.println("-5 health!");
 			}
+			if(puzzleID.equalsIgnoreCase("PUZ001"))
+			{
+				System.out.println(responses.get(userAnswer));
+			}
 		}
 	}
 
