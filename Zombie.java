@@ -159,20 +159,30 @@ public class Zombie extends Monster implements Serializable
 			if (hit)
 			{
 				turnsSinceSpecial = 0;
-				//player incapacitated for 3 turns
 				playerAttackPrevented = true;
-				//0% chance for special if player incapacitated
-				
-				//Won't cast special attack if player incapacitated
-				if (playerAttackPrevented)
-				{
-					specialAttackChance = 0;
-				}
-				else
-				{
-					specialAttackChance = 10;
-				}
 			}
+			
+			//Won't cast special attack if player incapacitated
+			if (playerAttackPrevented)
+			{
+				specialAttackChance = 0;
+			}
+			else
+			{
+				specialAttackChance = 10;
+			}
+			
+			//player incapacitated for 3 turns
+			if (specialActivated && turnsSinceSpecial < 3)
+			{
+				playerAttackPrevented = true;
+			}
+			else
+			{
+				playerAttackPrevented = false;
+			}
+			
+			turnsSinceSpecial += 1;
 			break;
 
 		case "M07":
@@ -242,7 +252,7 @@ public class Zombie extends Monster implements Serializable
 				}
 				else
 				{
-					System.out.println("...and hits for " + damage + " damage!");
+					//System.out.println("...and hits for " + damage + " damage!");
 				}
 			}
 			else
@@ -267,8 +277,6 @@ public class Zombie extends Monster implements Serializable
 		{
 			this.attack(player);
 		}
-		
-
 	}
 
 	/**

@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
@@ -21,7 +22,8 @@ public class Player extends Monster implements Serializable
 	private String currentRoomID, previousRoomID;
 	private LinkedHashMap<String, Artifact> playerInventory = new LinkedHashMap<String, Artifact>();
 	private int defCalculation;
-	private Artifact weaponEq, armorEq;
+	private Artifact weaponEq, armorEq, weaponHeld, armorHeld;
+	private HashMap<String, Room> rooms;
 
 	/**
 	 * @param monsterID
@@ -30,12 +32,13 @@ public class Player extends Monster implements Serializable
 	 * @param defense
 	 * @param currentRoomID
 	 */
-	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID)
+	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID, HashMap<String, Room> rooms)
 	{
 		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
 		this.currentRoomID = currentRoomID;
 		defCalculation = this.getDefense() / 5;
+		this.rooms = rooms;
 	}
 
 	@Override
@@ -159,6 +162,38 @@ public class Player extends Monster implements Serializable
 	 */
 	public void setPlayerInventory(LinkedHashMap<String, Artifact> playerInventory)
 	{
+		for (String key : playerInventory.keySet())
+		{
+			if (!this.playerInventory.containsKey(key))
+			{
+				if (playerInventory.get(key).isWeapon())
+				{
+					if (weaponHeld != null)
+					{
+						System.out.println("You dropped " + playerInventory.get(key) + ".");
+						rooms.get(currentRoomID).setArtifact(playerInventory.get(key));
+						this.playerInventory.remove(weaponHeld);
+					}
+				}
+				else if (playerInventory.get(key).isArmor())
+				{
+					if (armorHeld != null)
+					{
+						System.out.println("You dropped " + playerInventory.get(key) + ".");
+						rooms.get(currentRoomID).setArtifact(playerInventory.get(key));
+						this.playerInventory.remove(armorHeld);
+					}
+				}
+				else if (playerInventory.get(key).isConsumable())
+				{
+					//consumable already held
+				}
+			}
+			else
+			{
+				rooms.get(currentRoomID).setArtifact(null);
+			}
+		}
 		this.playerInventory = playerInventory;
 	}
 
@@ -184,6 +219,38 @@ public class Player extends Monster implements Serializable
 	public void setArmorEq(Artifact armorEq)
 	{
 		this.armorEq = armorEq;
+	}
+
+	/**
+	 * @return the weaponHeld
+	 */
+	public Artifact getWeaponHeld()
+	{
+		return weaponHeld;
+	}
+
+	/**
+	 * @return the armorHeld
+	 */
+	public Artifact getArmorHeld()
+	{
+		return armorHeld;
+	}
+
+	/**
+	 * @param weaponHeld the weaponHeld to set
+	 */
+	public void setWeaponHeld(Artifact weaponHeld)
+	{
+		this.weaponHeld = weaponHeld;
+	}
+
+	/**
+	 * @param armorHeld the armorHeld to set
+	 */
+	public void setArmorHeld(Artifact armorHeld)
+	{
+		this.armorHeld = armorHeld;
 	}
 
 	/**

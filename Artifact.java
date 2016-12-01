@@ -92,10 +92,18 @@ public class Artifact implements Serializable
 			{
 				if (isWeapon)
 				{
+					if (player.getWeaponHeld() != null)
+					{
+						LinkedHashMap<String, Artifact> tempInv = player.getPlayerInventory();
+						tempInv.remove(player.getWeaponHeld());
+						player.setPlayerInventory(tempInv);
+					}
+					player.setWeaponHeld(player.getWeaponEq());
 					player.setWeaponEq(null);
 				}
 				else if (isArmor)
 				{
+					player.setArmorHeld(player.getArmorEq());
 					player.setArmorEq(null);
 				}
 				
@@ -124,6 +132,7 @@ public class Artifact implements Serializable
 					}
 					
 					player.setWeaponEq(this);
+					player.setWeaponHeld(null);
 				}
 				else if (isArmor)
 				{
@@ -140,6 +149,7 @@ public class Artifact implements Serializable
 					}
 					
 					player.setArmorEq(this);
+					player.setArmorHeld(null);
 				}
 				
 				currentlyEquipped = true;
