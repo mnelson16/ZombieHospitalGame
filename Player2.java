@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -8,11 +9,11 @@ import java.util.Random;
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 10, 2016
- * 
  *
- * This class - now describe what the class does
  *
- * Purpose: - Describe the purpose of this class
+ * This class extends the Monster class to include player activity and traits.
+ *
+ * Purpose: to store information about player stats, equipment, etc.
  */
 
 public class Player extends Monster implements Serializable
@@ -20,21 +21,24 @@ public class Player extends Monster implements Serializable
 	private boolean inCombat;
 	private String currentRoomID, previousRoomID;
 	private LinkedHashMap<String, Artifact> playerInventory = new LinkedHashMap<String, Artifact>();
-	private int defCalculation = this.getDefense() / 5;
-	private Artifact weaponEq, armorEq;
+	private int defCalculation;
+	private Artifact weaponEq, armorEq, weaponHeld, armorHeld;
+	private HashMap<String, Room> rooms;
 
 	/**
 	 * @param monsterID
 	 * @param maxHealth
 	 * @param attack
 	 * @param defense
-	 * @param previousRoomID
+	 * @param currentRoomID
 	 */
-	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID)
+	public Player(String monsterID, int maxHealth, int attack, int defense, String currentRoomID, HashMap<String, Room> rooms)
 	{
 		super(monsterID, maxHealth, attack, defense, true);
 		this.inCombat = false;
 		this.currentRoomID = currentRoomID;
+		defCalculation = this.getDefense() / 5;
+		this.rooms = rooms;
 	}
 
 	@Override
@@ -42,29 +46,37 @@ public class Player extends Monster implements Serializable
 	{
 		Random rnd = new Random();
 		int damage = 0;
-		if (rnd.nextInt(100) < 80)
+
+		if (((Zombie) mon).isPlayerAttackPrevented()) //If player is incapacitated
 		{
-			//Damage = player attack (minus 1 for every 5 defense the monster has)
-			damage = this.getAttack() - mon.getDefense() / 5; 
-			mon.setHealth(mon.getHealth() - damage);
-		}
-		
-		if (damage > 0)
-		{
-			System.out.println("You attack for " + damage + " damage.");
+			System.out.println("You are incapacitated!\n");
 		}
 		else
 		{
-			System.out.println("You attack and miss!");
+			if (rnd.nextInt(100) < 80)
+			{
+				//Damage = player attack (minus 1 for every 5 defense the monster has)
+				damage = this.getAttack() - mon.getDefense() / 5;
+				mon.setHealth(mon.getHealth() - damage);
+			}
+
+			if (damage > 0)
+			{
+				System.out.println("You attack for " + damage + " damage.");
+			}
+			else
+			{
+				System.out.println("You attack and miss!");
+			}
 		}
 	}
-	
+
 	public String viewStats()
 	{
 		return "Health: " + getHealth() + "/" + getMaxHealth() + "\nAttack: "
 				+ getAttack() + "\nDefense: " + getDefense();
 	}
-	
+
 	/**
 	 * @return the inCombat
 	 */
@@ -72,7 +84,7 @@ public class Player extends Monster implements Serializable
 	{
 		return inCombat;
 	}
-	
+
 	/**
 	* @return the currentRoomID
 	*/
@@ -128,7 +140,7 @@ public class Player extends Monster implements Serializable
 	{
 		this.inCombat = inCombat;
 	}
-	
+
 	/**
 	 * @param currentRoomID the currentRoomID to set
 	 */
@@ -150,6 +162,38 @@ public class Player extends Monster implements Serializable
 	 */
 	public void setPlayerInventory(LinkedHashMap<String, Artifact> playerInventory)
 	{
+		for (String key : playerInventory.keySet())
+		{
+			if (!this.playerInventory.containsKey(key))
+			{
+				if (playerInventory.get(key).isWeapon())
+				{
+					if (weaponHeld != null)
+					{
+						System.out.println("You dropped " + playerInventory.get(key) + ".");
+						rooms.get(currentRoomID).setArtifact(playerInventory.get(key));
+						this.playerInventory.remove(weaponHeld);
+					}
+				}
+				else if (playerInventory.get(key).isArmor())
+				{
+					if (armorHeld != null)
+					{
+						System.out.println("You dropped " + playerInventory.get(key) + ".");
+						rooms.get(currentRoomID).setArtifact(playerInventory.get(key));
+						this.playerInventory.remove(armorHeld);
+					}
+				}
+				else if (playerInventory.get(key).isConsumable())
+				{
+					//consumable already held
+				}
+			}
+			else
+			{
+				rooms.get(currentRoomID).setArtifact(null);
+			}
+		}
 		this.playerInventory = playerInventory;
 	}
 
@@ -175,6 +219,38 @@ public class Player extends Monster implements Serializable
 	public void setArmorEq(Artifact armorEq)
 	{
 		this.armorEq = armorEq;
+	}
+
+	/**
+	 * @return the weaponHeld
+	 */
+	public Artifact getWeaponHeld()
+	{
+		return weaponHeld;
+	}
+
+	/**
+	 * @return the armorHeld
+	 */
+	public Artifact getArmorHeld()
+	{
+		return armorHeld;
+	}
+
+	/**
+	 * @param weaponHeld the weaponHeld to set
+	 */
+	public void setWeaponHeld(Artifact weaponHeld)
+	{
+		this.weaponHeld = weaponHeld;
+	}
+
+	/**
+	 * @param armorHeld the armorHeld to set
+	 */
+	public void setArmorHeld(Artifact armorHeld)
+	{
+		this.armorHeld = armorHeld;
 	}
 
 	/**
