@@ -178,7 +178,7 @@ public class PuzzleFactory
 		options7.add("a. Attempt to type in the password.");
 		options7.add("b. Search for another way.");
 
-		responses7.put('a', "'PASSWORD:_' shows on the computer screen. (Type 'back' to go back)");
+		responses7.put('a', "'PASSWORD:_' shows on the computer screen. (Type 'back' to go back)\n");
 		responses7.put('b', "You returned to the previous room.");
 
 		tempPuzzle = new Puzzle("PUZ007", "7", "You come across a locked door. Next to the "
