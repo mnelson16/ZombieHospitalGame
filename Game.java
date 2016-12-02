@@ -10,37 +10,47 @@ import java.util.HashMap;
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Nov 20, 2016
- * 
+ *
  *
  * This class provides the blueprint for Game files
  *
  * Purpose: Handle saving, loading, and starting a new game.
  */
-
 public class Game
 {
 	private HashMap<String, Room> updatedRooms = new HashMap<String, Room>(), rooms = RoomFactory.getRooms();
 	private Player newPlayer = new Player("00", 20, 10, 0, "L1001", rooms);
 	private Player player;
-	
+	private String zhtext = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+			"| |'''''/                   '||                    '||  ||`                             ||            '||`  |\n" +
+			"|     //                     ||      ''             ||  ||                        ''    ||             ||   |\n" +
+			"|    //   .|''|, '||),,(|,   ||''|,  ||  .|''|,     ||''||  .|''|, ('''' '||''|,  ||  ''||''   '''|.   ||   |\n" +
+			"|   //    ||  ||  || || ||   ||  ||  ||  ||..||     ||  ||  ||  ||  `'')  ||  ||  ||    ||    .|''||   ||   |\n" +
+			"| /.....| `|..|' .||    ||. .||..|' .||. `|...     .||  ||. `|..|' `...'  ||..|' .||.   `|..' `|..||. .||.  |\n" +
+			"|                                                                         ||                                |\n" +
+			"|                                                                        .||                                |\n" +
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+
 	public void makeNewGame()
 	{
-		saveGame(ZHTester.stockSave, newPlayer, RoomFactory.getRooms());
+		newPlayer = new Player("00", 20, 10, 0, "L1001", rooms);
+		rooms = RoomFactory.getRooms();
+		saveGame(ZHTester.stockSave, newPlayer, rooms);
 	}
-	
+
 	public void newGame()
 	{
 		System.out.print("New Game ");
 		loadGame(ZHTester.stockSave);
 	}
-	
+
 	public void saveGame(File file, Player player, HashMap<String, Room> rooms)
 	{
 		try
 		{
 			FileOutputStream fileOut = new FileOutputStream(file);
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-			
+
 			objectOut.writeObject(player);
 			objectOut.writeObject(rooms);
 			objectOut.close();
@@ -50,7 +60,7 @@ public class Game
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void loadGame(File file)
 	{
@@ -59,7 +69,7 @@ public class Game
 			FileInputStream fileIn = new FileInputStream(file);
 			@SuppressWarnings("resource")
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			
+
 			player = (Player) objectIn.readObject();
 			updatedRooms = (HashMap<String, Room>) objectIn.readObject();
 			ZHTester.setPlayer(player);
@@ -73,7 +83,8 @@ public class Game
 		if(player != null)
 		{
 			System.out.println("Loading... ");
-			System.out.println(rooms.get(player.getCurrentRoomID()).getDescription());
+			System.out.println(zhtext);
+			System.out.println(updatedRooms.get(player.getCurrentRoomID()).getDescription());
 		}
 	}
 
@@ -95,6 +106,11 @@ public class Game
 	public Player getPlayer()
 	{
 		return player;
+	}
+
+	public String getZHText()
+	{
+		return zhtext;
 	}
 
 	public void setRooms(HashMap<String, Room> rooms)
