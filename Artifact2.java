@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**Class: Artifact
@@ -7,11 +6,11 @@ import java.util.LinkedHashMap;
  * @version 1.0
  * Course: ITEC 3860 Fall 2016
  * Written: Oct 10, 2016
- * 
+ *
  *
  * This class includes Artifact type, name, description, and stat effects.
  *
- * Purpose: To provide the structure of Artifact 
+ * Purpose: To provide the structure of Artifact
  */
 
 public class Artifact implements Serializable
@@ -19,7 +18,7 @@ public class Artifact implements Serializable
 	private String name, description, currentRoom;
 	private boolean consumable, isWeapon, isArmor, currentlyEquipped;
 	private int atkIncrease, defIncrease, healthIncrease;
-	
+
 	/**
 	 * @param artifactID
 	 * @param name
@@ -31,8 +30,8 @@ public class Artifact implements Serializable
 	 * @param defIncrease
 	 * @param healthIncrease
 	 */
-	public Artifact(String name, String description, 
-			boolean consumable, boolean isWeapon, boolean isArmor, 
+	public Artifact(String name, String description,
+			boolean consumable, boolean isWeapon, boolean isArmor,
 			int atkIncrease, int defIncrease, int healthIncrease)
 	{
 		this.name = name;
@@ -50,21 +49,26 @@ public class Artifact implements Serializable
 	{
 		return name + "\n" + description;
 	}
-	
+
 	/**Method: useArtifact
 	 * Increases health, defense, and attack according to Artifact stats.
 	 * Consumable - disappears from player inventory
 	 * isWeapon/isArmor - becomes equipped or unequipped (affects available inventory slots)
-	 * None - should not be usable 
+	 * None - should not be usable
 	 * If equipment of same type (weapon or armor) is already equipped, unequips it first.
-	 * 
+	 *
 	 * @param mon The monster the artifact is being used on
 	 */
 	public void useArtifact(Player player)
 	{
 		String effectType;
 		int effectAmt;
-		
+
+		if (!isWeapon && !isArmor && !consumable)
+		{
+			System.out.println("The item does nothing.");
+		}
+
 		if (atkIncrease > 0)
 		{
 			effectType = "attack";
@@ -80,7 +84,7 @@ public class Artifact implements Serializable
 			effectType = "health";
 			effectAmt = healthIncrease;
 		}
-		
+
 		if (isWeapon || isArmor)
 		{
 			//if already equipped: unequip, reduce stats, and exit method
@@ -88,23 +92,37 @@ public class Artifact implements Serializable
 			{
 				if (isWeapon)
 				{
+					if (player.getWeaponHeld() != null)
+					{
+						LinkedHashMap<String, Artifact> tempInv = player.getPlayerInventory();
+						tempInv.remove(player.getWeaponHeld());
+						player.setPlayerInventory(tempInv);
+					}
+					player.setWeaponHeld(player.getWeaponEq());
 					player.setWeaponEq(null);
 				}
 				else if (isArmor)
 				{
+					player.setArmorHeld(player.getArmorEq());
 					player.setArmorEq(null);
 				}
-				
+
 				currentlyEquipped = false;
 				player.setHealth(player.getHealth() - healthIncrease);
 				player.setDefense(player.getDefense() - defIncrease);
 				player.setAttack(player.getAttack() - atkIncrease);
-				
-				System.out.println("You unequipped " + this.name + ". Your " + effectType 
+
+				System.out.println("You unequipped " + this.name + ". Your " + effectType
 						+ " decreased by " + effectAmt + ".");
+				if(name.equalsIgnoreCase("Obamacare Armor"))
+				{
+					player.getPlayerInventory().remove("Obamacare Armor");
+					System.out.println("The HazMat suit fell right apart as you removed it\n"
+							+ "from your body..");
+				}
 				return;
 			}
-			else
+			else //not currently equipped
 			{
 				if (isWeapon)
 				{
@@ -112,49 +130,57 @@ public class Artifact implements Serializable
 					if (player.getWeaponEq() != null)
 					{
 						player.getWeaponEq().setCurrentlyEquipped(false);
-						System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack" 
+						System.out.println("You unequipped " + player.getWeaponEq().getName() + ". Your attack"
 						 + " decreased by " + player.getWeaponEq().getAtkIncrease() + ".");
-						
+
 						//Reduce player attack from the previously equipped weapon
 						player.setAttack(player.getAttack() - player.getWeaponEq().getAtkIncrease());
 					}
-					
+
 					player.setWeaponEq(this);
+					player.setWeaponHeld(null);
 				}
 				else if (isArmor)
 				{
-					
+
 					//If player has armor equipped
 					if (player.getArmorEq() != null)
 					{
 						player.getArmorEq().setCurrentlyEquipped(false);
-						System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense" 
+						System.out.println("You unequipped " + player.getArmorEq().getName() + ". Your defense"
 								 + " decreased by " + player.getArmorEq().getDefIncrease() + ".");
-						
+
 						//Reduce player defense from the previously equipped armor
 						player.setDefense(player.getDefense() - player.getArmorEq().getDefIncrease());
+						if(player.getArmorEq().getName().equalsIgnoreCase("Obamacare Armor"))
+						{
+							player.getPlayerInventory().remove("Obamacare Armor");
+							System.out.println("The HazMat suit fell right apart as you removed it\n"
+									+ "from your body..");
+						}
 					}
-					
+
 					player.setArmorEq(this);
+					player.setArmorHeld(null);
 				}
-				
+
 				currentlyEquipped = true;
-				System.out.println("You equipped " + this.name + ". Your " + effectType 
+				System.out.println("You equipped " + this.name + ". Your " + effectType
 						+ " increased by " + effectAmt + ".");
-			}	
+			}
 		}
-		
+
 		if (consumable)
 		{
 			//Remove artifact from inventory
 			LinkedHashMap<String, Artifact> updatedInventory = player.getPlayerInventory();
 			updatedInventory.remove(this.name);
 			player.setPlayerInventory(updatedInventory);
-			
-			System.out.println("You used " + this.name + ". Your " + effectType 
+
+			System.out.println("You used " + this.name + ". Your " + effectType
 					+ " increased by " + effectAmt + ".");
 		}
-		
+
 		//if artifact's healthIncrease won't cause health to exceed max
 		if (player.getMaxHealth() > player.getHealth() + healthIncrease)
 		{
@@ -199,7 +225,7 @@ public class Artifact implements Serializable
 	{
 		return isWeapon;
 	}
-	
+
 	/**
 	 * @return if item is armor
 	 */
@@ -279,7 +305,7 @@ public class Artifact implements Serializable
 	{
 		this.isArmor = isArmor;
 	}
-	
+
 	/**
 	 * @param currentlyEquipped the currentlyEquipped to set
 	 */
